@@ -1,5 +1,7 @@
 # _4️⃣2️⃣_
 
+Репозиторий бекенда: https://github.com/go-park-mail-ru/2018_2_42
+
 ## Команда
 1️⃣ [Дикарев Андрей](https://github.com/DikarevAndrey)
 <br>
