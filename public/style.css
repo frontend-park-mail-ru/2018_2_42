@@ -21,7 +21,7 @@ body {
 }
 a {
     text-decoration: none;
-    color: burlywood;
+    color: black;
 }
 
 /* signin and signup */
@@ -31,7 +31,7 @@ form {
 
 /* index.html */
 .main div {
-    background-color: rgb(110, 31, 31); /* Green */
+    /* background-color: rgb(110, 31, 31);  */
     border: none;
     color: white;
     padding: 15px 32px;
