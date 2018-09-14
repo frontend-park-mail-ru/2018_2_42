@@ -5,6 +5,54 @@ html,body {
     margin:0;
 }
 
-.menu-button {
-    
+/* header block - верхняя шапка страницы, где будут только Sign In, Sign Up, либо имя фамилия пользователя, если он авторизован. */
+#header {
+    width: 100%;
+    height: 2.5rem;
+    /* background-color: red; */
+}
+#header a {
+    text-decoration: none;
+    float: right;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+    color: black;
+}
+
+/* logo - блок логотипа над блоком main */
+#logo {
+    width: 100%;
+    height: 2rem;
+    margin-top: 10%;
+    text-align: center;
+    /* background-color: green; */
+}
+
+/* main - главный блок страницы меню */
+#main {
+    width: 100%;
+    height: 17.5rem;
+    /* background-color: yellow; */
+}
+#menuItems {
+    width: 100%;
+    height: 17.5rem;
+    /* background-color: blue; */
+}
+#menu-button {
+    min-width: 5rem;
+    width: 12rem;
+    text-align: center;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.53rem;
+}
+#menuItems a {
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: black;
 }

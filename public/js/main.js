@@ -7,6 +7,27 @@ function createMenu () {
     const menuSection = document.createElement('section');
     menuSection.dataset.sectionName = 'menu';
 
+    // <div id="header">
+    //      <a href="sign_in">Sign In</a>
+    //      <a href="sign_up">Sign Up</a>
+    //</div>
+    const header = document.createElement('div');
+    header.id = 'header';
+    const login = document.createElement('a');
+    login.href = 'sign_in';
+    login.dataset.href = 'sign_in';
+    login.textContent = 'Sign In';
+    const registration = document.createElement('a');
+    registration.href = 'sign_up';
+    registration.dataset.href = 'sign_up';
+    registration.textContent = 'Sign Up';
+    header.appendChild(login);
+    header.appendChild(registration);
+
+    menuSection.appendChild(header);
+
+
+
     // <div id="logo">
     //      <h1>Our Game</h1>
     // </div>
@@ -15,6 +36,9 @@ function createMenu () {
     const logoHeader = document.createElement('h1');
     logoHeader.textContent = 'Our Game';
     logo.appendChild(logoHeader);
+
+    menuSection.appendChild(logo);
+
 
     // <div id="main">
     //      <div id="menuItems"></div>
@@ -26,29 +50,33 @@ function createMenu () {
     main.appendChild(mainInner);
 
     const titles = {
-        sign_in: 'Sign In',
-        sign_up: 'Sign Up',
-        leaders: 'Leaders',
-        me: 'Profile'
+        singleplayer: 'Singleplayer',
+        multuplayer:  'Multuplayer',
+        leaders:      'Leaders',
+        me:           'Profile'
     };
 
     Object.entries(titles).forEach(function (entry) {
         const href = entry[0];
         const title = entry[1];
 
+        const button = document.createElement('div');
+        button.id = 'menu-button';
+        button.textContent = title;
+
         const a = document.createElement('a');
         a.href = href;
         a.dataset.href = href;
-        a.textContent = title;
         a.classList.add('menu-button');
 
+        a.appendChild(button);
         mainInner.appendChild(a);
     });
     
-    menuSection.appendChild(logo);
     menuSection.appendChild(main);
 
     root.appendChild(menuSection);
 }
 
 createMenu();
+
