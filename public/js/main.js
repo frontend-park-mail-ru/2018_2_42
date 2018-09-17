@@ -2,15 +2,42 @@
 
 const root = document.getElementById('root');
 
+function ajax (callback, method, path, body) {
+	const xhr = new XMLHttpRequest();
+	xhr.open(method, path, true);
+	xhr.withCredentials = true;
+
+	if (body) {
+		xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+	}
+
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState !== 4) {
+			return;
+		}
+
+		callback(xhr);
+	};
+
+	if (body) {
+		xhr.send(JSON.stringify(body));
+	} else {
+		xhr.send();
+	}
+}
+
+function createMenuLink() {
+    const menuLink = document.createElement('a');
+    menuLink.href = menuLink.dataset.href = 'menu';
+    menuLink.textContent = 'Back to main menu';
+
+    return menuLink;
+}
+
 function createMenu () {
-    // <section></section>
     const menuSection = document.createElement('section');
     menuSection.dataset.sectionName = 'menu';
 
-    // <div id="header">
-    //      <a href="sign_in">Sign In</a>
-    //      <a href="sign_up">Sign Up</a>
-    //</div>
     const header = document.createElement('div');
     header.id = 'header';
     const login = document.createElement('a');
@@ -26,11 +53,6 @@ function createMenu () {
 
     menuSection.appendChild(header);
 
-
-
-    // <div id="logo">
-    //      <h1>Our Game</h1>
-    // </div>
     const logo = document.createElement('div');
     logo.id = 'logo';
     const logoHeader = document.createElement('h1');
@@ -39,10 +61,6 @@ function createMenu () {
 
     menuSection.appendChild(logo);
 
-
-    // <div id="main">
-    //      <div id="menuItems"></div>
-    // </div>
     const main = document.createElement('div');
     main.id = 'main';
     const mainInner = document.createElement('div');
@@ -78,5 +96,267 @@ function createMenu () {
     root.appendChild(menuSection);
 }
 
+function createSignIn() {
+    const signInSection = document.createElement('section');
+    signInSection.dataset.sectionName = 'sign_in';
+
+    const header = document.createElement('h1');
+    header.textContent = 'Sign In';
+
+    signInSection.appendChild(header);
+
+    const form = document.createElement('form');
+
+    const inputs = [
+        {
+            name: 'email',
+            type: 'email',
+            placeholder: 'Email'
+        },
+        {
+            name: 'password',
+            type: 'password',
+            placeholder: 'Password'
+        },
+        {
+            name: 'submit',
+            type: 'submit',
+        }
+    ]
+
+    inputs.forEach(function (item) {
+        const input = document.createElement('input');
+
+        input.name = item.name;
+        input.type = item.type;
+        input.placeholder = item.placeholder;
+
+        form.appendChild(input);
+        form.appendChild(document.createElement('br'));
+    });
+
+    signInSection.appendChild(form);
+    signInSection.appendChild(createMenuLink());
+    
+    form.addEventListener('submit', function (event) {
+		event.preventDefault();
+
+		const email = form.elements[ 'email' ].value;
+		const password = form.elements[ 'password' ].value;
+
+		ajax(function (xhr) {
+			root.innerHTML = '';
+			createProfile();
+		}, 'POST', '/signin', {
+			email: email,
+			password: password
+		});
+	});
+
+    root.appendChild(signInSection);
+}
+
+function createSignUp() {
+    const signUpSection = document.createElement('section');
+    signUpSection.dataset.sectionName = 'sign_up';
+
+    const header = document.createElement('h1');
+    header.textContent = 'Sign Up';
+
+    signUpSection.appendChild(header);
+
+    const form = document.createElement('form');
+
+    const inputs = [
+        {
+            name: 'email',
+            type: 'email',
+            placeholder: 'Email'
+        },
+        {
+            name: 'password',
+            type: 'password',
+            placeholder: 'Password'
+        },
+        {
+			name: 'password_repeat',
+			type: 'password',
+			placeholder: 'Repeat Password'
+		},
+        {
+            name: 'submit',
+            type: 'submit',
+        }
+    ]
+
+    inputs.forEach(function (item) {
+        const input = document.createElement('input');
+
+        input.name = item.name;
+        input.type = item.type;
+        input.placeholder = item.placeholder;
+
+        form.appendChild(input);
+        form.appendChild(document.createElement('br'));
+    });
+
+    signUpSection.appendChild(form);
+    signUpSection.appendChild(createMenuLink());
+    
+    form.addEventListener('submit', function (event) {
+		event.preventDefault();
+
+		const email = form.elements[ 'email' ].value;
+
+		const password = form.elements[ 'password' ].value;
+		const password_repeat = form.elements[ 'password_repeat' ].value;
+
+		if (password !== password_repeat) {
+			alert('Passwords is not equals');
+			return;
+		}
+
+		ajax(function (xhr) {
+			root.innerHTML = '';
+			createProfile();
+		}, 'POST', '/signup', {
+			email: email,
+			password: password
+		});
+	});
+
+    root.appendChild(signUpSection);
+}
+
+function createProfile (me) {
+    const profileSection = document.createElement('section');
+	profileSection.dataset.sectionName = 'profile';
+
+	const header = document.createElement('h1');
+    header.textContent = 'Profile';
+    
+    profileSection.appendChild(header);
+    profileSection.appendChild(createMenuLink());
+    
+
+	if (me) {
+		const p = document.createElement('p');
+
+		const div1 = document.createElement('div');
+		div1.textContent = `Email ${me.email}`;
+		const div2 = document.createElement('div');
+		div2.textContent = `Score ${me.score}`;
+
+		p.appendChild(div1);
+		p.appendChild(div2);
+        profileSection.appendChild(p);
+	} else {
+		ajax(function (xhr) {
+			if (!xhr.responseText) {
+				alert('Unauthorized');
+				root.innerHTML = '';
+				createMenu();
+				return;
+			}
+
+			const user = JSON.parse(xhr.responseText);
+			root.innerHTML = '';
+			createProfile(user);
+		}, 'GET', '/me');
+	}
+
+	root.appendChild(profileSection);
+}
+
+function createLeaderboard (users) {
+	const leaderboardSection = document.createElement('section');
+	leaderboardSection.dataset.sectionName = 'leaderboard';
+
+	const header = document.createElement('h1');
+	header.textContent = 'Leaders';
+
+	leaderboardSection.appendChild(header);
+	leaderboardSection.appendChild(createMenuLink());
+	leaderboardSection.appendChild(document.createElement('br'));
+
+	if (users) {
+		const table = document.createElement('table');
+		const thead = document.createElement('thead');
+		thead.innerHTML = `
+		<tr>
+			<th>Email</th>
+			<th>Age</th>
+			<th>Score</th>
+		</th>
+		`;
+		const tbody = document.createElement('tbody');
+
+		table.appendChild(thead);
+		table.appendChild(tbody);
+		table.border = 1;
+		table.cellSpacing = table.cellPadding = 0;
+
+		users.forEach(function (user) {
+			const email = user.email;
+			const age = user.age;
+			const score = user.score;
+
+			const tr = document.createElement('tr');
+			const tdEmail = document.createElement('td');
+			const tdAge = document.createElement('td');
+			const tdScore = document.createElement('td');
+
+			tdEmail.textContent = email;
+			tdAge.textContent = age;
+			tdScore.textContent = score;
+
+			tr.appendChild(tdEmail);
+			tr.appendChild(tdAge);
+			tr.appendChild(tdScore);
+
+			tbody.appendChild(tr);
+
+			leaderboardSection.appendChild(table);
+		});
+	} else {
+		const em = document.createElement('em');
+		em.textContent = 'Loading';
+		leaderboardSection.appendChild(em);
+
+		ajax(function (xhr) {
+			const users = JSON.parse(xhr.responseText);
+			root.innerHTML = '';
+			createLeaderboard(users);
+		}, 'GET', '/users');
+	}
+
+	root.appendChild(leaderboardSection);
+}
+
+const pages = {
+	menu: createMenu,
+	sign_in: createSignIn,
+	sign_up: createSignUp,
+	leaders: createLeaderboard,
+	me: createProfile
+};
+
 createMenu();
 
+root.addEventListener('click', function (event) {
+	if (!(event.target instanceof HTMLAnchorElement)) {
+		return;
+	}
+
+	event.preventDefault();
+	const link = event.target;
+
+	console.log({
+		href: link.href,
+		dataHref: link.dataset.href
+	});
+
+	root.innerHTML = '';
+
+	pages[ link.dataset.href ]();
+});
