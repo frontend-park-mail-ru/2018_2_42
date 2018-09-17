@@ -1,36 +1,12 @@
 'use strict';
 
 const root = document.getElementById('root');
-
-function ajax (callback, method, path, body) {
-	const xhr = new XMLHttpRequest();
-	xhr.open(method, path, true);
-	xhr.withCredentials = true;
-
-	if (body) {
-		xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-	}
-
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState !== 4) {
-			return;
-		}
-
-		callback(xhr);
-	};
-
-	if (body) {
-		xhr.send(JSON.stringify(body));
-	} else {
-		xhr.send();
-	}
-}
+const AJAX = window.AjaxModule;
 
 function createMenuLink() {
     const menuLink = document.createElement('a');
     menuLink.href = menuLink.dataset.href = 'menu';
     menuLink.textContent = 'Back to main menu';
-
     return menuLink;
 }
 
@@ -41,16 +17,14 @@ function createMenu () {
     const header = document.createElement('div');
     header.id = 'header';
     const login = document.createElement('a');
-    login.href = 'sign_in';
-    login.dataset.href = 'sign_in';
+    login.href = login.dataset.href ='sign_in';
     login.textContent = 'Sign In';
     const registration = document.createElement('a');
-    registration.href = 'sign_up';
-    registration.dataset.href = 'sign_up';
+    registration.href = registration.dataset.href = 'sign_up';
     registration.textContent = 'Sign Up';
+
     header.appendChild(login);
     header.appendChild(registration);
-
     menuSection.appendChild(header);
 
     const logo = document.createElement('div');
@@ -75,85 +49,22 @@ function createMenu () {
     };
 
     Object.entries(titles).forEach(function (entry) {
-        const href = entry[0];
-        const title = entry[1];
+        const href = entry[ 0 ];
+        const title = entry[ 1 ];
 
         const button = document.createElement('div');
         button.id = 'menu-button';
         button.textContent = title;
 
         const a = document.createElement('a');
-        a.href = href;
-        a.dataset.href = href;
-        a.classList.add('menu-button');
+        a.href = a.dataset.href = href;
 
         a.appendChild(button);
         mainInner.appendChild(a);
     });
     
     menuSection.appendChild(main);
-
     root.appendChild(menuSection);
-}
-
-function createSignIn() {
-    const signInSection = document.createElement('section');
-    signInSection.dataset.sectionName = 'sign_in';
-
-    const header = document.createElement('h1');
-    header.textContent = 'Sign In';
-
-    signInSection.appendChild(header);
-
-    const form = document.createElement('form');
-
-    const inputs = [
-        {
-            name: 'email',
-            type: 'email',
-            placeholder: 'Email'
-        },
-        {
-            name: 'password',
-            type: 'password',
-            placeholder: 'Password'
-        },
-        {
-            name: 'submit',
-            type: 'submit',
-        }
-    ]
-
-    inputs.forEach(function (item) {
-        const input = document.createElement('input');
-
-        input.name = item.name;
-        input.type = item.type;
-        input.placeholder = item.placeholder;
-
-        form.appendChild(input);
-        form.appendChild(document.createElement('br'));
-    });
-
-    signInSection.appendChild(form);
-    signInSection.appendChild(createMenuLink());
-    
-    form.addEventListener('submit', function (event) {
-		event.preventDefault();
-
-		const email = form.elements[ 'email' ].value;
-		const password = form.elements[ 'password' ].value;
-
-		ajax(function (xhr) {
-			root.innerHTML = '';
-			createProfile();
-		}, 'POST', '/signin', {
-			email: email,
-			password: password
-		});
-	});
-
-    root.appendChild(signInSection);
 }
 
 function createSignUp() {
@@ -216,16 +127,84 @@ function createSignUp() {
 			return;
 		}
 
-		ajax(function (xhr) {
-			root.innerHTML = '';
-			createProfile();
-		}, 'POST', '/signup', {
-			email: email,
-			password: password
-		});
+		AJAX.doPost({
+            callback: function (xhr) {
+                root.innerHTML = '';
+                createProfile();
+            },
+            path: '/signup',
+            body: {
+                email,
+                password,
+            },
+        });
 	});
 
     root.appendChild(signUpSection);
+}
+
+function createSignIn() {
+    const signInSection = document.createElement('section');
+    signInSection.dataset.sectionName = 'sign_in';
+
+    const header = document.createElement('h1');
+    header.textContent = 'Sign In';
+
+    signInSection.appendChild(header);
+
+    const form = document.createElement('form');
+
+    const inputs = [
+        {
+            name: 'email',
+            type: 'email',
+            placeholder: 'Email'
+        },
+        {
+            name: 'password',
+            type: 'password',
+            placeholder: 'Password'
+        },
+        {
+            name: 'submit',
+            type: 'submit',
+        }
+    ]
+
+    inputs.forEach(function (item) {
+        const input = document.createElement('input');
+
+        input.name = item.name;
+        input.type = item.type;
+        input.placeholder = item.placeholder;
+
+        form.appendChild(input);
+        form.appendChild(document.createElement('br'));
+    });
+
+    signInSection.appendChild(form);
+    signInSection.appendChild(createMenuLink());
+    
+    form.addEventListener('submit', function (event) {
+		event.preventDefault();
+
+		const email = form.elements[ 'email' ].value;
+		const password = form.elements[ 'password' ].value;
+
+		AJAX.doPost({
+			callback: function (xhr) {
+				root.innerHTML = '';
+				createProfile();
+			},
+			path: '/login',
+			body: {
+				email,
+				password,
+			},
+		});
+	});
+
+    root.appendChild(signInSection);
 }
 
 function createProfile (me) {
@@ -251,18 +230,20 @@ function createProfile (me) {
 		p.appendChild(div2);
         profileSection.appendChild(p);
 	} else {
-		ajax(function (xhr) {
-			if (!xhr.responseText) {
-				alert('Unauthorized');
-				root.innerHTML = '';
-				createMenu();
-				return;
-			}
-
-			const user = JSON.parse(xhr.responseText);
-			root.innerHTML = '';
-			createProfile(user);
-		}, 'GET', '/me');
+		AJAX.doGet({
+            callback (xhr) {
+                if (!xhr.responseText) {
+                    alert('Unauthorized');
+                    root.innerHTML = '';
+                    createMenu();
+                    return;
+                }
+                const user = JSON.parse(xhr.responseText);
+                root.innerHTML = '';
+                createProfile(user);
+            },
+            path: '/me',
+        });
 	}
 
 	root.appendChild(profileSection);
@@ -323,11 +304,14 @@ function createLeaderboard (users) {
 		em.textContent = 'Loading';
 		leaderboardSection.appendChild(em);
 
-		ajax(function (xhr) {
-			const users = JSON.parse(xhr.responseText);
-			root.innerHTML = '';
-			createLeaderboard(users);
-		}, 'GET', '/users');
+		AJAX.doGet({
+			callback (xhr) {
+				const users = JSON.parse(xhr.responseText);
+				root.innerHTML = '';
+				createLeaderboard(users);
+			},
+			path: '/users',
+		});
 	}
 
 	root.appendChild(leaderboardSection);
