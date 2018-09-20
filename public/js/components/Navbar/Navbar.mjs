@@ -13,7 +13,7 @@ export class NavbarComponent {
                 {title: this._username, url: this._username},
             ];
             const template = window.fest['js/components/Navbar/Navbar.tmpl'](authButtons);
-            this._el.innerHTML = template;
+            this._el.innerHTML += template;
             return
 		} else {
             const authButtons = [
@@ -21,7 +21,7 @@ export class NavbarComponent {
                 {title: 'Sign In', url: "sign_in"},
             ];
             const template = window.fest['js/components/Navbar/Navbar.tmpl'](authButtons);
-            this._el.innerHTML = template;
+            this._el.innerHTML += template;
             return
         }
 	}

@@ -1,6 +1,7 @@
 'use strict';
 
 import {NavbarComponent} from './components/Navbar/Navbar.mjs';
+import {LogoComponent} from './components/Logo/Logo.mjs';
 
 const root = document.getElementById('root');
 const AJAX = window.AjaxModule;
@@ -17,6 +18,9 @@ function createMenuLink () {
 function createMenu () {
 	const navbar = new NavbarComponent({el: root, username:"Daniel Lee"});
 	navbar.render();
+
+	const logo = new LogoComponent({el: root, logo:"RPS"});
+	logo.render();
 }
 
 
