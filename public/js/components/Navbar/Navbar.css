@@ -1,0 +1,20 @@
+.navbar {
+    width: 100%;
+    height: 2.5rem;
+}
+.navbar a {
+    text-decoration: none;
+    color: black;
+}
+.navbar-button {
+    border: 1px solid black;
+    border-radius: 3px;
+    float: right;
+    text-align: center;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    min-width: 7%;
+    min-height: 1rem;
+}

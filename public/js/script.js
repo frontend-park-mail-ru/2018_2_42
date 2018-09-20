@@ -1,13 +1,6 @@
 'use strict';
 
-import {
-	BoardComponent,
-	RENDER_TYPES,
-} from './components/Board/Board.mjs';
-
-import {
-	NavbarComponent
-} from './components/Navbar/Navbar.mjs';
+import {NavbarComponent} from './components/Navbar/Navbar.mjs';
 
 const root = document.getElementById('root');
 const AJAX = window.AjaxModule;
@@ -22,7 +15,7 @@ function createMenuLink () {
 }
 
 function createMenu () {
-	const navbar = new NavbarComponent({username:"andrey"});
+	const navbar = new NavbarComponent({el: root, username:"Daniel Lee"});
 	navbar.render();
 }
 
