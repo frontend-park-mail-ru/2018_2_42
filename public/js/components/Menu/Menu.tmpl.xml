@@ -1,0 +1,11 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="menu_titles">
+<div class="main-menu">
+    <div class="menu-items">
+        <fest:each iterate="menu_titles" index="i">
+            <a href="/{menu_titles[i].url}">
+                <div class="menu-button"><fest:value>menu_titles[i].titleme</fest:value></div>
+            </a>
+        </fest:each>
+    </div>
+</div>
+</fest:template>
