@@ -1,4 +1,3 @@
-
 'use strict';
 
 const express = require('express');
@@ -69,7 +68,7 @@ app.post('/signup', function (req, res) {
 	res.status(201).json({id});
 });
 
-app.post('/signin', function (req, res) {
+app.post('/login', function (req, res) {
 	const password = req.body.password;
 	const email = req.body.email;
 	if (!password || !email) {
