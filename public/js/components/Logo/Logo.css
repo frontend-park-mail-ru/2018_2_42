@@ -1,0 +1,12 @@
+/* logo */
+.Logo-view {
+    width: 100%;
+    height: 3rem;
+    margin-top: 12%;
+    text-align: center;
+}
+.Logo-view a{
+    text-decoration: none;
+    color: black;
+    font-size: 2.5rem;
+}

@@ -1,0 +1,11 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="authButtons">
+        <div class="navbar">
+            <fest:each iterate="authButtons" index="i">
+                <div class="navbar-button">
+                    <a href="/{authButtons[i].url}">
+                            <fest:value>authButtons[i].title</fest:value>
+                    </a>
+                </div>
+            </fest:each>
+        </div>
+</fest:template>

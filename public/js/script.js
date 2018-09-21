@@ -1,9 +1,7 @@
 'use strict';
 
-import {
-	BoardComponent,
-	RENDER_TYPES,
-} from './components/Board/Board.mjs';
+import {NavbarComponent} from './components/Navbar/Navbar.mjs';
+import {LogoComponent} from './components/Logo/Logo.mjs';
 
 import { MenuComponent } from "./components/Menu/Menu.mjs";
 
@@ -20,8 +18,15 @@ function createMenuLink () {
 }
 
 function createMenu () {
+	const navbar = new NavbarComponent({el: root, username:"Daniel Lee"});
+	navbar.render();
+
+	const logo = new LogoComponent({el: root, logo:"RPS"});
+	logo.render();
+
 	const menu = new MenuComponent({ el: root });
 	menu.render();
+
 }
 
 
