@@ -7,7 +7,7 @@ export class NavbarComponent {
     }
     
     render () {
-		if (this._username) {
+        if (this._username) {
             const authButtons = [
                 {title: 'Sign Out', url: "sign_out"},
                 {title: this._username, url: this._username},
@@ -15,7 +15,7 @@ export class NavbarComponent {
             const template = window.fest['js/components/Navbar/Navbar.tmpl'](authButtons);
             this._el.innerHTML += template;
             return
-		} else {
+        } else {
             const authButtons = [
                 {title: "Sign Out", url: "sign_up"},
                 {title: 'Sign In', url: "sign_in"},

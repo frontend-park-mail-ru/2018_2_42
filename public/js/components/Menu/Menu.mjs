@@ -6,12 +6,12 @@ export class MenuComponent {
     }
 
     render() {
-        const menu_titles = [
+        const menuTitles = [
             { title: 'Singleplayer', url: 'singelplayer' },
-            { title: 'Multuplayer', url: 'multuplayer' },
+            { title: 'Multiplayer', url: 'multiplayer' },
             { title: 'LeaderBoard', url: 'users' }
         ];
-        const template = window.fest['js/components/Menu/Menu.tmpl'](menu_titles);
+        const template = window.fest['js/components/Menu/Menu.tmpl'](menuTitles);
         this._el.innerHTML += template;
     }
 }

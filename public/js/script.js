@@ -120,7 +120,7 @@ function createSignUp () {
 			placeholder: 'Password'
 		},
 		{
-			name: 'password_repeat',
+			name: 'passwordRepeat',
 			type: 'password',
 			placeholder: 'Repeat Password'
 		},
@@ -152,9 +152,9 @@ function createSignUp () {
 		const email = form.elements[ 'email' ].value;
 		const age = parseInt(form.elements[ 'age' ].value);
 		const password = form.elements[ 'password' ].value;
-		const password_repeat = form.elements[ 'password_repeat' ].value;
+		const passwordRepeat = form.elements[ 'passwordRepeat' ].value;
 
-		if (password !== password_repeat) {
+		if (password !== passwordRepeat) {
 			alert('Passwords is not equals');
 
 			return;

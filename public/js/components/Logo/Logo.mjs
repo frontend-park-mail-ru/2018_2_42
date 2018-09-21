@@ -7,11 +7,11 @@ export class LogoComponent {
     }
     
     render () {
-		if (this._logo) {
+        if (this._logo) {
             const template = window.fest['js/components/Logo/Logo.tmpl'](this._logo);
             this._el.innerHTML += template;
-        return
-		} else {
+            return
+        } else {
             this._el.innerHTML += "";
             return
         }
