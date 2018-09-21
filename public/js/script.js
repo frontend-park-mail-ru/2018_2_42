@@ -1,8 +1,7 @@
 'use strict';
 
-import {NavbarComponent} from './components/Navbar/Navbar.mjs';
-import {LogoComponent} from './components/Logo/Logo.mjs';
-
+import { NavbarComponent } from './components/Navbar/Navbar.mjs';
+import { LogoComponent } from './components/Logo/Logo.mjs';
 import { MenuComponent } from "./components/Menu/Menu.mjs";
 
 const root = document.getElementById('root');
@@ -26,7 +25,6 @@ function createMenu () {
 
 	const menu = new MenuComponent({ el: root });
 	menu.render();
-
 }
 
 
