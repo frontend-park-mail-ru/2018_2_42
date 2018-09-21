@@ -1,0 +1,10 @@
+@import '../js/components/Navbar/Navbar.css';
+@import '../js/components/Logo/Logo.css';
+@import '../js/components/Menu/Menu.css';
+
+/* common styles */
+html,body {
+    height:100%;
+    width:100%;
+    margin:0;
+}

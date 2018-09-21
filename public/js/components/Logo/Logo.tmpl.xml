@@ -1,0 +1,7 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="logoName">
+        <div class="Logo-view">
+            <a data-href="/" href="/">
+                <fest:value>logoName</fest:value>
+            </a>
+        </div>
+</fest:template>
