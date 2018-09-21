@@ -9,7 +9,7 @@ export class MenuComponent {
         const menuTitles = [
             { title: 'Singleplayer', url: 'singelplayer' },
             { title: 'Multiplayer', url: 'multiplayer' },
-            { title: 'LeaderBoard', url: 'users' }
+            { title: 'Leader Board', url: 'users' }
         ];
         const template = window.fest['js/components/Menu/Menu.tmpl'](menuTitles);
         this._el.innerHTML += template;
