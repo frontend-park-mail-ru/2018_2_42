@@ -2,9 +2,11 @@
 <div class="main-menu">
     <div class="menu-items">
         <fest:each iterate="menu_titles" index="i">
-            <a href="/{menu_titles[i].url}">
-                <div class="menu-button"><fest:value>menu_titles[i].title</fest:value></div>
-            </a>
+            <div class="menu-button">
+                <a data-href="{menu_titles[i].url}" href="/{menu_titles[i].url}">
+                    <fest:value>menu_titles[i].title</fest:value>
+                </a>
+            </div>
         </fest:each>
     </div>
 </div>

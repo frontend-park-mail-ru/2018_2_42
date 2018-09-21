@@ -2,7 +2,7 @@
         <div class="navbar">
             <fest:each iterate="authButtons" index="i">
                 <div class="navbar-button">
-                    <a href="/{authButtons[i].url}">
+                    <a data-href="{authButtons[i].url}" href="/{authButtons[i].url}">
                             <fest:value>authButtons[i].title</fest:value>
                     </a>
                 </div>

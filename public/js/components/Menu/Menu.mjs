@@ -7,7 +7,7 @@ export class MenuComponent {
 
     render() {
         const menu_titles = [
-            { title: 'Singleplayer', url: 'singlplayer' },
+            { title: 'Singleplayer', url: 'singelplayer' },
             { title: 'Multuplayer', url: 'multuplayer' },
             { title: 'LeaderBoard', url: 'users' }
         ];
