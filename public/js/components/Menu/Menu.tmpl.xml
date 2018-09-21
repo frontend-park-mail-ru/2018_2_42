@@ -3,7 +3,7 @@
     <div class="menu-items">
         <fest:each iterate="menu_titles" index="i">
             <a href="/{menu_titles[i].url}">
-                <div class="menu-button"><fest:value>menu_titles[i].titleme</fest:value></div>
+                <div class="menu-button"><fest:value>menu_titles[i].title</fest:value></div>
             </a>
         </fest:each>
     </div>

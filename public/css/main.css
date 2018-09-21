@@ -1,3 +1,6 @@
+@import '../js/components/Navbar/Navbar.css';
+@import '../js/components/Logo/Logo.css';
+
 /* common styles */
 html,body {
     height:100%;

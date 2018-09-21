@@ -11,7 +11,7 @@ export class MenuComponent {
             { title: 'Multuplayer', url: 'multuplayer' },
             { title: 'LeaderBoard', url: 'users' }
         ];
-        const template = window.fest['js/components/Menu/Menu.tmpl'];(menu_titles);
-        this._el.innerHTML = template;
+        const template = window.fest['js/components/Menu/Menu.tmpl'](menu_titles);
+        this._el.innerHTML += template;
     }
 }
