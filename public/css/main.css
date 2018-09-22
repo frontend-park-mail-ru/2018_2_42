@@ -1,6 +1,7 @@
 @import '../js/components/Navbar/Navbar.css';
 @import '../js/components/Logo/Logo.css';
 @import '../js/components/Menu/Menu.css';
+@import '../js/components/NavButton/NavButton.css';
 
 @font-face {
     font-family: "Pexico Micro";

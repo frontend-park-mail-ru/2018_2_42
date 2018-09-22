@@ -6,12 +6,14 @@ export class MenuComponent {
     }
 
     render() {
-        const menuTitles = [
-            { title: 'Singleplayer', url: 'singelplayer' },
-            { title: 'Multiplayer', url: 'multiplayer' },
-            { title: 'Leader Board', url: 'users' }
-        ];
-        const template = window.fest['js/components/Menu/Menu.tmpl'](menuTitles);
+        const data = { 
+            menuTitles: [
+                { caption: 'Singleplayer', url: 'singleplayer', className: "menu__navbutton" },
+                { caption: 'Multiplayer', url: 'multiplayer', className: "menu__navbutton" },
+                { caption: 'Leader Board', url: 'users', className: "menu__navbutton" }
+            ]
+        };
+        const template = window.fest['js/components/Menu/Menu.tmpl'](data);
         this._el.innerHTML += template;
     }
 }

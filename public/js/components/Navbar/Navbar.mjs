@@ -8,19 +8,23 @@ export class NavbarComponent {
     
     render () {
         if (this._username) {
-            const authButtons = [
-                {title: 'Sign Out', url: "sign_out"},
-                {title: this._username, url: this._username},
-            ];
-            const template = window.fest['js/components/Navbar/Navbar.tmpl'](authButtons);
+            const data = {
+                authButtons: [
+                    { caption: 'Sign Out', url: "sign_out", className: "navbar__navbutton" },
+                    { caption: this._username, url: this._username, className: "navbar__navbutton" }
+                ]
+            };
+            const template = window.fest['js/components/Navbar/Navbar.tmpl'](data);
             this._el.innerHTML += template;
             return
         } else {
-            const authButtons = [
-                {title: "Sign Out", url: "sign_up"},
-                {title: 'Sign In', url: "sign_in"},
-            ];
-            const template = window.fest['js/components/Navbar/Navbar.tmpl'](authButtons);
+            const data = {
+                authButtons: [
+                    { caption: "Sign Up", url: "sign_up", className: "navbar__navbutton" },
+                    { caption: 'Sign In', url: "sign_in", className: "navbar__navbutton" }
+                ]
+            };
+            const template = window.fest['js/components/Navbar/Navbar.tmpl'](data);
             this._el.innerHTML += template;
             return
         }

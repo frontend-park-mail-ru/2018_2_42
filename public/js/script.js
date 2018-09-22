@@ -17,10 +17,10 @@ function createMenuLink () {
 }
 
 function createMenu () {
-	const navbar = new NavbarComponent({el: root, username:"Daniel Lee"});
+	const navbar = new NavbarComponent({ el: root, username:"Daniel Lee" });
 	navbar.render();
 
-	const logo = new LogoComponent({el: root, logo:"RPS"});
+	const logo = new LogoComponent({ el: root, logo:"RPS" });
 	logo.render();
 
 	const menu = new MenuComponent({ el: root });
