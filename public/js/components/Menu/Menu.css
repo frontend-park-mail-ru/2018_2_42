@@ -1,15 +1,11 @@
 /* main-menu */
-.main-menu {
+.menu {
     width: 100%;
     height: 17.5rem;
+    margin-top: 1rem;
 }
 
-.menu-items {
-    width: 100%;
-    height: 17.5rem;
-}
-
-.menu-items a {
+.menu a {
     text-decoration: none;
     font-size: 1.5rem;
     color: black;
