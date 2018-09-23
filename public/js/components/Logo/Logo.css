@@ -1,12 +1,38 @@
 /* logo */
-.Logo-view {
+.logo {
     width: 100%;
     height: 3rem;
-    margin-top: 12%;
+    margin-top: 14rem;
     text-align: center;
 }
-.Logo-view a{
+.logo a{
     text-decoration: none;
     color: black;
     font-size: 2.5rem;
+}
+
+@-webkit-keyframes logo {
+    to {
+      -webkit-transform: scale(1.1);
+      transform: scale(1.1);
+    }
+  }
+  @keyframes logo {
+    to {
+      -webkit-transform: scale(1.1);
+      transform: scale(1.1);
+    }
+  }
+
+.logo:hover, .logo:focus, .logo:active {
+    -webkit-animation-name: logo;
+    animation-name: logo;
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
 }

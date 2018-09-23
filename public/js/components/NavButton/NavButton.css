@@ -1,0 +1,37 @@
+/* main-menu */
+.menu__navbutton {
+    min-width: 5rem;
+    width: 12rem;
+    text-align: center;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 3px;
+    padding: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.53rem;
+    font-weight: bold;
+}
+
+.menu__navbutton:hover, .menu__navbutton:focus, .menu__navbutton:active {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+}
+
+.navbar__navbutton {
+    border: 2px solid black;
+    border-radius: 3px;
+    float: right;
+    text-align: center;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    min-width: 7%;
+    min-height: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.navbar__navbutton:hover, .navbar__navbutton:focus, .navbar__navbutton:active {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+}
