@@ -1,12 +1,9 @@
 /* logo */
 .logo {
     width: 100%;
-    height: 3rem;
-    margin-top: 14rem;
     text-align: center;
 }
+
 .logo a{
-    text-decoration: none;
-    color: black;
     font-size: 2.5rem;
 }
