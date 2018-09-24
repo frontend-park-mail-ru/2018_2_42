@@ -10,8 +10,8 @@ export class NavbarComponent {
         if (this._username) {
             const data = {
                 authButtons: [
-                    { caption: 'Sign Out', url: "sign_out", className: "navbar__navbutton" },
-                    { caption: this._username, url: this._username, className: "navbar__navbutton" }
+                    { caption: 'Sign Out', url: "sign_out", className: "navbar__button" },
+                    { caption: this._username, url: this._username, className: "navbar__button" }
                 ]
             };
             const template = window.fest['js/components/Navbar/Navbar.tmpl'](data);
@@ -20,8 +20,8 @@ export class NavbarComponent {
         } else {
             const data = {
                 authButtons: [
-                    { caption: "Sign Up", url: "sign_up", className: "navbar__navbutton" },
-                    { caption: 'Sign In', url: "sign_in", className: "navbar__navbutton" }
+                    { caption: "Sign Up", url: "sign_up", className: "navbar__button" },
+                    { caption: 'Sign In', url: "sign_in", className: "navbar__button" }
                 ]
             };
             const template = window.fest['js/components/Navbar/Navbar.tmpl'](data);

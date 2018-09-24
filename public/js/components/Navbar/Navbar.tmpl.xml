@@ -1,7 +1,7 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
         <div class="navbar">
             <fest:each iterate="data.authButtons" index="i">
-                <fest:include context="data.authButtons[i]" src="../NavButton/NavButton.tmpl.xml"/>
+                <fest:include context="data.authButtons[i]" src="../Button/Button.tmpl.xml"/>
             </fest:each>
         </div>
 </fest:template>
