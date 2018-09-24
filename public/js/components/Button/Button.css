@@ -38,20 +38,3 @@
 .navbar__button:hover, .navbar__button:focus, .navbar__button:active {
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
 }
-
-/* back button */
-.backbutton__button {
-    border: 2px solid black;
-    border-radius: 3px;
-    color: black;
-    float: left;
-    text-align: center;
-    margin-right: 0.5rem;
-    margin-left: 0.5rem;
-    margin-top: 0.5rem;
-    padding: 0.5rem;
-    min-width: 7%;
-    min-height: 1rem;
-    font-size: 1rem;
-    font-weight: bold;
-}
