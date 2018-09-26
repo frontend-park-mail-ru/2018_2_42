@@ -2,6 +2,7 @@
 @import '../js/components/Logo/Logo.css';
 @import '../js/components/Menu/Menu.css';
 @import '../js/components/Button/Button.css';
+@import '../js/components/Form/Form.css';
 
 @font-face {
     font-family: "Pexico Micro";
