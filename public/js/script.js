@@ -30,9 +30,7 @@ function createSignUp () {
 
 	const form = new FormComponent({
 		el: root, 
-		headerForm: "Sign Up",
-		action: FormActions.sign_in,
-		method: "POST",
+		action: FormActions.sign_up,
 	});
 	form.render();
 	// const signUpSection = document.createElement('section');
@@ -119,68 +117,76 @@ function createSignUp () {
 }
 
 function createSignIn () {
-	const signInSection = document.createElement('section');
-	signInSection.dataset.sectionName = 'sign_in';
+	const navbar = new NavbarComponent({ el: root });
+	navbar.render();
 
-	const header = document.createElement('h1');
-	header.textContent = 'Sign In';
-
-
-	const form = document.createElement('form');
-
-	const inputs = [
-		{
-			name: 'email',
-			type: 'email',
-			placeholder: 'Email'
-		},
-		{
-			name: 'password',
-			type: 'password',
-			placeholder: 'Password'
-		},
-		{
-			name: 'submit',
-			type: 'submit'
-		}
-	];
-
-	inputs.forEach(function (item) {
-		const input = document.createElement('input');
-
-		input.name = item.name;
-		input.type = item.type;
-
-		input.placeholder = item.placeholder;
-
-		form.appendChild(input);
-		form.appendChild(document.createElement('br'));
+	const form = new FormComponent({
+		el: root, 
+		action: FormActions.sign_in,
 	});
+	form.render();
+	// const signInSection = document.createElement('section');
+	// signInSection.dataset.sectionName = 'sign_in';
 
-	signInSection.appendChild(header);
-	signInSection.appendChild(form);
-	signInSection.appendChild(createMenuLink());
+	// const header = document.createElement('h1');
+	// header.textContent = 'Sign In';
 
-	form.addEventListener('submit', function (event) {
-		event.preventDefault();
 
-		const email = form.elements[ 'email' ].value;
-		const password = form.elements[ 'password' ].value;
+	// const form = document.createElement('form');
 
-		AJAX.doPost({
-			callback (xhr) {
-				root.innerHTML = '';
-				createProfile();
-			},
-			path: '/login',
-			body: {
-				email,
-				password,
-			},
-		});
-	});
+	// const inputs = [
+	// 	{
+	// 		name: 'email',
+	// 		type: 'email',
+	// 		placeholder: 'Email'
+	// 	},
+	// 	{
+	// 		name: 'password',
+	// 		type: 'password',
+	// 		placeholder: 'Password'
+	// 	},
+	// 	{
+	// 		name: 'submit',
+	// 		type: 'submit'
+	// 	}
+	// ];
 
-	root.appendChild(signInSection);
+	// inputs.forEach(function (item) {
+	// 	const input = document.createElement('input');
+
+	// 	input.name = item.name;
+	// 	input.type = item.type;
+
+	// 	input.placeholder = item.placeholder;
+
+	// 	form.appendChild(input);
+	// 	form.appendChild(document.createElement('br'));
+	// });
+
+	// signInSection.appendChild(header);
+	// signInSection.appendChild(form);
+	// signInSection.appendChild(createMenuLink());
+
+	// form.addEventListener('submit', function (event) {
+	// 	event.preventDefault();
+
+	// 	const email = form.elements[ 'email' ].value;
+	// 	const password = form.elements[ 'password' ].value;
+
+	// 	AJAX.doPost({
+	// 		callback (xhr) {
+	// 			root.innerHTML = '';
+	// 			createProfile();
+	// 		},
+	// 		path: '/login',
+	// 		body: {
+	// 			email,
+	// 			password,
+	// 		},
+	// 	});
+	// });
+
+	// root.appendChild(signInSection);
 }
 
 

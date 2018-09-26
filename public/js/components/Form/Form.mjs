@@ -5,22 +5,22 @@ export const FormActions = {
 }
 
 export class FormComponent {
-    constructor({ el = document.body, headerForm = '', action = '', method = 'get' } = {}) {
+    constructor({ el = document.body, action = '' } = {}) {
         this._el = el;
-        this._headerForm = headerForm;
         this._action = action;
-        this._method = method;
     }
+
+    
 
     render() {
         if (this._action === FormActions.sign_in) {
             const data = { 
-                headerForm: this._headerForm,
+                headerForm: "Sign In",
                 action: this._action,
-                method: this._method,
+                method: "POST",
                 fields: [
                     { name: 'Email', type: 'email', className: 'input' },
-                    { name: 'Password', type: 'number', className: 'input' },
+                    { name: 'Password', type: 'password', className: 'input' },
                     { name: 'Sign In', type: 'submit', className: 'form_button' },
                 ],
             };
@@ -28,14 +28,14 @@ export class FormComponent {
             this._el.innerHTML += template;
         } else {
             const data = { 
-                headerForm: this._headerForm,
+                headerForm: "Sign Up",
                 action: this._action,
-                method: this._method,
+                method: "POST",
                 fields: [
                     { name: 'First Name', type: 'text', className: 'input' },
                     { name: 'Last Name', type: 'text', className: 'input' },
                     { name: 'Email', type: 'email', className: 'input' },
-                    { name: 'Password', type: 'number', className: 'input' },
+                    { name: 'Password', type: 'password', className: 'input' },
                     { name: 'Repeat Password', type: 'password', className: 'input' },
                     { name: 'Sign Up', type: 'submit', className: 'form_button' },
                 ],
