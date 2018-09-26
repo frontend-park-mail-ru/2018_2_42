@@ -16,77 +16,11 @@ function createMenuLink () {
 }
 
 function createMenu () {
-	const navbar = new NavbarComponent({ el: root, username:"Daniel Lee" });
+	const navbar = new NavbarComponent({ el: root });
 	navbar.render();
 	
 	const menu = new MenuComponent({ el: root });
 	menu.render();
-}
-
-
-function createSignIn () {
-	const signInSection = document.createElement('section');
-	signInSection.dataset.sectionName = 'sign_in';
-
-	const header = document.createElement('h1');
-	header.textContent = 'Sign In';
-
-
-	const form = document.createElement('form');
-
-	const inputs = [
-		{
-			name: 'email',
-			type: 'email',
-			placeholder: 'Email'
-		},
-		{
-			name: 'password',
-			type: 'password',
-			placeholder: 'Password'
-		},
-		{
-			name: 'submit',
-			type: 'submit'
-		}
-	];
-
-	inputs.forEach(function (item) {
-		const input = document.createElement('input');
-
-		input.name = item.name;
-		input.type = item.type;
-
-		input.placeholder = item.placeholder;
-
-		form.appendChild(input);
-		form.appendChild(document.createElement('br'));
-	});
-
-	signInSection.appendChild(header);
-	signInSection.appendChild(form);
-	signInSection.appendChild(createMenuLink());
-
-	form.addEventListener('submit', function (event) {
-		event.preventDefault();
-
-		const email = form.elements[ 'email' ].value;
-		const password = form.elements[ 'password' ].value;
-
-		AJAX.doPost({
-			callback (xhr) {
-				root.innerHTML = '';
-				createProfile();
-			},
-			path: '/login',
-			body: {
-				email,
-				password,
-			},
-		});
-	});
-
-	root.appendChild(signInSection);
 }
 
 function createSignUp () {
@@ -172,6 +106,72 @@ function createSignUp () {
 
 	root.appendChild(signUpSection);
 }
+
+function createSignIn () {
+	const signInSection = document.createElement('section');
+	signInSection.dataset.sectionName = 'sign_in';
+
+	const header = document.createElement('h1');
+	header.textContent = 'Sign In';
+
+
+	const form = document.createElement('form');
+
+	const inputs = [
+		{
+			name: 'email',
+			type: 'email',
+			placeholder: 'Email'
+		},
+		{
+			name: 'password',
+			type: 'password',
+			placeholder: 'Password'
+		},
+		{
+			name: 'submit',
+			type: 'submit'
+		}
+	];
+
+	inputs.forEach(function (item) {
+		const input = document.createElement('input');
+
+		input.name = item.name;
+		input.type = item.type;
+
+		input.placeholder = item.placeholder;
+
+		form.appendChild(input);
+		form.appendChild(document.createElement('br'));
+	});
+
+	signInSection.appendChild(header);
+	signInSection.appendChild(form);
+	signInSection.appendChild(createMenuLink());
+
+	form.addEventListener('submit', function (event) {
+		event.preventDefault();
+
+		const email = form.elements[ 'email' ].value;
+		const password = form.elements[ 'password' ].value;
+
+		AJAX.doPost({
+			callback (xhr) {
+				root.innerHTML = '';
+				createProfile();
+			},
+			path: '/login',
+			body: {
+				email,
+				password,
+			},
+		});
+	});
+
+	root.appendChild(signInSection);
+}
+
 
 function createLeaderboard (users) {
 	const leaderboardSection = document.createElement('section');
