@@ -2,7 +2,7 @@
 
 import { NavbarComponent } from './components/Navbar/Navbar.mjs';
 import { MenuComponent } from "./components/Menu/Menu.mjs";
-import { FormComponent } from "./components/Form/Form.mjs";
+import { FormActions, FormComponent } from "./components/Form/Form.mjs";
 
 const root = document.getElementById('root');
 const AJAX = window.AjaxModule;
@@ -28,7 +28,12 @@ function createSignUp () {
 	const navbar = new NavbarComponent({ el: root });
 	navbar.render();
 
-	const form = new FormComponent({ el: root, formName: "Sign Up"});
+	const form = new FormComponent({
+		el: root, 
+		headerForm: "Sign Up",
+		action: FormActions.sign_in,
+		method: "POST",
+	});
 	form.render();
 	// const signUpSection = document.createElement('section');
 	// signUpSection.dataset.sectionName = 'sign_in';

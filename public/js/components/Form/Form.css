@@ -4,6 +4,13 @@
     flex-grow: 1;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+}
+
+.form form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .form_head {
@@ -12,11 +19,25 @@
 }
 
 .input {
-    width: 100%;
+    display: flex;
     padding: 0.5rem;
     margin: 0.53rem;
     box-sizing: border-box;
     border: 2px solid black;
     border-radius: 3px; 
     font-size: 1rem;
+}
+
+.form_button {
+    width: 50%;
+    margin-top: 2rem; 
+    border: 2px solid black;
+    border-radius: 3px; 
+    font-size: 1rem;
+    padding: 0.5rem;
+    background-color: #d0d4d8;
+}
+
+.form_button:hover {
+    background-color: #d0d4d833;
 }
