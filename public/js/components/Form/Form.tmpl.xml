@@ -6,6 +6,7 @@
             </div>
             <fest:each iterate="data.fields" index="i">
                 <input type="{data.fields[i].type}" name="{data.fields[i].name}" class="{data.fields[i].className}" placeholder="{data.fields[i].name}"></input>
+                <div class="form__error_message"></div>
             </fest:each>
         </form>
     </div>

@@ -10,8 +10,6 @@ export class FormComponent {
         this._action = action;
     }
 
-    
-
     render() {
         if (this._action === FormActions.sign_in) {
             const data = { 
