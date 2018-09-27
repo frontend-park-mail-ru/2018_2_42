@@ -1,6 +1,6 @@
 'use strict'
 
-import { ValidatorModule } from "../../modules/validation.js";
+import { Errors, ValidatorModule } from "../../modules/validation.js";
 
 const validator = new ValidatorModule;
 
@@ -36,16 +36,26 @@ export class SignInFormComponent {
         this._email = this._form["Email"].value;
         this._password = this._form["Password"].value;
 
-        if (validator.validateEmail(this._email)) {
-            this._addError("email_error");
-            // POST
+        let validated = true;
+        if (!validator.validateEmail(this._email)) {
+            validator.addError(this._form, Errors.email.id, Errors.email.wrongFormat);
+            validated = false;
         } else {
-            this._addError("email_error", "Wrong email format");
+            validator.addError(this._form, Errors.email.id, '');
+            validated = true;
         }
-    }
-    
-    _addError(errId, msg = '') {
-        const errDiv = this._form.children[errId];
-        errDiv.innerHTML = msg;
+        
+        if (!validator.validatePassword(this._password)) {
+            validator.addError(this._form, Errors.password.id, Errors.password.requried);
+            validated = false;
+        } else {
+            validator.addError(this._form, Errors.password.id, '');
+            validated = true;
+        }
+
+        if (validated) {
+            // POST
+            console.log("Validated!");
+        }
     }
 }

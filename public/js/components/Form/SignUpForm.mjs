@@ -1,14 +1,12 @@
 'use strict'
 
-import { ValidatorModule } from "../../modules/validation.js";
+import { Errors, ValidatorModule } from "../../modules/validation.js";
 
 const validator = new ValidatorModule;
 
 export class SignUpFormComponent {
-    constructor({ el = document.body, validateEmailFn, validatePasswordFn } = {}) {
+    constructor({ el = document.body } = {}) {
         this._el = el;
-        this._validateEmailFn = validateEmailFn;
-        this._validatePasswordFn = validatePasswordFn;
     }
 
     render() {
@@ -44,18 +42,56 @@ export class SignUpFormComponent {
         this._firstName = this._form["First Name"].value;
         this._lastName = this._form["Last Name"].value;
 
-        // Нам ОЧЕНЬ СТЫДНО за следующие пару десятков строк кода:(((
-        if (validator.validateEmail(this._email)) {
-            this._addError("email_error");
-            // POST
-        } else {
-            this._addError("email_error", "Wrong email format");
-        }
-        // Валидация всех полей
-    }
+        // Нам ОЧЕНЬ СТЫДНО за следующие несколько десятков строк кода:(((
+        // const validators = [
+        //     { func: validator.validateEmail, parameter: this._email },
+        // ]
+        // console.log(validators[0].func(validators[0].parameter));
 
-    _addError(errId, msg = '') {
-        const errDiv = this._form.children[errId];
-        errDiv.innerHTML = msg;
+        let validated = true
+        if (!validator.validateEmail(this._email)) {
+            validator.addError(this._form, Errors.email.id, Errors.email.wrongFormat);
+            validated = false;
+        } else {
+            validator.addError(this._form, Errors.email.id);
+            validated = true;
+        }
+
+        if (!validator.validatePassword(this._password)) {
+            validator.addError(this._form, Errors.password.id, Errors.password.minLength);
+            validated = false;
+        } else {
+            validator.addError(this._form, Errors.password.id);
+            validated = true;
+        }
+
+        if (!validator.validateRepPassword(this._password, this._repPassword)) {
+            validator.addError(this._form, Errors.repPassword.id, Errors.repPassword.doNotMatch);
+            validated = false;
+        } else {
+            validator.addError(this._form, Errors.repPassword.id);
+            validated = true;
+        }
+
+        if (!validator.validateFirstName(this._firstName)) {
+            validator.addError(this._form, Errors.firstName.id, Errors.firstName.required);
+            validated = false;
+        } else {
+            validator.addError(this._form, Errors.firstName.id);
+            validated = true;
+        }
+
+        if (!validator.validateLastName(this._lastName)) {
+            validator.addError(this._form, Errors.lastName.id, Errors.lastName.required);
+            validated = false;
+        } else {
+            validator.addError(this._form, Errors.lastName.id);
+            validated = true;
+        }
+
+        if (validated) {
+            // POST
+            console.log("Validated!");
+        }
     }
 }
