@@ -1,5 +1,9 @@
 'use strict'
 
+import { ValidatorModule } from "../../modules/validation.js";
+
+const validator = new ValidatorModule;
+
 export class SignInFormComponent {
     constructor({ el = document.body } = {}) {
         this._el = el;
@@ -20,38 +24,28 @@ export class SignInFormComponent {
         const template = window.fest['js/components/Form/Form.tmpl'](data);
         this._el.innerHTML += template;
 
-        this._form = this._el.getElementsByClassName('form__sign_in')
-        this._form.addEventListener('submit', this._submitForm(event));
+        this._form = this._el.getElementsByClassName('form__sign_in')[0];
+        this._form.addEventListener('submit', function() {
+            this._submitForm(event)
+        }.bind(this, event));
     }
     
     _submitForm(event) {
         event.preventDefault();
-        if (this._validateEmail()) {
-            // AJAX.doPost({
-            //     callback (xhr) {
-            //         root.innerHTML = '';
-            //         createProfile();
-            //     },
-            //     path: '/login',
-            //     body: {
-            //         email,
-            //         password,
-            //     },
-            // });
+
+        this._email = this._form["Email"].value;
+        this._password = this._form["Password"].value;
+
+        if (validator.validateEmail(this._email)) {
+            this._addError("email_error");
+            // POST
         } else {
-            this._addError();
+            this._addError("email_error", "Wrong email format");
         }
     }
     
-    _validateEmail() {
-        this._email = this._form.elements[ 'email' ].value;
-        this._password = this._form.elements[ 'password' ].value;
-        // regexp
-        return true
-    }
-    
-    _addError(field, msg) {
-        const err = this._form.getElementsByClassName('form__error_message');
-        err.innerHTML += msg; 
+    _addError(errId, msg = '') {
+        const errDiv = this._form.children[errId];
+        errDiv.innerHTML = msg;
     }
 }

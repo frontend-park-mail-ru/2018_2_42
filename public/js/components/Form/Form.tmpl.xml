@@ -1,6 +1,6 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <div class="form">
-        <form class="{data.classForm}" action="{data.action}" method="{data.method}">
+        <form class="{data.classForm}" action="{data.action}" method="{data.method}" novalidate="novalidate">
             <div class="form__head">
                 <fest:value>data.headerForm</fest:value>
             </div>
