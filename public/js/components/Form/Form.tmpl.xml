@@ -1,13 +1,13 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <div class="form">
-        <form action="{data.action}" method="{data.method}">
-            <div class="form_head">
+        <form class="{data.classForm}" action="{data.action}" method="{data.method}">
+            <div class="form__head">
                 <fest:value>data.headerForm</fest:value>
             </div>
             <fest:each iterate="data.fields" index="i">
                 <input type="{data.fields[i].type}" name="{data.fields[i].name}" class="{data.fields[i].className}" placeholder="{data.fields[i].name}"></input>
                 <fest:if test="data.fields[i].type != 'submit'">
-                    <div class="form__error_message"></div>
+                    <div id="{data.fields[i].errId}" class="form__error_message"></div>
                 </fest:if>
             </fest:each>
         </form>

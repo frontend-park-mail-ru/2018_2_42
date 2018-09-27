@@ -2,7 +2,8 @@
 
 import { NavbarComponent } from './components/Navbar/Navbar.mjs';
 import { MenuComponent } from "./components/Menu/Menu.mjs";
-import { FormActions, FormComponent } from "./components/Form/Form.mjs";
+import { SignUpFormComponent } from "./components/Form/SignUpForm.mjs";
+import { SignInFormComponent } from "./components/Form/SignInForm.mjs";
 
 const root = document.getElementById('root');
 const AJAX = window.AjaxModule;
@@ -26,9 +27,8 @@ function createSignUp () {
 	const navbar = new NavbarComponent({ el: root });
 	navbar.render();
 
-	const form = new FormComponent({
+	const form = new SignUpFormComponent({
 		el: root, 
-		action: FormActions.sign_up,
 	});
 	form.render();
 }
@@ -37,9 +37,8 @@ function createSignIn () {
 	const navbar = new NavbarComponent({ el: root });
 	navbar.render();
 
-	const form = new FormComponent({
+	const form = new SignInFormComponent({
 		el: root, 
-		action: FormActions.sign_in,
 	});
 	form.render();
 }
