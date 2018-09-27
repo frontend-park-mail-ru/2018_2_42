@@ -6,8 +6,11 @@
             </div>
             <fest:each iterate="data.fields" index="i">
                 <input type="{data.fields[i].type}" name="{data.fields[i].name}" class="{data.fields[i].className}" placeholder="{data.fields[i].name}"></input>
-                <div class="form__error_message"></div>
+                <fest:if test="data.fields[i].type != 'submit'">
+                    <div class="form__error_message"></div>
+                </fest:if>
             </fest:each>
         </form>
+        <a href="/menu" data-href="menu" class="form__back">Back</a>
     </div>
 </fest:template>

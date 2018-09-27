@@ -41,3 +41,11 @@
 .form_button:hover {
     background-color: #d0d4d833;
 }
+
+.form__error_message {
+
+}
+
+.form__back {
+    margin-top: 1rem;
+}
