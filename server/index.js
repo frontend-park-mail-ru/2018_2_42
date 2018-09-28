@@ -43,24 +43,14 @@ const users = {
 };
 const ids = {};
 
-app.post('/signup', function (req, res) {
+app.post('/sign_up', function (req, res) {
 	const password = req.body.password;
 	const email = req.body.email;
-	const age = req.body.age;
-	if (
-		!password || !email || !age ||
-		!password.match(/^\S{4,}$/) ||
-		!email.match(/@/) ||
-		!(typeof age === 'number' && age > 10 && age < 100)
-	) {
-		return res.status(400).json({error: 'Не валидные данные пользователя'});
-	}
-	if (users[email]) {
-		return res.status(400).json({error: 'Пользователь уже существует'});
-	}
+	const lastName = req.body.lastName;
+	const firstName = req.body.firstName;
 
 	const id = uuid();
-	const user = {password, email, age, score: 0};
+	const user = {password, email, lastName, firstName};
 	ids[id] = email;
 	users[email] = user;
 
@@ -68,15 +58,9 @@ app.post('/signup', function (req, res) {
 	res.status(201).json({id});
 });
 
-app.post('/login', function (req, res) {
+app.post('/sign_in', function (req, res) {
 	const password = req.body.password;
 	const email = req.body.email;
-	if (!password || !email) {
-		return res.status(400).json({error: 'Не указан E-Mail или пароль'});
-	}
-	if (!users[email] || users[email].password !== password) {
-		return res.status(400).json({error: 'Не верный E-Mail и/или пароль'});
-	}
 
 	const id = uuid();
 	ids[id] = email;
@@ -85,7 +69,7 @@ app.post('/login', function (req, res) {
 	res.status(201).json({id});
 });
 
-app.get('/me', function (req, res) {
+app.get('/profile', function (req, res) {
 	const id = req.cookies['sessionid'];
 	const email = ids[id];
 	if (!email || !users[email]) {

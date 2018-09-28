@@ -3,6 +3,7 @@
 import { Errors, ValidatorModule } from "../../modules/validation.js";
 
 const validator = new ValidatorModule;
+const AJAX = window.AjaxModule;
 
 export class SignUpFormComponent {
     constructor({ el = document.body } = {}) {
@@ -77,8 +78,19 @@ export class SignUpFormComponent {
         }
 
         if (validateCounter == validators.length) {
-            // POST
-            console.log("Validated!");
+            AJAX.doPost({
+                callback (xhr) {
+                    root.innerHTML = '';
+                    createMenu();
+                },
+                path: '/sign_up',
+                body: {
+                    email: this._email,
+                    password: this._password,
+                    firstName: this._firstName,
+                    lastName: this._lastName,
+                },
+            });
         }
     }
 }

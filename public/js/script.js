@@ -4,16 +4,11 @@ import { NavbarComponent } from './components/Navbar/Navbar.mjs';
 import { MenuComponent } from "./components/Menu/Menu.mjs";
 import { SignUpFormComponent } from "./components/Form/SignUpForm.mjs";
 import { SignInFormComponent } from "./components/Form/SignInForm.mjs";
+import { ProfileComponent } from "./components/Profile/Profile.mjs";
 
 const root = document.getElementById('root');
 const AJAX = window.AjaxModule;
 
-function createMenuLink () {
-	const menuLink = document.createElement('a');
-	menuLink.href = menuLink.dataset.href = 'menu';
-	menuLink.textContent = 'Back to main menu';
-	return menuLink;
-}
 
 function createMenu () {
 	const navbar = new NavbarComponent({ el: root });
@@ -43,94 +38,56 @@ function createSignIn () {
 	form.render();
 }
 
+function createProfile (user) {
+	const navbar = new NavbarComponent({ el: root, username: user});
+	navbar.render();
 
-function createLeaderboard (users) {
-	const leaderboardSection = document.createElement('section');
-	leaderboardSection.dataset.sectionName = 'leaderboard';
-
-	const header = document.createElement('h1');
-	header.textContent = 'Leaders';
-
-	leaderboardSection.appendChild(header);
-	leaderboardSection.appendChild(createMenuLink());
-	leaderboardSection.appendChild(document.createElement('br'));
-	const tableWrapper = document.createElement('div');
-	leaderboardSection.appendChild(tableWrapper);
-
-	if (users) {
-		const board = new BoardComponent({el: tableWrapper, type: RENDER_TYPES.STRING});
-		board.data = users;
-		board.render();
-	} else {
-		const em = document.createElement('em');
-		em.textContent = 'Loading';
-		leaderboardSection.appendChild(em);
-
-		AJAX.doGet({
-			callback (xhr) {
-				const users = JSON.parse(xhr.responseText);
-				root.innerHTML = '';
-				createLeaderboard(users);
-			},
-			path: '/users',
-		});
-	}
-
-	root.appendChild(leaderboardSection);
+	const profile = new ProfileComponent({ el: root, username: user });
+	profile.render();
 }
 
-function createProfile (me) {
-	const profileSection = document.createElement('section');
-	profileSection.dataset.sectionName = 'profile';
+// function createLeaderboard (users) {
+// 	const leaderboardSection = document.createElement('section');
+// 	leaderboardSection.dataset.sectionName = 'leaderboard';
 
-	const header = document.createElement('h1');
-	header.textContent = 'Profile';
+// 	const header = document.createElement('h1');
+// 	header.textContent = 'Leaders';
 
-	profileSection.appendChild(header);
-	profileSection.appendChild(createMenuLink());
+// 	leaderboardSection.appendChild(header);
+// 	leaderboardSection.appendChild(createMenuLink());
+// 	leaderboardSection.appendChild(document.createElement('br'));
+// 	const tableWrapper = document.createElement('div');
+// 	leaderboardSection.appendChild(tableWrapper);
 
-	if (me) {
-		const p = document.createElement('p');
+// 	if (users) {
+// 		const board = new BoardComponent({el: tableWrapper, type: RENDER_TYPES.STRING});
+// 		board.data = users;
+// 		board.render();
+// 	} else {
+// 		const em = document.createElement('em');
+// 		em.textContent = 'Loading';
+// 		leaderboardSection.appendChild(em);
 
-		const div1 = document.createElement('div');
-		div1.textContent = `Email ${me.email}`;
-		const div2 = document.createElement('div');
-		div2.textContent = `Age ${me.age}`;
-		const div3 = document.createElement('div');
-		div3.textContent = `Score ${me.score}`;
+// 		AJAX.doGet({
+// 			callback (xhr) {
+// 				const users = JSON.parse(xhr.responseText);
+// 				root.innerHTML = '';
+// 				createLeaderboard(users);
+// 			},
+// 			path: '/users',
+// 		});
+// 	}
 
-		p.appendChild(div1);
-		p.appendChild(div3);
-		p.appendChild(div3);
+// 	root.appendChild(leaderboardSection);
+// }
 
-		profileSection.appendChild(p);
-	} else {
-		AJAX.doGet({
-			callback (xhr) {
-				if (!xhr.responseText) {
-					alert('Unauthorized');
-					root.innerHTML = '';
-					createMenu();
-					return;
-				}
-
-				const user = JSON.parse(xhr.responseText);
-				root.innerHTML = '';
-				createProfile(user);
-			},
-			path: '/me',
-		});
-	}
-
-	root.appendChild(profileSection);
-}
 
 const pages = {
 	menu: createMenu,
 	sign_in: createSignIn,
 	sign_up: createSignUp,
-	users: createLeaderboard,
-	me: createProfile
+	// users: createLeaderboard,
+	profile: createProfile
 };
 
 createMenu();
