@@ -42,54 +42,41 @@ export class SignUpFormComponent {
         this._firstName = this._form["First Name"].value;
         this._lastName = this._form["Last Name"].value;
 
-        // Нам ОЧЕНЬ СТЫДНО за следующие несколько десятков строк кода:(((
-        // const validators = [
-        //     { func: validator.validateEmail, parameter: this._email },
-        // ]
-        // console.log(validators[0].func(validators[0].parameter));
+        const validators = [
+            { 
+                func: validator.validateEmail, 
+                parameter: this._email, 
+                errors: [Errors.email.id, Errors.email.wrongFormat]
+            },
+            { 
+                func: validator.validatePassword, 
+                parameter: this._password, 
+                errors: [Errors.password.id, Errors.password.minLength] 
+            },
+            { 
+                func: validator.validateRepPassword, 
+                parameter: [this._password, this._repPassword], 
+                errors: [Errors.repPassword.id, Errors.repPassword.doNotMatch] 
+            },
+            { 
+                func: validator.validateFirstName, 
+                parameter: this._firstName, 
+                errors: [Errors.firstName.id, Errors.firstName.required] 
+            },
+            { func: validator.validateLastName, parameter: this._lastName, errors: [Errors.lastName.id, Errors.lastName.required] },
+        ];
 
-        let validated = true
-        if (!validator.validateEmail(this._email)) {
-            validator.addError(this._form, Errors.email.id, Errors.email.wrongFormat);
-            validated = false;
-        } else {
-            validator.addError(this._form, Errors.email.id);
-            validated = true;
+        let validateCounter = 0;
+        for (let i = 0; i < validators.length; i++) {
+            if (!validators[i].func(validators[i].parameter)) {
+                validator.addError(this._form, validators[i].errors[0], validators[i].errors[1]);
+            } else {
+                validator.addError(this._form, validators[i].errors[0]);
+                validateCounter++;
+            }
         }
 
-        if (!validator.validatePassword(this._password)) {
-            validator.addError(this._form, Errors.password.id, Errors.password.minLength);
-            validated = false;
-        } else {
-            validator.addError(this._form, Errors.password.id);
-            validated = true;
-        }
-
-        if (!validator.validateRepPassword(this._password, this._repPassword)) {
-            validator.addError(this._form, Errors.repPassword.id, Errors.repPassword.doNotMatch);
-            validated = false;
-        } else {
-            validator.addError(this._form, Errors.repPassword.id);
-            validated = true;
-        }
-
-        if (!validator.validateFirstName(this._firstName)) {
-            validator.addError(this._form, Errors.firstName.id, Errors.firstName.required);
-            validated = false;
-        } else {
-            validator.addError(this._form, Errors.firstName.id);
-            validated = true;
-        }
-
-        if (!validator.validateLastName(this._lastName)) {
-            validator.addError(this._form, Errors.lastName.id, Errors.lastName.required);
-            validated = false;
-        } else {
-            validator.addError(this._form, Errors.lastName.id);
-            validated = true;
-        }
-
-        if (validated) {
+        if (validateCounter == validators.length) {
             // POST
             console.log("Validated!");
         }

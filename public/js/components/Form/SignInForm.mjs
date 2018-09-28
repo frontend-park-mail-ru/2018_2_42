@@ -36,24 +36,30 @@ export class SignInFormComponent {
         this._email = this._form["Email"].value;
         this._password = this._form["Password"].value;
 
-        let validated = true;
-        if (!validator.validateEmail(this._email)) {
-            validator.addError(this._form, Errors.email.id, Errors.email.wrongFormat);
-            validated = false;
-        } else {
-            validator.addError(this._form, Errors.email.id, '');
-            validated = true;
-        }
-        
-        if (!validator.validatePassword(this._password)) {
-            validator.addError(this._form, Errors.password.id, Errors.password.requried);
-            validated = false;
-        } else {
-            validator.addError(this._form, Errors.password.id, '');
-            validated = true;
+        const validators = [
+            { 
+                func: validator.validateEmail, 
+                parameter: this._email, 
+                errors: [Errors.email.id, Errors.email.wrongFormat]
+            },
+            { 
+                func: validator.validatePassword, 
+                parameter: this._password, 
+                errors: [Errors.password.id, Errors.password.wrongFormat] 
+            },
+        ];
+
+        let validateCounter = 0;
+        for (let i = 0; i < validators.length; i++) {
+            if (!validators[i].func(validators[i].parameter)) {
+                validator.addError(this._form, validators[i].errors[0], validators[i].errors[1]);
+            } else {
+                validator.addError(this._form, validators[i].errors[0]);
+                validateCounter++;
+            }
         }
 
-        if (validated) {
+        if (validateCounter == validators.length) {
             // POST
             console.log("Validated!");
         }
