@@ -1,9 +1,10 @@
 'use strict'
 
 import { Errors, ValidatorModule } from "../../modules/validation.js";
+import { APIModule } from "../../modules/api.js";
 
 const validator = new ValidatorModule;
-const AJAX = window.AjaxModule;
+const api = new APIModule;
 
 export class SignUpFormComponent {
     constructor({ el = document.body } = {}) {
@@ -78,18 +79,12 @@ export class SignUpFormComponent {
         }
 
         if (validateCounter == validators.length) {
-            AJAX.doPost({
-                callback (xhr) {
-                    root.innerHTML = '';
-                    createMenu();
-                },
-                path: '/sign_up',
-                body: {
-                    email: this._email,
-                    password: this._password,
-                    firstName: this._firstName,
-                    lastName: this._lastName,
-                },
+            api.SignUp({ login: this._email, password: this._password })
+            .then(function (data) {
+                // Запрос успешно выполнен
+            })
+            .catch(function (error) {
+                // Запрос не выполнен
             });
         }
     }

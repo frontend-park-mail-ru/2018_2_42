@@ -1,8 +1,10 @@
 'use strict'
 
 import { Errors, ValidatorModule } from "../../modules/validation.js";
+import { APIModule } from "../../modules/api.js";
 
 const validator = new ValidatorModule;
+const api = new APIModule;
 
 export class SignInFormComponent {
     constructor({ el = document.body } = {}) {
@@ -60,8 +62,13 @@ export class SignInFormComponent {
         }
 
         if (validateCounter == validators.length) {
-            // POST
-            console.log("Validated!");
+            api.SignIn({ login: this._email, password: this._password })
+            .then(function (data) {
+                // Запрос успешно выполнен
+            })
+            .catch(function (error) {
+                // Запрос не выполнен
+            });
         }
     }
 }
