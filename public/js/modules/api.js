@@ -6,8 +6,7 @@ const network = new NetworkModule;
 
 export class APIModule {
     SignUp(data = {}) {
-        // const url = "/api/v1/user?temporary=false";
-        const url = "/sign_up";
+        const url = "/api/v1/user";
         return network.promisePost(url, {
             headers: {
                 'Content-Type': 'application/json'
@@ -17,8 +16,7 @@ export class APIModule {
     };
     
     SignIn(data = {}) {
-        // const url = "/api/v1/session";
-        const url = "/sign_in";
+        const url = "/api/v1/session";
         return network.promisePost(url, {
             headers: {
                 'Content-Type': 'application/json'

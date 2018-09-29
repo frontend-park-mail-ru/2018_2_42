@@ -10,12 +10,10 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
-    "debug": "^3.1.0",
     "express": "^4.16.3",
+    "express-http-proxy": "^1.4.0",
     "fest": "^0.12.1",
-    "morgan": "^1.9.0",
-    "mustache": "^3.0.0",
-    "uuid": "^3.3.2"
+    "morgan": "^1.9.0"
   },
   "author": "42",
   "license": "MIT"

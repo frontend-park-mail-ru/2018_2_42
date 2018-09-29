@@ -14,7 +14,7 @@ export class SignInFormComponent {
     render() {
         const data = { 
             headerForm: "Sign In",
-            action: "/sign_in",
+            action: "/api/v1/session ",
             method: "POST",
             classForm: "form__sign_in",
             fields: [
@@ -65,11 +65,9 @@ export class SignInFormComponent {
             api.SignIn({ login: this._email, password: this._password })
             .then(function (data) {
                 // Запрос успешно выполнен
-                console.log("success");
             })
             .catch(function (error) {
                 // Запрос не выполнен
-                console.log("failure");
             });
         }
     }

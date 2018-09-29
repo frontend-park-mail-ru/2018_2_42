@@ -14,12 +14,10 @@ export class SignUpFormComponent {
     render() {
         const data = { 
             headerForm: "Sign Up",
-            action: "/sign_up",
+            action: "/api/v1/user",
             method: "POST",
             classForm: "form__sign_up",
             fields: [
-                // { name: 'First Name', type: 'text', className: 'form__input', errId: 'firstName_error' },
-                // { name: 'Last Name', type: 'text', className: 'form__input', errId: 'lastName_error' },
                 { name: 'Email', type: 'email', className: 'form__input', errId: 'email_error' },
                 { name: 'Password', type: 'password', className: 'form__input', errId: 'password_error' },
                 { name: 'Repeat Password', type: 'password', className: 'form__input', errId: 'rep_password_error' },
@@ -41,8 +39,6 @@ export class SignUpFormComponent {
         this._email = this._form["Email"].value;
         this._password = this._form["Password"].value;
         this._repPassword = this._form["Repeat Password"].value;
-        // this._firstName = this._form["First Name"].value;
-        // this._lastName = this._form["Last Name"].value;
 
         const validators = [
             { 
@@ -60,16 +56,6 @@ export class SignUpFormComponent {
                 parameter: [this._password, this._repPassword], 
                 errors: [Errors.repPassword.id, Errors.repPassword.doNotMatch] 
             },
-            // { 
-            //     func: validator.validateFirstName, 
-            //     parameter: this._firstName, 
-            //     errors: [Errors.firstName.id, Errors.firstName.required] 
-            // },
-            // { 
-            //     func: validator.validateLastName, 
-            //     parameter: this._lastName, 
-            //     errors: [Errors.lastName.id, Errors.lastName.required] 
-            // },
         ];
 
         let validateCounter = 0;
