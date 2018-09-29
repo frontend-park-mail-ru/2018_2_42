@@ -46,47 +46,30 @@ function createProfile (user) {
 	profile.render();
 }
 
-// function createLeaderboard (users) {
-// 	const leaderboardSection = document.createElement('section');
-// 	leaderboardSection.dataset.sectionName = 'leaderboard';
-
-// 	const header = document.createElement('h1');
-// 	header.textContent = 'Leaders';
-
-// 	leaderboardSection.appendChild(header);
-// 	leaderboardSection.appendChild(createMenuLink());
-// 	leaderboardSection.appendChild(document.createElement('br'));
-// 	const tableWrapper = document.createElement('div');
-// 	leaderboardSection.appendChild(tableWrapper);
-
-// 	if (users) {
-// 		const board = new BoardComponent({el: tableWrapper, type: RENDER_TYPES.STRING});
-// 		board.data = users;
-// 		board.render();
-// 	} else {
-// 		const em = document.createElement('em');
-// 		em.textContent = 'Loading';
-// 		leaderboardSection.appendChild(em);
-
-// 		AJAX.doGet({
-// 			callback (xhr) {
-// 				const users = JSON.parse(xhr.responseText);
-// 				root.innerHTML = '';
-// 				createLeaderboard(users);
-// 			},
-// 			path: '/users',
-// 		});
-// 	}
-
-// 	root.appendChild(leaderboardSection);
-// }
+function createLeaderboard (users) {
+	if (users) {
+		for (let i = 0; i < users.length; i++) {
+			root.innerHTML += users[i].login + '<br>';
+		}
+	} else {
+		AJAX.doGet({
+			callback (xhr) {
+				const users = JSON.parse(xhr.responseText);
+				root.innerHTML = '';
+				createLeaderboard(users);
+				console.log(users);
+			},
+			path: '/users',
+		});
+	}
+}
 
 
 const pages = {
 	menu: createMenu,
 	sign_in: createSignIn,
 	sign_up: createSignUp,
-	// users: createLeaderboard,
+	users: createLeaderboard,
 	profile: createProfile
 };
 

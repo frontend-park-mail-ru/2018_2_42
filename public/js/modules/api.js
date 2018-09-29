@@ -24,8 +24,8 @@ export class APIModule {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        })
-    }
+        });
+    };
 
     SignOut() {
         const url = "/api/v1/session";
@@ -33,8 +33,8 @@ export class APIModule {
             headers: {
                 'Content-Type': 'application/json'
             }
-        })
-    }
+        });
+    };
 
     // Страница таблицы лидеров, авторизация для действия не требуется..
     // GET

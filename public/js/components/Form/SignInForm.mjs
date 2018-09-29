@@ -65,9 +65,11 @@ export class SignInFormComponent {
             api.SignIn({ login: this._email, password: this._password })
             .then(function (data) {
                 // Запрос успешно выполнен
+                console.log("success");
             })
             .catch(function (error) {
                 // Запрос не выполнен
+                console.log("failure");
             });
         }
     }
