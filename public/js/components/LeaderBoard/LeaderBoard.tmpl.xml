@@ -1,0 +1,16 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="leaderBoard">
+        <div>
+            <img src="{data.avatarAddress}"></img>
+        </div>
+        <div>
+            <fest:value>data.login</fest:value>
+        </div>
+        <div>
+            <fest:value>data.gamesPlayed</fest:value> игр сыграно
+        </div> 
+        <div>
+            <fest:value>data.wins</fest:value> игр выиграно
+        </div>
+    </div>
+</fest:template>

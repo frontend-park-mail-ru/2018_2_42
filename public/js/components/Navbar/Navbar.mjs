@@ -10,7 +10,7 @@ export class NavbarComponent {
         if (this._username) {
             const data = {
                 authButtons: [
-                    { caption: this._username, url: this._username, className: "navbar__button" },
+                    { caption: this._username, url: "/api/v1/user?login=" + String(this._username), className: "navbar__button" },
                     { caption: 'Sign Out', url: "sign_out", className: "navbar__button" },
                 ]
             };

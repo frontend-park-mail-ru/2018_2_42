@@ -1,10 +1,12 @@
-'use strict'
+'use strict';
 
 import { Errors, ValidatorModule } from "../../modules/validation.js";
 import { APIModule } from "../../modules/api.js";
+// import { DrawerModule } from "../../modules/drawer.js";
 
 const validator = new ValidatorModule;
 const api = new APIModule;
+// const drawer = new DrawerModule;
 
 export class SignUpFormComponent {
     constructor({ el = document.body } = {}) {
@@ -71,10 +73,13 @@ export class SignUpFormComponent {
         if (validateCounter == validators.length) {
             api.SignUp({ login: this._email, password: this._password })
             .then(function (data) {
+                console.log(data);
                 // Запрос успешно выполнен
                 // redirect to user profile
+                // drawer.createProfile(this._email);
             })
             .catch(function (error) {
+                console.log(error);
                 // Запрос не выполнен
                 // redirect to sign up снова с ошибкой
             });

@@ -34,15 +34,18 @@ export class APIModule {
         });
     };
 
-    // Страница таблицы лидеров, авторизация для действия не требуется..
-    // GET
-    // "/api/v1/users?limit=20&offset=0"
+    Leaders() {
+        const url = "/api/v1/users?limit=20&offset=0";
+        return network.promiseGet(url);
+    }
 
-    // Профиль любого пользователя, авторизация для действия не требуется.
-    // GET
-    // "/api/v1/user?login=JohanDoe"
+    Profile(username) {
+        const url = "/api/v1/user?login=" + username;
+        return network.promiseGet(url);
+    }
 
-    // Измение аватара. Нужно быть залогиненным.
-    // POST
-    // "/api/v1/avatar"
+    // Avatar() {
+    //     const url = "/api/v1/avatar";
+    //     return network.promisePost(url)
+    // }
 }
