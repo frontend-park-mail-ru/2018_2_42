@@ -10,7 +10,8 @@ export const Errors = {
 
 export class ValidatorModule {
     validateEmail(email) {
-        return /^\w+@\w+\.\w+$/.test(email);
+        // покрывает 99 % адресов
+        return /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(email);
     }
 
     validatePassword(password) {
