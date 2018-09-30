@@ -112,31 +112,36 @@ export class DrawerModule {
      * @param {string} user currently signed in user's login.
      * @param {json} users leaders.
      */
-    static createLeaderBoard(user = null, users = null) {
-        root.innerHTML = '';
+    static createLeaderBoard(user = null, page = 1, limit = 20) {
+        api.Leaders(page, limit)
+        .then(function (response) {
+            // if (!response.ok) {
+            //     throw new Error('Network response was not ok.');
+            // }
+        })
+        .then(function (data) {
+            // users = JSON.parse(data);
+            root.innerHTML = '';
 
-        if (!users) {
-            api.Leaders()
-            .then(function (response) {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok.');
-                }
-            })
-            .then(function (data) {
-                // Запрос успешно выполнен
-                users = JSON.parse(data);
+            const navbar = new NavbarComponent({ el: root, username: user });
+            navbar.render();
 
-                const navbar = new NavbarComponent({ el: root, username: user });
-                navbar.render();
+            const leaderBoard = new LeaderBoardComponent({ el: root, users: {}, page: page, limit: limit })
+            leaderBoard.render();
 
-                const leaderBoard = new LeaderBoardComponent({ el: root, users: users })
-                leaderBoard.render();
-            })
-            .catch(function (error) {
-                // Запрос не выполнен
-                console.log(error);
-                DrawerModule.createMenu(user);
+            leaderBoard.leaderBoard.getElementsByClassName('prev_button')[0].addEventListener('prev_button', function (event) {
+                DrawerModule.createLeaderBoard(user, event.detail.page, event.detail.limit);
             });
-        }
+
+            leaderBoard.leaderBoard.getElementsByClassName('next_button')[0].addEventListener('next_button', function (event) {
+                DrawerModule.createLeaderBoard(user, event.detail.page, event.detail.limit);
+            });
+        })
+        .catch(function (error) {
+            console.log(error);
+            DrawerModule.createMenu(user);
+        });
+
+        
     }
 }

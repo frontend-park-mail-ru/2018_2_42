@@ -34,8 +34,9 @@ export class APIModule {
         });
     };
 
-    Leaders() {
-        const url = "/api/v1/users?limit=20&offset=0";
+    Leaders(page = 1, limit = 20) {
+        const offset = (page - 1) * limit;
+        const url = '/api/v1/users?limit=${limit}&offset=${offset}';
         return network.promiseGet(url);
     }
 

@@ -1,16 +1,34 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
-    <div class="leaderBoard">
-        <div>
-            <img src="{data.avatarAddress}"></img>
+    <div class="leaderboard" style="margin-bottom: 20rem;">
+        <table style="border: 1px solid black;">
+            <tr>
+                <th>User</th>
+                <th>Games played</th>
+                <th>Games won</th>
+            </tr>
+            <fest:each iterate="data.users" index="i">
+                <tr>
+                    <td>
+                        <fest:value>data.users[i].login</fest:value>
+                        <img src="{data.users[i].avatarAddress}"></img>
+                    </td>
+                    <td>
+                        <fest:value>data.users[i].gamesPlayed</fest:value> games played
+                    </td>
+                    <td>
+                        <fest:value>data.users[i].wins</fest:value> games won
+                    </td>
+                </tr>
+            </fest:each>
+        </table>
+
+        <div class="prev_button">
+            <a>Previous page</a>
         </div>
-        <div>
-            <fest:value>data.login</fest:value>
+        <div class="next_button">
+            <a>Next page</a>
         </div>
-        <div>
-            <fest:value>data.gamesPlayed</fest:value> игр сыграно
-        </div> 
-        <div>
-            <fest:value>data.wins</fest:value> игр выиграно
-        </div>
+        <div>Page <fest:value>data.page</fest:value></div>
+        <a href="/menu" data-href="menu" class="leaderboard__back">Back</a>
     </div>
 </fest:template>
