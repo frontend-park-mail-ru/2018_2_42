@@ -13,6 +13,7 @@
     "express": "^4.16.3",
     "express-http-proxy": "^1.4.0",
     "fest": "^0.12.1",
+    "jsdoc": "^3.5.5",
     "morgan": "^1.9.0"
   },
   "author": "42",

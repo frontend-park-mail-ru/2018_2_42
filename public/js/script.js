@@ -2,8 +2,6 @@
 
 import { DrawerModule } from "./modules/drawer.js";
 
-// const drawer = new DrawerModule;
-
 const pages = {
 	menu: DrawerModule.createMenu,
 	sign_in: DrawerModule.createSignIn,

@@ -12,6 +12,10 @@ const root = document.getElementById('root');
 const api = new APIModule;
 
 export class DrawerModule {
+    /**
+     * Draws main menu
+     * @param {string} user currently signed in user's login.
+     */
     static createMenu(user = null) {
         root.innerHTML = '';
 
@@ -21,7 +25,11 @@ export class DrawerModule {
         const menu = new MenuComponent({ el: root });
         menu.render();
     }
-    
+
+    /**
+     * Draws Sign Up page
+     * @param {string} user currently signed in user's login.
+     */
     static createSignUp(user = null) {
         root.innerHTML = '';
 
@@ -42,6 +50,10 @@ export class DrawerModule {
         });
     }
 
+    /**
+     * Draws Sign in page
+     * @param {string} user currently signed in user's login.
+     */
     static createSignIn(user = null) {
         root.innerHTML = '';
 
@@ -62,7 +74,12 @@ export class DrawerModule {
         });
     }
 
-    static createProfile(profileData = null) {
+    /**
+     * Draws Profile page
+     * @param {string} suer currently signed in user's login.
+     * @param {json} profileData user's data.
+     */
+    static createProfile(user = null, profileData = null) {
         root.innerHTML = '';
 
         if (!profileData) {
@@ -76,7 +93,7 @@ export class DrawerModule {
                 // Запрос успешно выполнен
                 profileData = JSON.parse(data);
 
-                const navbar = new NavbarComponent({ el: root, username: profileData.login });
+                const navbar = new NavbarComponent({ el: root, username: user });
                 navbar.render();
 
                 const profile = new ProfileComponent({ el: root, profile: profileData });
@@ -90,6 +107,11 @@ export class DrawerModule {
         }
     }
 
+    /**
+     * Draws Leader board page
+     * @param {string} user currently signed in user's login.
+     * @param {json} users leaders.
+     */
     static createLeaderBoard(user = null, users = null) {
         root.innerHTML = '';
 
