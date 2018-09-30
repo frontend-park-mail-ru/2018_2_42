@@ -63,6 +63,11 @@ export class SignInFormComponent {
 
         if (validateCounter == validators.length) {
             api.SignIn({ login: this._email, password: this._password })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+            })
             .then(function (data) {
                 // Запрос успешно выполнен
             })

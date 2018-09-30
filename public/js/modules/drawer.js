@@ -36,30 +36,55 @@ export class DrawerModule {
         form.render();
     }
 
-    createProfile(user = null) {
-        const navbar = new NavbarComponent({ el: root, username: user });
-        navbar.render();
+    createProfile(profileData = null) {
+        if (!profileData) {
+            api.Profile()
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok.');
+                    }
+                })
+                .then(function (data) {
+                    // Запрос успешно выполнен
+                    profileData = JSON.parse(data);
 
-        const profile = new ProfileComponent({ el: root, username: user });
-        profile.render();
+                    const navbar = new NavbarComponent({ el: root, username: profileData.login });
+                    navbar.render();
+
+                    const profile = new ProfileComponent({ el: root, profile: profileData });
+                    profile.render();
+                })
+                .catch(function (error) {
+                    // Запрос не выполнен
+                    console.log(error);
+                    createMenu(profile.login);
+                });
+        }
     }
 
     createLeaderBoard(user = null, users = null) {
         if (!users) {
             api.Leaders()
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+            })
             .then(function (data) {
                 // Запрос успешно выполнен
                 users = JSON.parse(data);
+
+                const navbar = new NavbarComponent({ el: root, username: user });
+                navbar.render();
+
+                const leaderBoard = new LeaderBoardComponent({ el: root, users: users })
+                leaderBoard.render();
             })
             .catch(function (error) {
                 // Запрос не выполнен
+                console.log(error);
                 createMenu(user);
             });
         }
-        const navbar = new NavbarComponent({ el: root, username: user });
-        navbar.render();
-
-        const leaderBoard = new LeaderBoardComponent({ el: root, users: users })
-        leaderBoard.render();
     }
 }

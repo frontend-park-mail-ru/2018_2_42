@@ -4,7 +4,7 @@
             <img src="../../media/default.png"></img>
         </div>
         <div>
-            <fest:value>data.username</fest:value>
+            <fest:value>data.login</fest:value>
         </div>
     </div>
 </fest:template>

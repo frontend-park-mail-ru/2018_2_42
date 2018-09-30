@@ -72,6 +72,11 @@ export class SignUpFormComponent {
 
         if (validateCounter == validators.length) {
             api.SignUp({ login: this._email, password: this._password })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+            })
             .then(function (data) {
                 console.log(data);
                 // Запрос успешно выполнен
