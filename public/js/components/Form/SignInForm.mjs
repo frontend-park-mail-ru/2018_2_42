@@ -26,17 +26,27 @@ export class SignInFormComponent {
         const template = window.fest['js/components/Form/Form.tmpl'](data);
         this._el.innerHTML += template;
 
-        this._form = this._el.getElementsByClassName('form__sign_in')[0];
-        this._form.addEventListener('submit', function() {
+        this.form = this._el.getElementsByClassName('form__sign_in')[0];
+        this.form.addEventListener('submit', function() {
             this._submitForm(event)
         }.bind(this, event));
     }
     
+    showServerError(errorMsg) {
+        let errorEl = document.createElement("div");
+        errorEl.className = "form__error_message";
+        errorEl.innerText = errorMsg;
+        this.form.insertBefore(errorEl, this.form.firstChild);
+        setTimeout(function () {
+            errorEl.parentNode.removeChild(errorEl);
+        }, 3000);
+    }
+
     _submitForm(event) {
         event.preventDefault();
 
-        this._email = this._form["Email"].value;
-        this._password = this._form["Password"].value;
+        this._email = this.form["Email"].value;
+        this._password = this.form["Password"].value;
 
         const validators = [
             { 
@@ -54,14 +64,15 @@ export class SignInFormComponent {
         let validateCounter = 0;
         for (let i = 0; i < validators.length; i++) {
             if (!validators[i].func(validators[i].parameter)) {
-                validator.addError(this._form, validators[i].errors[0], validators[i].errors[1]);
+                validator.addError(this.form, validators[i].errors[0], validators[i].errors[1]);
             } else {
-                validator.addError(this._form, validators[i].errors[0]);
+                validator.addError(this.form, validators[i].errors[0]);
                 validateCounter++;
             }
         }
 
         if (validateCounter == validators.length) {
+            let that = this;
             api.SignIn({ login: this._email, password: this._password })
             .then(function (response) {
                 if (!response.ok) {
@@ -69,10 +80,12 @@ export class SignInFormComponent {
                 }
             })
             .then(function (data) {
-                // Запрос успешно выполнен
+                let event = new CustomEvent('successful_sign_in', { detail: data });
+                that.form.dispatchEvent(event);
             })
             .catch(function (error) {
-                // Запрос не выполнен
+                let event = new CustomEvent('unsuccessful_sign_in', { detail: error });
+                that.form.dispatchEvent(event);
             });
         }
     }

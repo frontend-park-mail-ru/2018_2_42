@@ -2,17 +2,17 @@
 
 import { DrawerModule } from "./modules/drawer.js";
 
-const drawer = new DrawerModule;
+// const drawer = new DrawerModule;
 
 const pages = {
-	menu: drawer.createMenu,
-	sign_in: drawer.createSignIn,
-	sign_up: drawer.createSignUp,
-	users: drawer.createLeaderBoard,
-	profile: drawer.createProfile
+	menu: DrawerModule.createMenu,
+	sign_in: DrawerModule.createSignIn,
+	sign_up: DrawerModule.createSignUp,
+	users: DrawerModule.createLeaderBoard,
+	profile: DrawerModule.createProfile
 };
 
-drawer.createMenu();
+DrawerModule.createMenu();
 
 root.addEventListener('click', function (event) {
 	if (!(event.target instanceof HTMLAnchorElement)) {
