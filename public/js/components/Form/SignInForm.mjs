@@ -80,7 +80,7 @@ export class SignInFormComponent {
                 }
             })
             .then(function (data) {
-                let event = new CustomEvent('successful_sign_in', { detail: data });
+                let event = new CustomEvent('successful_sign_in', { detail: { login: that._email } });
                 that.form.dispatchEvent(event);
             })
             .catch(function (error) {

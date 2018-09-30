@@ -40,12 +40,12 @@ export class DrawerModule {
         form.render();
         
         form.form.addEventListener('successful_sign_up', function (event) {
-            console.log("Successful sign up for", event.detail);
-            DrawerModule.createProfile();
+            console.log("Successful sign up for", event.detail.login);
+            DrawerModule.createProfile(event.detail.login);
         });
 
         form.form.addEventListener('unsuccessful_sign_up', function (event) {
-            console.log("Unsuccessful sign up.", event.detail);
+            console.log("Unsuccessful sign up.", event.detail.login);
             form.showServerError(event.detail);
         });
     }
@@ -64,8 +64,8 @@ export class DrawerModule {
         form.render();
 
         form.form.addEventListener('successful_sign_in', function (event) {
-            console.log("Successful sign in for", event.detail);
-            DrawerModule.createMenu(user);
+            console.log("Successful sign in for", event.detail.login);
+            DrawerModule.createMenu(event.detail.login);
         });
 
         form.form.addEventListener('unsuccessful_sign_in', function (event) {
@@ -83,7 +83,7 @@ export class DrawerModule {
         root.innerHTML = '';
 
         if (!profileData) {
-            api.Profile()
+            api.Profile(user)
             .then(function (response) {
                 if (!response.ok) {
                     throw new Error('Network response was not ok.');

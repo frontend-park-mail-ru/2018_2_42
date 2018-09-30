@@ -87,7 +87,7 @@ export class SignUpFormComponent {
                 }
             })
             .then(function (data) {
-                let event = new CustomEvent('successful_sign_up', { detail: data });
+                let event = new CustomEvent('successful_sign_up', { detail: { login: that._email } });
                 that.form.dispatchEvent(event);
             })
             .catch(function (error) {
