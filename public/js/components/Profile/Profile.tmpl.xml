@@ -1,7 +1,7 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <div class="profile">
         <div>
-            <img src="../../media/default.png"></img>
+            <img src="{data.avatarAddress}"></img>
         </div>
         <div>
             <fest:value>data.login</fest:value>

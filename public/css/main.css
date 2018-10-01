@@ -4,7 +4,7 @@
 @import '../js/components/Button/Button.css';
 @import '../js/components/Form/Form.css';
 @import '../js/components/Profile/Profile.css';
-@import '../js/components/Profile/LeaderBoard.css';
+@import '../js/components/LeaderBoard/LeaderBoard.css';
 
 @font-face {
     font-family: "Pexico Micro";

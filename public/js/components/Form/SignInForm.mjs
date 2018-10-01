@@ -18,7 +18,7 @@ export class SignInFormComponent {
             method: "POST",
             classForm: "form__sign_in",
             fields: [
-                { name: 'Email', type: 'email', className: 'form__input', errId: 'email_error' },
+                { name: 'Login', type: 'text', className: 'form__input', errId: 'login_error' },
                 { name: 'Password', type: 'password', className: 'form__input', errId: 'password_error' },
                 { name: 'Sign In', type: 'submit', className: 'form__button' },
             ],
@@ -45,14 +45,14 @@ export class SignInFormComponent {
     _submitForm(event) {
         event.preventDefault();
 
-        this._email = this.form["Email"].value;
+        this._login = this.form["Login"].value;
         this._password = this.form["Password"].value;
 
         const validators = [
             { 
-                func: validator.validateEmail, 
-                parameter: this._email, 
-                errors: [Errors.email.id, Errors.email.wrongFormat]
+                func: validator.validateLogin, 
+                parameter: this._login, 
+                errors: [Errors.login.id, Errors.login.wrongFormat]
             },
             { 
                 func: validator.validatePassword, 
@@ -73,20 +73,23 @@ export class SignInFormComponent {
 
         if (validateCounter == validators.length) {
             let that = this;
-            api.SignIn({ login: this._email, password: this._password })
-            .then(function (response) {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok.');
-                }
-            })
-            .then(function (data) {
-                let event = new CustomEvent('successful_sign_in', { detail: { login: that._email } });
-                that.form.dispatchEvent(event);
-            })
-            .catch(function (error) {
-                let event = new CustomEvent('unsuccessful_sign_in', { detail: error });
-                that.form.dispatchEvent(event);
-            });
+
+            api.SignIn({ login: this._login, password: this._password })
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok.');
+                    }
+                    return response.json();
+                })
+                .then(function (data) {
+                    localStorage.setItem("login", that._login);
+                    let event = new CustomEvent('successful_sign_in', { detail: { login: that._login } });
+                    that.form.dispatchEvent(event);
+                })
+                .catch(function (error) {
+                    let event = new CustomEvent('unsuccessful_sign_in', { detail: error });
+                    that.form.dispatchEvent(event);
+                });
         }
     }
 }

@@ -1,7 +1,7 @@
 'use strict';
 
 export const Errors = {
-    email: { id: "email_error", wrongFormat: "Wrong email format" },
+    login: { id: "login_error", required: "Login is required" },
     password: { id: "password_error", minLength: "Password must be at least 6 characters long", wrongFormat: "Wrong password format" },
     repPassword: { id: "rep_password_error", doNotMatch: "Passwords do not match" },
     firstName: { id: "firstName_error", required: "First name is requried" },
@@ -9,9 +9,10 @@ export const Errors = {
 }
 
 export class ValidatorModule {
-    validateEmail(email) {
+    validateLogin(login) {
         // покрывает 99 % адресов
-        return /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(email);
+        // return /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(email);
+        return login.length > 0;
     }
 
     validatePassword(password) {

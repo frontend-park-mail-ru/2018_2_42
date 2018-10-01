@@ -6,6 +6,7 @@ const pages = {
 	menu: DrawerModule.createMenu,
 	sign_in: DrawerModule.createSignIn,
 	sign_up: DrawerModule.createSignUp,
+	sign_out: DrawerModule.createMenuWithSignOut,
 	users: DrawerModule.createLeaderBoard,
 	profile: DrawerModule.createProfile
 };

@@ -6,29 +6,26 @@
                 <th>Games played</th>
                 <th>Games won</th>
             </tr>
-            <fest:each iterate="data.users" index="i">
+            <fest:each iterate="data.leaders" index="i">
                 <tr>
                     <td>
-                        <fest:value>data.users[i].login</fest:value>
-                        <img src="{data.users[i].avatarAddress}"></img>
+                        <fest:value>data.leaders[i].login</fest:value>
+                        <img src="{data.leaders[i].avatarAddress}"></img>
                     </td>
                     <td>
-                        <fest:value>data.users[i].gamesPlayed</fest:value> games played
+                        <fest:value>data.leaders[i].gamesPlayed</fest:value> games played
                     </td>
                     <td>
-                        <fest:value>data.users[i].wins</fest:value> games won
+                        <fest:value>data.leaders[i].wins</fest:value> games won
                     </td>
                 </tr>
             </fest:each>
         </table>
 
-        <div class="prev_button">
-            <a>Previous page</a>
+        <div class="more_button">
+            <a>Show more</a>
         </div>
-        <div class="next_button">
-            <a>Next page</a>
-        </div>
-        <div>Page <fest:value>data.page</fest:value></div>
+        
         <a href="/menu" data-href="menu" class="leaderboard__back">Back</a>
     </div>
 </fest:template>

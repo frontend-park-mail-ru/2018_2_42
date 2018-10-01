@@ -36,12 +36,12 @@ export class APIModule {
 
     Leaders(page = 1, limit = 20) {
         const offset = (page - 1) * limit;
-        const url = '/api/v1/users?limit=${limit}&offset=${offset}';
+        const url = `/api/v1/users?limit=${limit}&offset=${offset}`;
         return network.promiseGet(url);
     }
 
     Profile(username) {
-        const url = "/api/v1/user?login=" + username;
+        const url = `/api/v1/user?login=${username}`;
         return network.promiseGet(url);
     }
 
