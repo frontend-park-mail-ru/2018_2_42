@@ -8,7 +8,7 @@ export class ProfileComponent {
 
     render() {
         const data = this._profileData;
-        
+        console.log("data", data);
         const template = window.fest['js/components/Profile/Profile.tmpl'](data);
         this._el.innerHTML += template;
     }

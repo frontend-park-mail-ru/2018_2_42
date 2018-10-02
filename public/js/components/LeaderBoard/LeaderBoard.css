@@ -28,3 +28,11 @@
 .more_button:hover, .more_button:focus, .more_button:active {
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
 }
+
+.leader_card {
+    font-weight: bold;
+    font-size: 2rem;
+    border: solid;
+    border-radius: 8px;
+    width: 100%;
+}

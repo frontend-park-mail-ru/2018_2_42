@@ -6,6 +6,7 @@ import { SignUpFormComponent } from "../components/Form/SignUpForm.mjs";
 import { SignInFormComponent } from "../components/Form/SignInForm.mjs";
 import { ProfileComponent } from "../components/Profile/Profile.mjs";
 import { LeaderBoardComponent } from "../components/LeaderBoard/LeaderBoard.mjs";
+import { AboutComponent } from "../components/about/about.mjs";
 import { APIModule } from "./api.js";
 
 const root = document.getElementById('root');
@@ -136,28 +137,25 @@ export class DrawerModule {
         api.Leaders(page, limit)
         .then(function (response) {
             if (!response.ok) {
-                throw new Error('Network response was not ok.');
+                throw new Error('Server response was not ok.');
             }
             return response.json();
         })
         .then(function (data) {
             DrawerModule.createNavbar();
 
-            const leaderBoard = new LeaderBoardComponent({ el: root, leaders: data, page: page, limit: limit })
+            const leaderBoard = new LeaderBoardComponent({ el: root, leaders: data, page: page, limit: limit });
             leaderBoard.render();
-
-            // leaderBoard.leaderBoard.getElementsByClassName('prev_button')[0].addEventListener('prev_button', function (event) {
-            //     DrawerModule.createLeaderBoard(user, event.detail.page, event.detail.limit);
-            // });
-
-            // leaderBoard.leaderBoard.getElementsByClassName('next_button')[0].addEventListener('next_button', function (event) {
-            //     DrawerModule.createLeaderBoard(user, event.detail.page, event.detail.limit);
-            // });
         })
         .catch(function (error) {
             DrawerModule.createMenu();
-        });
+        }); 
+    }
 
-        
+    static createAbout() {
+        DrawerModule.createNavbar();
+
+        const about = new AboutComponent({ el: root });
+        about.render();
     }
 }

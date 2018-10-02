@@ -8,7 +8,8 @@ const pages = {
 	sign_up: DrawerModule.createSignUp,
 	sign_out: DrawerModule.createMenuWithSignOut,
 	users: DrawerModule.createLeaderBoard,
-	profile: DrawerModule.createProfile
+	profile: DrawerModule.createProfile,
+	about: DrawerModule.createAbout
 };
 
 DrawerModule.createMenu();

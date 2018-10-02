@@ -1,0 +1,24 @@
+/* leader board */
+.about {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.about__back {
+    margin-top: 1rem;
+}
+
+.contributor_card {
+    font-weight: bold;
+    font-size: 2rem;
+    border: solid;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.contributor_card + .contributor_card {
+    margin-top: 1rem;
+}

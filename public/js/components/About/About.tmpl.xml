@@ -1,0 +1,11 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="about" style="margin-top: 2rem;">
+        <fest:each iterate="data.contributors" index="i">
+            <div class="contributor_card">
+                <img src="{data.contributors[i].avatarAddress}"></img>
+                <span><a href="{data.contributors[i].gitHubUrl}"><fest:value>data.contributors[i].name</fest:value></a></span>-<fest:value>data.contributors[i].faculty</fest:value>-<fest:value>data.contributors[i].position</fest:value><br/>
+            </div>
+        </fest:each>
+        <a href="/menu" data-href="menu" class="about__back">Back</a>
+    </div>
+</fest:template>

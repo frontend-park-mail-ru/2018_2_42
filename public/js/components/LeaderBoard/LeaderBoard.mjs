@@ -22,12 +22,12 @@ export class LeaderBoardComponent {
 
         this.leaderBoard = this._el.getElementsByClassName('leaderboard')[0];
 
+        let that = this;
         this.leaderBoard.getElementsByClassName('more_button')[0].onclick = function (event) {
+            event.preventDefault();
             event.stopPropagation();
 
-            let that = this;
-
-            api.Leaders(this._page + 1, this._limit)
+            api.Leaders(that._page + 1, that._limit)
                 .then(function (response) {
                     if (!response.ok) {
                         throw new Error('Server response was not ok.');
@@ -43,19 +43,17 @@ export class LeaderBoardComponent {
                     button.parentNode.removeChild(button);
                 });
         }
-
-        // let prevPageEvent = new CustomEvent('click', { detail: { page: this._page - 1, limit: this._limit } });
-        // this.leaderBoard.getElementsByClassName('prev_button')[0].addEventListener('click', function () {
-        //     that.leaderBoard.getElementsByClassName('prev_button')[0].dispatchEvent(prevPageEvent);
-        // });
     }
 
     _addLeaders(leaders) {
-        let table = this.leaderBoard.getElementsByTagName("table")[0];
-        console.log(leaders);
-        for (leader in leaders) {
-            let newRow = table.insertRow();
-            newRow.innerHTML = `<tr><td>${leader.login}<img src="${leader.avatarAddress}"></td><td>${leader.gamesPlayed}games played</td><td>${leader.wins}games won</td></tr>`
+        if (!leaders) {
+            throw new Error('No more leaders.');
         }
+        let table = this.leaderBoard.getElementsByTagName("table")[0];
+        leaders.forEach(leader => {
+            console.log(leader);
+            let newRow = table.insertRow();
+            newRow.innerHTML = `<tr><td>${leader.login}<img src="${leader.avatarAddress}"></td><td>${leader.gamesPlayed}games played</td><td>${leader.wins}games won</td></tr>`;
+        });
     }
 }
