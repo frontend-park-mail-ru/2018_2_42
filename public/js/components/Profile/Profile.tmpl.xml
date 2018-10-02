@@ -1,10 +1,22 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <div class="profile">
         <div>
-            <img src="{data.avatarAddress}"></img>
+            <div class="container">
+                <div>
+                    <!-- <img class="avatar" id="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiwmR2PaexgZ5FSxKwyrg9fSWGN_Tl7FOgi0cjWCDNsNdPVfBA"></img> -->
+                    <img class="avatar" id="avatar" src="{data.profile.avatarAddress}"></img>
+                </div>
+                <fest:if test="data.isSignedInUsersProfile">
+                    <div style="font-size: 1rem;" class="middle">
+                        <input type="file" id="avatarinput" accept="image/*"></input>
+                    </div>
+                </fest:if>
+            </div>
+            <div>
+                <fest:value>data.profile.login</fest:value>
+            </div>
+            <!-- Статистика пользователя -->
         </div>
-        <div>
-            <fest:value>data.login</fest:value>
-        </div>
+        <a href="/menu" data-href="menu" class="about__back">Back</a>
     </div>
 </fest:template>

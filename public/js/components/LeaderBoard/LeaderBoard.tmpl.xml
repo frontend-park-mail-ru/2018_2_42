@@ -29,8 +29,8 @@
             <fest:each iterate="data.leaders" index="i">
                 <tr>
                     <td>
-                        <fest:value>data.leaders[i].login</fest:value>
                         <img src="{data.leaders[i].avatarAddress}"></img>
+                        <fest:value>data.leaders[i].login</fest:value>
                     </td>
                     <td>
                         <fest:value>data.leaders[i].gamesPlayed</fest:value> games played
