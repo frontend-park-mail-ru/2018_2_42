@@ -6,7 +6,7 @@ import { SignUpFormComponent } from "../components/Form/SignUpForm.mjs";
 import { SignInFormComponent } from "../components/Form/SignInForm.mjs";
 import { ProfileComponent } from "../components/Profile/Profile.mjs";
 import { LeaderBoardComponent } from "../components/LeaderBoard/LeaderBoard.mjs";
-import { AboutComponent } from "../components/about/about.mjs";
+import { AboutComponent } from "../components/About/About.mjs";
 import { APIModule } from "./api.js";
 
 const root = document.getElementById('root');
