@@ -3,8 +3,8 @@
         <div>
             <div class="container">
                 <div>
-                    <img class="avatar" id="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiwmR2PaexgZ5FSxKwyrg9fSWGN_Tl7FOgi0cjWCDNsNdPVfBA"></img>
-                    <!-- <img class="avatar" id="avatar" src="{data.profile.avatarAddress}"></img> -->
+                    <!-- <img class="avatar" id="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiwmR2PaexgZ5FSxKwyrg9fSWGN_Tl7FOgi0cjWCDNsNdPVfBA"></img> -->
+                    <img class="avatar" id="avatar" src="{data.profile.avatarAddress}"></img>
                 </div>
                 <fest:if test="data.isSignedInUsersProfile">
                     <div style="font-size: 1rem;" class="middle">

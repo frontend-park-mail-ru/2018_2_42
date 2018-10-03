@@ -13,12 +13,10 @@ export class ProfileComponent {
 
     render() {
         const isSignedInUsersProfile = (localStorage.getItem('login') === this._profileData.login)
-        console.log(isSignedInUsersProfile);
         const data = {
             profile: this._profileData,
             isSignedInUsersProfile: isSignedInUsersProfile
         };
-
         const template = window.fest['js/components/Profile/Profile.tmpl'](data);
         this._el.innerHTML += template;
 
