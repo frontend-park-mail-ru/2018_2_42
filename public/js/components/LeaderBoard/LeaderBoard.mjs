@@ -53,7 +53,7 @@ export class LeaderBoardComponent {
         leaders.forEach(leader => {
             console.log(leader);
             let newRow = table.insertRow();
-            newRow.innerHTML = `<tr><td><img src="${leader.avatarAddress}">${leader.login}</td><td>${leader.gamesPlayed}games played</td><td>${leader.wins}games won</td></tr>`;
+            newRow.innerHTML = `<tr><td>${leader.login}</td><td>${leader.gamesPlayed}games played</td><td>${leader.wins}games won</td></tr>`;
         });
     }
 }
