@@ -3,12 +3,16 @@
         <div>
             <div class="container">
                 <div>
-                    <!-- <img class="avatar" id="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiwmR2PaexgZ5FSxKwyrg9fSWGN_Tl7FOgi0cjWCDNsNdPVfBA"></img> -->
-                    <img class="avatar" id="avatar" src="{data.profile.avatarAddress}"></img>
+                    <img class="avatar" id="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiwmR2PaexgZ5FSxKwyrg9fSWGN_Tl7FOgi0cjWCDNsNdPVfBA"></img>
+                    <!-- <img class="avatar" id="avatar" src="{data.profile.avatarAddress}"></img> -->
                 </div>
                 <fest:if test="data.isSignedInUsersProfile">
                     <div style="font-size: 1rem;" class="middle">
-                        <input type="file" id="avatarinput" accept="image/*"></input>
+                        <input type="file" id="avatarinput" name="avatarinput" accept="image/*" class="inputfile"></input>
+                        <label for="avatarinput">
+                            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/0fe9ee33226725.56aa72f1200c2.jpg" alt="Choose new avatar" style="opacity: 0.5; width: 8rem; border-radius: 50%;"></img>
+                        </label>
+                        <label for="avatarinput">Choose new avatar</label>
                     </div>
                 </fest:if>
             </div>

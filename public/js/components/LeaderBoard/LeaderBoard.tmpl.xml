@@ -29,7 +29,7 @@
             <fest:each iterate="data.leaders" index="i">
                 <tr>
                     <td>
-                        <img src="{data.leaders[i].avatarAddress}"></img>
+                        <!-- <img src="{data.leaders[i].avatarAddress}" style="display: inline;"></img> -->
                         <fest:value>data.leaders[i].login</fest:value>
                     </td>
                     <td>

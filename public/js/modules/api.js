@@ -6,7 +6,7 @@ const network = new NetworkModule;
 
 export class APIModule {
     SignUp(data = {}) {
-        const url = "/api/v1/user";
+        const url = "/api/v1/user?temporary=false";
         return network.promisePost(url, {
             headers: {
                 'Content-Type': 'application/json'
@@ -48,11 +48,14 @@ export class APIModule {
     Avatar(file) {
         const url = "/api/v1/avatar";
         console.log(file);
+        let formData = new FormData();
+        formData.append('avatar', file);
+
         return network.promisePost(url, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
-            body: file
+            // headers: {
+            //     'Content-Type': 'multipart/form-data'
+            // },
+            body: formData
         });
     }
 }
