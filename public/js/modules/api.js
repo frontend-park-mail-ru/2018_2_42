@@ -45,8 +45,14 @@ export class APIModule {
         return network.promiseGet(url);
     }
 
-    // Avatar() {
-    //     const url = "/api/v1/avatar";
-    //     return network.promisePost(url)
-    // }
+    Avatar(file) {
+        const url = "/api/v1/avatar";
+        console.log(file);
+        return network.promisePost(url, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            body: file
+        });
+    }
 }

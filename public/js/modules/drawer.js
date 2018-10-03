@@ -105,6 +105,17 @@ export class DrawerModule {
             login = localStorage.getItem("login");
         }
 
+
+        // DrawerModule.createNavbar();
+        // const profile = new ProfileComponent({ el: root, profileData: {
+        //         login: "Dikarevandre",
+        //         avatarAddress: "",
+        //         gamesPlayed: 20,
+        //         "wins": 9
+        // } });
+        // profile.render();
+
+
         if (login) {
             api.Profile(login)
                 .then(function (response) {

@@ -1,5 +1,10 @@
 'use strict';
 
+import { APIModule } from "../../modules/api.js";
+import { DrawerModule } from "../../modules/drawer.js";
+
+const api = new APIModule;
+
 export class ProfileComponent {
     constructor ({ el = document.body, profileData = null } = {}) {
         this._el = el;
@@ -7,9 +12,35 @@ export class ProfileComponent {
     }
 
     render() {
-        const data = this._profileData;
-        console.log("data", data);
+        const isSignedInUsersProfile = (localStorage.getItem('login') === this._profileData.login)
+        console.log(isSignedInUsersProfile);
+        const data = {
+            profile: this._profileData,
+            isSignedInUsersProfile: isSignedInUsersProfile
+        };
+
         const template = window.fest['js/components/Profile/Profile.tmpl'](data);
         this._el.innerHTML += template;
+
+        if (isSignedInUsersProfile) {
+            const fileInput = document.getElementById('avatarinput');
+
+            fileInput.addEventListener('change', function () {
+                api.Avatar(fileInput.files[0])
+                    .then(function (response) {
+                        if (!response.ok) {
+                            throw new Error('Server response was not ok.');
+                        }
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        console.log(data);
+                        DrawerModule.createProfile();
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }, false);
+        }
     }
 }
