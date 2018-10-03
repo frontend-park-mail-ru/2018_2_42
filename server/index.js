@@ -14,7 +14,7 @@ app.use(body.json());
 app.use(cookie());
  
 
-app.use("*", proxy("http://18.222.72.188:8080/", {
+app.use("*", proxy("http://18.222.251.221:8080/", {
   proxyReqPathResolver: function(req) {
     return req.originalUrl;
   }

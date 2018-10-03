@@ -9,11 +9,29 @@
     text-align: center;
 }
 
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+	cursor: pointer;
+}
+
+label + label {
+    cursor: pointer;
+}
+
 .avatar {
+    text-align: center;
     border-radius: 50%;
     border: 2px solid black;
     opacity: 1;
-    display: block;
+    /* display: block; */
     width: 15rem;
     height: auto;
     transition: .5s ease;
