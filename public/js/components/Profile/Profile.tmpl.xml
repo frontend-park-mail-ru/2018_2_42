@@ -10,7 +10,7 @@
                     <div style="font-size: 1rem;" class="middle">
                         <input type="file" id="avatarinput" name="avatarinput" accept="image/*" class="inputfile"></input>
                         <label for="avatarinput">
-                            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/0fe9ee33226725.56aa72f1200c2.jpg" alt="Choose new avatar" style="opacity: 0.5; width: 8rem; border-radius: 50%;"></img>
+                            <img src="/media/images/noun_pixel_man.png" alt="Choose new avatar" style="opacity: 0.5; width: 8rem; border-radius: 50%;"></img>
                         </label>
                         <label for="avatarinput">Choose new avatar</label>
                     </div>
