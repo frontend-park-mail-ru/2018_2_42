@@ -20,8 +20,6 @@ app.use("*", proxy("http://18.222.251.221:8080/", {
   }
 }))
 
-const port = process.env.PORT || 3000;
-
-app.listen(port, function () {
-	console.log(`Server listening port ${port}`);
+app.listen(process.env.PORT || 3000, function () {
+	console.log(`http://localhost:3000`);
 });

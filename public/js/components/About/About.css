@@ -7,18 +7,37 @@
     align-items: center;
 }
 
-.about__back {
-    margin-top: 1rem;
+.avatar {
+    object-fit: cover;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
 }
 
 .contributor_card {
-    font-weight: bold;
-    font-size: 2rem;
-    border: solid;
-    border-radius: 8px;
-    width: 100%;
+    display: flex;
+    width: 80%;
+    /* flex-direction: column; */
+    align-items: center;
 }
 
-.contributor_card + .contributor_card {
-    margin-top: 1rem;
+.contributor_name {
+    margin-left: 1rem;
+}
+
+.repo_button {
+    border: 2px solid black;
+    border-radius: 3px;
+    text-align: center;
+    padding: 0.5rem;
+    min-width: 7%;
+    min-height: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.repo_buttons {
+    display: flex;
+    width: 80%;
+    margin-top: 2rem;
 }
