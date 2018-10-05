@@ -7,6 +7,10 @@
     align-items: center;
 }
 
+.about_back {
+    margin-top: 1rem;
+}
+
 .avatar {
     object-fit: cover;
     width: 4.5rem;
@@ -17,7 +21,6 @@
 .contributor_card {
     display: flex;
     width: 80%;
-    /* flex-direction: column; */
     align-items: center;
 }
 
@@ -40,4 +43,6 @@
     display: flex;
     width: 80%;
     margin-top: 2rem;
+    flex-direction: row;
+    justify-content: space-between;
 }

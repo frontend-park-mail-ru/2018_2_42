@@ -16,17 +16,17 @@
 
         <div class="repo_buttons">
             <div class="{data.fronendtUrl.className}">
-                <a data-href="{data.url}" href="/{data.url}">
+                <a data-href="{data.url}" href="/{data.url}" onclick="event.stopPropagation();">
                     <fest:value>data.fronendtUrl.caption</fest:value>
                 </a>
             </div>
             <div class="{data.backendUrl.className}">
-                <a data-href="{data.url}" href="/{data.url}">
+                <a data-href="{data.url}" href="/{data.url}" onclick="event.stopPropagation();">
                     <fest:value>data.backendUrl.caption</fest:value>
                 </a>
             </div>
         </div>
 
-        <a href="/menu" data-href="menu">Back</a>
+        <a class="about_back" href="/menu" data-href="menu">Back</a>
     </div>
 </fest:template>
