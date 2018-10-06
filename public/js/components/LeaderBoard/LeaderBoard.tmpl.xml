@@ -1,48 +1,30 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
-    <!-- <div class="leaderboard">
-        <fest:each iterate="data.leaders" index="i">
-            <div class="leader_card">
-                <img src="{data.leaders[i].avatarAddress}"></img>
-                <span><img src="{data.leaders[i].login}"><fest:value>data.leaders[i].name</fest:value></a></span>-<fest:value>data.leaders[i].faculty</fest:value>-<fest:value>data.leaders[i].position</fest:value><br/>
-            </div>
-                <tr>
-                    <td>
-                        <fest:value>data.leaders[i].login</fest:value>
-                        <img src="{data.leaders[i].avatarAddress}"></img>
-                    </td>
-                    <td>
-                        <fest:value>data.leaders[i].gamesPlayed</fest:value> games played
-                    </td>
-                    <td>
-                        <fest:value>data.leaders[i].wins</fest:value> games won
-                    </td>
-                </tr>
-            </fest:each>
-    </div> -->
-    <div class="leaderboard" style="margin-bottom: 20rem;">
-        <table style="border: 1px solid black;">
-            <tr>
-                <th>User</th>
-                <th>Games played</th>
-                <th>Games won</th>
-            </tr>
-            <fest:each iterate="data.leaders" index="i">
-                <tr>
-                    <td>
-                        <!-- <img src="{data.leaders[i].avatarAddress}" style="display: inline;"></img> -->
-                        <fest:value>data.leaders[i].login</fest:value>
-                    </td>
-                    <td>
-                        <fest:value>data.leaders[i].gamesPlayed</fest:value> games played
-                    </td>
-                    <td>
-                        <fest:value>data.leaders[i].wins</fest:value> games won
-                    </td>
-                </tr>
-            </fest:each>
-        </table>
+    <div class="leaderboard">
 
-        <div class="more_button">
+        <div class="leaderboard__tableBlock">
+            <table>
+                <tr>
+                    <th>User</th>
+                    <th>Games played</th>
+                    <th>Games won</th>
+                </tr>
+                <fest:each iterate="data.leaders" index="i">
+                    <tr>
+                        <td>
+                            <fest:value>data.leaders[i].login</fest:value>
+                        </td>
+                        <td>
+                            <fest:value>data.leaders[i].gamesPlayed</fest:value>
+                        </td>
+                        <td>
+                            <fest:value>data.leaders[i].wins</fest:value>
+                        </td>
+                    </tr>
+                </fest:each>
+            </table>
+        </div>
+
+        <div class="leaderboard__moreButton">
             <a data-href="" href="">Show more</a>
         </div>
 

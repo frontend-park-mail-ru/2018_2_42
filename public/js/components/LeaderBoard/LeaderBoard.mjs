@@ -23,7 +23,7 @@ export class LeaderBoardComponent {
         this.leaderBoard = this._el.getElementsByClassName('leaderboard')[0];
 
         let that = this;
-        this.leaderBoard.getElementsByClassName('more_button')[0].onclick = function (event) {
+        this.leaderBoard.getElementsByClassName('leaderboard__moreButton')[0].onclick = function (event) {
             event.preventDefault();
             event.stopPropagation();
 
@@ -39,7 +39,7 @@ export class LeaderBoardComponent {
                     that._addLeaders(data);
                 })
                 .catch(function (error) {
-                    let button = that.leaderBoard.getElementsByClassName('more_button')[0];
+                    let button = that.leaderBoard.getElementsByClassName('leaderboard__moreButton')[0];
                     button.parentNode.removeChild(button);
                 });
         }
@@ -53,7 +53,7 @@ export class LeaderBoardComponent {
         leaders.forEach(leader => {
             console.log(leader);
             let newRow = table.insertRow();
-            newRow.innerHTML = `<tr><td>${leader.login}</td><td>${leader.gamesPlayed}games played</td><td>${leader.wins}games won</td></tr>`;
+            newRow.innerHTML = `<tr><td>${leader.login}</td><td>${leader.gamesPlayed}</td><td>${leader.wins}</td></tr>`;
         });
     }
 }
