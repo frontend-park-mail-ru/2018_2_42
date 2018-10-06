@@ -15,12 +15,10 @@ export class AboutComponent {
                 { name: 'Морозенков Олег', gitHubUrl: 'https://github.com/reo7sp', position: "Лучший ментор", avatar: "../../images/about/oleg.jpg" }
             ],
             fronendtUrl: {
-                className: "repo_button",
                 caption: "Frontend",
                 url: "https://github.com/frontend-park-mail-ru/2018_2_42"
             },
             backendUrl: {
-                className: "repo_button",
                 caption: "Backend",
                 url: "https://github.com/go-park-mail-ru/2018_2_42"
             },

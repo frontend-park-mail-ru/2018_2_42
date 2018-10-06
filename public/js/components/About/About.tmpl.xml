@@ -1,32 +1,32 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <div class="about">
         <fest:each iterate="data.contributors" index="i">
-            <div class="contributor_card">
+            <div class="about__contributorCard">
                 <div>
-                    <img class="avatar" src="{data.contributors[i].avatar}"></img>
+                    <img class="about__contributorAvatar" src="{data.contributors[i].avatar}"></img>
                 </div>
-                <div class="contributor_name">
+                <div class="about__contributorName">
                     <a href="{data.contributors[i].gitHubUrl}" onclick="event.stopPropagation();">
                         <fest:value>data.contributors[i].name</fest:value>
-                        [<fest:value>data.contributors[i].position</fest:value>]
+                        <fest:space/>[<fest:value>data.contributors[i].position</fest:value>]
                     </a>
                 </div>
             </div>
         </fest:each>
 
-        <div class="repo_buttons">
-            <div class="{data.fronendtUrl.className}">
+        <div class="about__repoButtons">
+            <div class="about__repoButton">
                 <a href="{data.fronendtUrl.url}" onclick="event.stopPropagation();">
                     <fest:value>data.fronendtUrl.caption</fest:value>
                 </a>
             </div>
-            <div class="{data.backendUrl.className}">
+            <div class="about__repoButton">
                 <a href="{data.fronendtUrl.url}" onclick="event.stopPropagation();">
                     <fest:value>data.backendUrl.caption</fest:value>
                 </a>
             </div>
         </div>
 
-        <a class="about_back" href="/menu" data-href="menu">Back</a>
+        <a class="about__back" href="/menu" data-href="menu">Back</a>
     </div>
 </fest:template>

@@ -1,4 +1,5 @@
-/* Form sign up */
+/* Form */
+
 .form {
     display: flex;
     flex-grow: 1;
@@ -42,7 +43,7 @@
     background-color: #d0d4d833;
 }
 
-.form__error_message {
+.form__errorMessage {
     display: flex;
     text-align: center;
     color: red;

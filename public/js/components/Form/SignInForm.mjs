@@ -34,7 +34,7 @@ export class SignInFormComponent {
     
     showServerError(errorMsg) {
         let errorEl = document.createElement("div");
-        errorEl.className = "form__error_message";
+        errorEl.className = "form__errorMessage";
         errorEl.innerText = errorMsg;
         this.form.insertBefore(errorEl, this.form.firstChild);
         setTimeout(function () {

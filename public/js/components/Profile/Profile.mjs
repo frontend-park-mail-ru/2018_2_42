@@ -21,7 +21,7 @@ export class ProfileComponent {
         this._el.innerHTML += template;
 
         if (isSignedInUsersProfile) {
-            const fileInput = document.getElementById('avatarinput');
+            const fileInput = document.getElementById('profile__avatarInput');
 
             fileInput.addEventListener('change', function () {
                 api.Avatar(fileInput.files[0])
