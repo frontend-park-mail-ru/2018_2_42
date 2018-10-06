@@ -64,3 +64,5 @@ typings/
 
 # JetBrains IDE settings
 .idea
+
+public/media/

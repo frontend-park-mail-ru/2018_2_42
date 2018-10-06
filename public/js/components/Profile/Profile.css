@@ -22,10 +22,11 @@
     border-radius: 50%;
     border: 2px solid black;
     opacity: 1;
-    max-width: 16rem;
-    max-height: 16rem;
+    width: 16rem;
+    height: 16rem;
     transition: .5s ease;
     backface-visibility: hidden;
+    object-fit: cover;
 }
 
 .profile__container:hover .profile__middle {
