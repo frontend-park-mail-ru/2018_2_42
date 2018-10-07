@@ -10,6 +10,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
+    "eslint": "^5.6.1",
     "express": "^4.16.3",
     "express-http-proxy": "^1.4.0",
     "fest": "^0.12.1",

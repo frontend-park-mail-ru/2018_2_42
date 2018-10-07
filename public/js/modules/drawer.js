@@ -15,7 +15,7 @@ const api = new APIModule;
 export class DrawerModule {
 
     /**
-     * Draws navbar
+     * Draws navbar with login taken from local storage if exists
      */
     static createNavbar() {
         root.innerHTML = '';
@@ -36,7 +36,7 @@ export class DrawerModule {
     }
 
     /**
-     * Draws main menu after Signing Out
+     * Draws main menu after signing out
      */
     static createMenuWithSignOut() {
         api.SignOut()
@@ -56,7 +56,7 @@ export class DrawerModule {
     }
 
     /**
-     * Draws Sign Up page
+     * Draws sign up page
      */
     static createSignUp() {
         DrawerModule.createNavbar();
@@ -77,7 +77,7 @@ export class DrawerModule {
     }
 
     /**
-     * Draws Sign in page
+     * Draws sign in page
      */
     static createSignIn() {
         DrawerModule.createNavbar();
@@ -105,17 +105,6 @@ export class DrawerModule {
             login = localStorage.getItem("login");
         }
 
-
-        // DrawerModule.createNavbar();
-        // const profile = new ProfileComponent({ el: root, profileData: {
-        //         login: "Dikarevandre",
-        //         avatarAddress: "",
-        //         gamesPlayed: 20,
-        //         "wins": 9
-        // } });
-        // profile.render();
-
-
         if (login) {
             api.Profile(login)
                 .then(function (response) {
@@ -140,11 +129,11 @@ export class DrawerModule {
     }
 
     /**
-     * Draws Leader board page
-     * @param {string} user currently signed in user's login.
-     * @param {json} users leaders.
+     * Draws leader board page
+     * @param {number} page page number
+     * @param {number} limit amount of users on single page
      */
-    static createLeaderBoard({ page = 1, limit = 3 } = { page: 1, limit: 3 }) {
+    static createLeaderBoard({ page = 1, limit = 5 } = { page: 1, limit: 5 }) {
         api.Leaders(page, limit)
         .then(function (response) {
             if (!response.ok) {
@@ -163,6 +152,9 @@ export class DrawerModule {
         }); 
     }
 
+    /**
+     * Draws about page
+     */
     static createAbout() {
         DrawerModule.createNavbar();
 

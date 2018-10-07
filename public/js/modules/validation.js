@@ -9,28 +9,59 @@ export const Errors = {
 }
 
 export class ValidatorModule {
+    /**
+     * Checks that login is not empty
+     * @param {string} login login to be validated
+     * @returns {boolean}
+     */
     validateLogin(login) {
         // покрывает 99 % адресов
         // return /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(email);
         return login.length > 0;
     }
 
+    /**
+     * Checks that password length is more than 6 symbols
+     * @param {string} password password to be validated
+     * @returns {boolean}
+     */
     validatePassword(password) {
         return password.length >= 6;
     }
 
+    /**
+     * Checks that firstName is not empty
+     * @param {string} firstName firstName to be validated
+     * @returns {boolean}
+     */
     validateFirstName(firstName) {
         return firstName.length > 0;
     }
 
+    /**
+     * Checks that lastName is not empty
+     * @param {string} lastName lastName to be validated
+     * @returns {boolean}
+     */
     validateLastName(lastName) {
         return lastName.length > 0;
     }
 
+    /**
+     * Checks if passwords match
+     * @param {Array} passwords array of two passwords
+     * @returns {boolean}
+     */
     validateRepPassword(passwords = []) {
         return passwords[0] === passwords[1];
     }
 
+    /**
+     * Displays error messages for the given form
+     * @param {form} form form element where errors should appear
+     * @param {string} errId id of error field
+     * @param {string} msg error message to be displayed
+     */
     addError(form, errId, msg = '') {
         const errDiv = form.children[errId];
         errDiv.innerHTML = msg;

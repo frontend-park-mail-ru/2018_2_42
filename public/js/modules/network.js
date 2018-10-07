@@ -1,6 +1,12 @@
 'use strict';
 
 export class NetworkModule {
+    /**
+     * Perfoms GET request
+     * @param {string} url requests's url
+     * @param {json} options fetch request options
+     * @returns {promise}
+     */
     promiseGet(url = "/", options = {}) {
         return fetch(url, {
             ...options,
@@ -8,6 +14,12 @@ export class NetworkModule {
         });
     }
 
+    /**
+     * Perfoms POST request
+     * @param {string} url requests's url
+     * @param {json} options fetch request options
+     * @returns {promise}
+     */
     promisePost(url = "/", options = {}) {
         return fetch(url, {
             ...options,
@@ -17,6 +29,12 @@ export class NetworkModule {
         });
     }
 
+    /**
+     * Perfoms DELETE request
+     * @param {string} url requests's url
+     * @param {json} options fetch request options
+     * @returns {promise}
+     */
     promiseDelete(url = "/", options = {}) {
         return fetch(url, {
             ...options,
