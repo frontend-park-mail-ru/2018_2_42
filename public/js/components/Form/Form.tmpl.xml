@@ -11,7 +11,7 @@
                 </fest:if>
 
                 <fest:if test="data.fields[i].type == 'submit'">
-                    <input type="{data.fields[i].type}" name="{data.fields[i].name}" class="{data.fields[i].className}" placeholder="{data.fields[i].name}" caption="{data.fields[i].name}"></input>
+                    <input type="{data.fields[i].type}" name="{data.fields[i].name}" class="{data.fields[i].className}" placeholder="{data.fields[i].name}" value="{data.fields[i].name}"></input>
                 </fest:if>
 
             </fest:each>

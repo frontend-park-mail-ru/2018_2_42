@@ -10,8 +10,7 @@ export class MenuComponent {
             menuTitles: [
                 { caption: 'Singleplayer', url: 'singleplayer', className: "menu__button" },
                 { caption: 'Multiplayer', url: 'multiplayer', className: "menu__button" },
-                { caption: 'Leader Board', url: 'users', className: "menu__button" },
-                // { caption: 'Settings', url: 'settings', className: "menu__button" },
+                { caption: 'Leaderboard', url: 'users', className: "menu__button" },
                 { caption: 'About', url: 'about', className: "menu__button" },
             ]
         };
