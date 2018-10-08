@@ -12,7 +12,7 @@
     display: flex;
     max-width: 80%;
     overflow-x:auto;
-    margin-top: 2rem;
+    margin-top: 3rem;
 }
 
 .leaderboard table {
@@ -38,6 +38,7 @@
 .leaderboard__back {
     margin-top: 1rem;
     margin-bottom: 2rem;
+    font-weight: bold;
 }
 
 .leaderboard__moreButton {

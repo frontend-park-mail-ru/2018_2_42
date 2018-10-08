@@ -17,8 +17,8 @@
 
 .about__contributorAvatar {
     object-fit: cover;
-    width: 4.5rem;
-    height: 4.5rem;
+    width: 4rem;
+    height: 4rem;
     border-radius: 50%;
 }
 
@@ -47,4 +47,6 @@
 
 .about__back {
     margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
 }
