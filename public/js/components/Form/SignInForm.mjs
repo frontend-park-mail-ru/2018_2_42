@@ -27,9 +27,9 @@ export class SignInFormComponent {
         this._el.innerHTML += template;
 
         this.form = this._el.getElementsByClassName('form__sign_in')[0];
-        this.form.addEventListener('submit', function() {
+        this.form.addEventListener('submit', function(event) {
             this._submitForm(event)
-        }.bind(this, event));
+        }.bind(this));
     }
     
     showServerError(errorMsg) {
