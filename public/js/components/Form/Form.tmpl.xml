@@ -5,10 +5,15 @@
                 <fest:value>data.headerForm</fest:value>
             </div>
             <fest:each iterate="data.fields" index="i">
-                <input type="{data.fields[i].type}" name="{data.fields[i].name}" class="{data.fields[i].className}" placeholder="{data.fields[i].name}"></input>
                 <fest:if test="data.fields[i].type != 'submit'">
-                    <div id="{data.fields[i].errId}" class="form__error_message"></div>
+                    <input type="{data.fields[i].type}" name="{data.fields[i].name}" class="{data.fields[i].className}" placeholder="{data.fields[i].name}"></input>
+                    <div id="{data.fields[i].errId}" class="form__errorMessage"></div>
                 </fest:if>
+
+                <fest:if test="data.fields[i].type == 'submit'">
+                    <input type="{data.fields[i].type}" name="{data.fields[i].name}" class="{data.fields[i].className}" placeholder="{data.fields[i].name}" caption="{data.fields[i].name}"></input>
+                </fest:if>
+
             </fest:each>
         </form>
         <a href="/menu" data-href="menu" class="form__back">Back</a>
