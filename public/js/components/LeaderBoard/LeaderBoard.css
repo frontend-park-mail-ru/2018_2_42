@@ -12,11 +12,11 @@
     display: flex;
     max-width: 80%;
     overflow-x:auto;
+    margin-top: 2rem;
 }
 
 .leaderboard table {
     width: 100%;
-    /* border-collapse: collapse; */
     border-spacing: 0;
     border: 2px solid black;
     text-align: left;
@@ -37,6 +37,7 @@
 
 .leaderboard__back {
     margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 
 .leaderboard__moreButton {

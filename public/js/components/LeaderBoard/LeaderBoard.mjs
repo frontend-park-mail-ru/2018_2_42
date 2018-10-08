@@ -51,7 +51,6 @@ export class LeaderBoardComponent {
         }
         let table = this.leaderBoard.getElementsByTagName("table")[0];
         leaders.forEach(leader => {
-            console.log(leader);
             let newRow = table.insertRow();
             newRow.innerHTML = `<tr><td>${leader.login}</td><td>${leader.gamesPlayed}</td><td>${leader.wins}</td></tr>`;
         });

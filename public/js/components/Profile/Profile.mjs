@@ -32,7 +32,6 @@ export class ProfileComponent {
                         return response.json();
                     })
                     .then(function (data) {
-                        console.log(data);
                         DrawerModule.createProfile();
                     })
                     .catch(function (error) {

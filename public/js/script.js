@@ -22,11 +22,6 @@ root.addEventListener('click', function (event) {
 	event.preventDefault();
 	const link = event.target;
 
-	console.log({
-		href: link.href,
-		dataHref: link.dataset.href
-	});
-
 	root.innerHTML = '';
 
 	pages[ link.dataset.href ]();
