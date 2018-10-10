@@ -1,0 +1,21 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="form">
+        <form class="{data.classForm}" action="{data.action}" method="{data.method}" novalidate="novalidate">
+            <div class="form__head">
+                <fest:value>data.headerForm</fest:value>
+            </div>
+            <fest:each iterate="data.fields" index="i">
+                <fest:if test="data.fields[i].type != 'submit'">
+                    <input type="{data.fields[i].type}" name="{data.fields[i].name}" class="{data.fields[i].className}" placeholder="{data.fields[i].name}"></input>
+                    <div id="{data.fields[i].errId}" class="form__errorMessage"></div>
+                </fest:if>
+
+                <fest:if test="data.fields[i].type == 'submit'">
+                    <input type="{data.fields[i].type}" name="{data.fields[i].name}" class="{data.fields[i].className}" placeholder="{data.fields[i].name}" value="{data.fields[i].name}"></input>
+                </fest:if>
+
+            </fest:each>
+        </form>
+        <a href="/menu" data-href="menu" class="form__back">Back</a>
+    </div>
+</fest:template>

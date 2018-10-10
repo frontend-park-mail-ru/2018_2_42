@@ -1,0 +1,52 @@
+/* about */
+
+.about {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.about__contributorCard {
+    display: flex;
+    width: 90%;
+    align-items: center;
+    padding: 1rem 1rem 0 0;
+}
+
+.about__contributorAvatar {
+    object-fit: cover;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+}
+
+.about__contributorName {
+    margin-left: 1rem;
+}
+
+.about__repoButtons {
+    display: flex;
+    width: 90%;
+    margin-top: 2rem;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.about__repoButton {
+    border: 2px solid black;
+    border-radius: 3px;
+    text-align: center;
+    padding: 0.5rem;
+    min-width: 7%;
+    min-height: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.about__back {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
+}

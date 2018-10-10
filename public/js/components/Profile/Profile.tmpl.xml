@@ -1,0 +1,30 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="profile">
+        <div class="profile__container">
+            <div>
+                <img class="profile__avatar" src="{data.profile.avatarAddress}"></img>
+            </div>
+
+            <fest:if test="data.isSignedInUsersProfile">
+                <div class="profile__middle">
+                    <input type="file" id="profile__avatarInput" name="avatarInput" accept="image/*" class="profile__inputFile"></input>
+                    <label for="profile__avatarInput">
+                        <img src="/images/update_avatar.png" alt="Choose new avatar"></img>
+                    </label>
+                    <label for="profile__avatarInput">Choose new avatar</label>
+                </div>
+            </fest:if>
+        </div>
+
+        <div class="profile__login">
+            <fest:value>data.profile.login</fest:value>
+        </div>
+
+        <div class="profile__statistics">
+            <div>Played:<fest:space/><fest:value>data.profile.gamesPlayed</fest:value></div>
+            <div>Wins:<fest:space/><fest:value>data.profile.wins</fest:value></div>
+        </div>
+
+        <a href="/menu" data-href="menu" class="about__back">Back</a>
+    </div>
+</fest:template>

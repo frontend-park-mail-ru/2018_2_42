@@ -8,11 +8,10 @@ export class MenuComponent {
     render() {
         const data = { 
             menuTitles: [
-                { caption: 'Singleplayer', url: 'singleplayer', className: "menu__navbutton" },
-                { caption: 'Multiplayer', url: 'multiplayer', className: "menu__navbutton" },
-                { caption: 'Leader Board', url: 'users', className: "menu__navbutton" },
-                { caption: 'Settings', url: 'settings', className: "menu__navbutton" },
-                { caption: 'About', url: 'about', className: "menu__navbutton" },
+                { caption: 'Singleplayer', url: 'singleplayer', className: "menu__button" },
+                { caption: 'Multiplayer', url: 'multiplayer', className: "menu__button" },
+                { caption: 'Leaderboard', url: 'users', className: "menu__button" },
+                { caption: 'About', url: 'about', className: "menu__button" },
             ]
         };
         const template = window.fest['js/components/Menu/Menu.tmpl'](data);

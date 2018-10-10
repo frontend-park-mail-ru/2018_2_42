@@ -1,6 +1,6 @@
 'use strict'
 
-export class NavButtonComponent {
+export class ButtonComponent {
     constructor({ el = document.body, className = null, caption = null, url = null } = {}) {
         this._el = el;
         this._className = className;
@@ -14,7 +14,7 @@ export class NavButtonComponent {
             caption: this._caption,
             url: this._url
         };
-        const template = window.fest['js/components/NavButton/NavButton.tmpl'](data);
+        const template = window.fest['js/components/Button/Button.tmpl'](data);
         this._el.innerHTML += template;
     }
 }
