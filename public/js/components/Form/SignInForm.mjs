@@ -14,7 +14,7 @@ export class SignInFormComponent {
     render() {
         const data = { 
             headerForm: "Sign In",
-            action: "/api/v1/session ",
+            action: "/api/v1/session",
             method: "POST",
             classForm: "form__sign_in",
             fields: [
@@ -27,9 +27,9 @@ export class SignInFormComponent {
         this._el.innerHTML += template;
 
         this.form = this._el.getElementsByClassName('form__sign_in')[0];
-        this.form.addEventListener('submit', function(event) {
+        this.form.addEventListener('submit', event => {
             this._submitForm(event)
-        }.bind(this));
+        });
     }
     
     showServerError(errorMsg) {
@@ -75,18 +75,18 @@ export class SignInFormComponent {
             let that = this;
 
             api.SignIn({ login: this._login, password: this._password })
-                .then(function (response) {
+                .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok.');
                     }
                     return response.json();
                 })
-                .then(function (data) {
+                .then(data => {
                     localStorage.setItem("login", that._login);
                     let event = new CustomEvent('successful_sign_in', { detail: { login: that._login } });
                     that.form.dispatchEvent(event);
                 })
-                .catch(function (error) {
+                .catch(error => {
                     let event = new CustomEvent('unsuccessful_sign_in', { detail: error });
                     that.form.dispatchEvent(event);
                 });

@@ -28,9 +28,9 @@ export class SignUpFormComponent {
         this._el.innerHTML += template;
 
         this.form = this._el.getElementsByClassName('form__sign_up')[0];
-        this.form.addEventListener('submit', function(event) {
+        this.form.addEventListener('submit', event => {
             this._submitForm(event)
-        }.bind(this));
+        });
     }
 
     showServerError(errorMsg) {
@@ -38,7 +38,7 @@ export class SignUpFormComponent {
         errorEl.className = "form__errorMessage";
         errorEl.innerText = errorMsg;
         this.form.insertBefore(errorEl, this.form.firstChild);
-        setTimeout(function () {
+        setTimeout(() => {
             errorEl.parentNode.removeChild(errorEl);
         }, 3000);
     }
@@ -79,23 +79,22 @@ export class SignUpFormComponent {
         }
 
         if (validateCounter == validators.length) {
-            let that = this;
             
             api.SignUp({ login: this._login, password: this._password })
-                .then(function (response) {
+                .then(response => {
                     if (!response.ok) {
                         throw new Error('Server response was not ok.');
                     }
                     return response.json();
                 })
-                .then(function (data) {
-                    localStorage.setItem("login", that._login);
+                .then(data => {
+                    localStorage.setItem("login", this._login);
                     let event = new CustomEvent('successful_sign_up', { detail: { login: that._login } });
-                    that.form.dispatchEvent(event);
+                    this.form.dispatchEvent(event);
                 })
-                .catch(function (error) {
+                .catch(error => {
                     let event = new CustomEvent('unsuccessful_sign_up', { detail: error });
-                    that.form.dispatchEvent(event);
+                    this.form.dispatchEvent(event);
                 });
         }
     }
