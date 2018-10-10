@@ -1,7 +1,11 @@
 @import '../js/components/Navbar/Navbar.css';
 @import '../js/components/Logo/Logo.css';
 @import '../js/components/Menu/Menu.css';
-@import '../js/components/NavButton/NavButton.css';
+@import '../js/components/Button/Button.css';
+@import '../js/components/Form/Form.css';
+@import '../js/components/Profile/Profile.css';
+@import '../js/components/LeaderBoard/LeaderBoard.css';
+@import '../js/components/About/About.css';
 
 @font-face {
     font-family: "Pexico Micro";
@@ -13,6 +17,19 @@ html,body {
     height:100%;
     width:100%;
     margin:0;
+}
+
+#root{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+    color: black;
 }
 
 * {

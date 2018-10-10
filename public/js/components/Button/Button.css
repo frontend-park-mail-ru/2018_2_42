@@ -1,5 +1,7 @@
-/* main-menu */
-.menu__navbutton {
+/* buttons */
+
+/* menu button */
+.menu__button {
     min-width: 5rem;
     width: 12rem;
     text-align: center;
@@ -13,11 +15,12 @@
     font-weight: bold;
 }
 
-.menu__navbutton:hover, .menu__navbutton:focus, .menu__navbutton:active {
+.menu__button:hover, .menu__button:focus, .menu__button:active {
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
 }
 
-.navbar__navbutton {
+/* navbar button */
+.navbar__button {
     border: 2px solid black;
     border-radius: 3px;
     float: right;
@@ -32,6 +35,6 @@
     font-weight: bold;
 }
 
-.navbar__navbutton:hover, .navbar__navbutton:focus, .navbar__navbutton:active {
+.navbar__button:hover, .navbar__button:focus, .navbar__button:active {
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
 }

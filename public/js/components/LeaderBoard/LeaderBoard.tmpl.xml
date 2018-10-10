@@ -1,0 +1,33 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="leaderboard">
+
+        <div class="leaderboard__tableBlock">
+            <table>
+                <tr>
+                    <th>User</th>
+                    <th>Games played</th>
+                    <th>Games won</th>
+                </tr>
+                <fest:each iterate="data.leaders" index="i">
+                    <tr>
+                        <td>
+                            <fest:value>data.leaders[i].login</fest:value>
+                        </td>
+                        <td>
+                            <fest:value>data.leaders[i].gamesPlayed</fest:value>
+                        </td>
+                        <td>
+                            <fest:value>data.leaders[i].wins</fest:value>
+                        </td>
+                    </tr>
+                </fest:each>
+            </table>
+        </div>
+
+        <div class="leaderboard__moreButton">
+            <a data-href="" href="">Show more</a>
+        </div>
+
+        <a href="/menu" data-href="menu" class="leaderboard__back">Back</a>
+    </div>
+</fest:template>

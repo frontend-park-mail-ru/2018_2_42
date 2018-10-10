@@ -1,7 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="logoName">
         <div class="logo">
-            <a data-href="/" href="/">
-                <fest:value>logoName</fest:value>
-            </a>
+            <fest:value>logoName</fest:value>   
         </div>
 </fest:template>
