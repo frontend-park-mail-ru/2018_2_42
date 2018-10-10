@@ -14,7 +14,7 @@ const pages = {
 
 DrawerModule.createMenu();
 
-root.addEventListener('click', function (event) {
+root.addEventListener('click', event => {
 	if (!(event.target instanceof HTMLAnchorElement)) {
 		return;
 	}

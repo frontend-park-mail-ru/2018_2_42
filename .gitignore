@@ -64,6 +64,3 @@ typings/
 
 # JetBrains IDE settings
 .idea
-
-# Do not add custom images (in the old version).
-public/media/

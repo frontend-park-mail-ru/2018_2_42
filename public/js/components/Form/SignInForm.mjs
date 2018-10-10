@@ -26,7 +26,7 @@ export class SignInFormComponent {
         const template = window.fest['js/components/Form/Form.tmpl'](data);
         this._el.innerHTML += template;
 
-        this.form = this._el.getElementsByClassName('form__sign_in')[0];
+        this.form = this._el.querySelector('.form__sign_in');
         this.form.addEventListener('submit', event => {
             this._submitForm(event)
         });
@@ -37,7 +37,7 @@ export class SignInFormComponent {
         errorEl.className = "form__errorMessage";
         errorEl.innerText = errorMsg;
         this.form.insertBefore(errorEl, this.form.firstChild);
-        setTimeout(function () {
+        setTimeout(() => {
             errorEl.parentNode.removeChild(errorEl);
         }, 3000);
     }
@@ -45,18 +45,18 @@ export class SignInFormComponent {
     _submitForm(event) {
         event.preventDefault();
 
-        this._login = this.form["Login"].value;
-        this._password = this.form["Password"].value;
+        let login = this.form["Login"].value;
+        let password = this.form["Password"].value;
 
         const validators = [
             { 
                 func: validator.validateLogin, 
-                parameter: this._login, 
+                parameter: login, 
                 errors: [Errors.login.id, Errors.login.wrongFormat]
             },
             { 
                 func: validator.validatePassword, 
-                parameter: this._password, 
+                parameter: password, 
                 errors: [Errors.password.id, Errors.password.wrongFormat] 
             },
         ];
@@ -72,9 +72,8 @@ export class SignInFormComponent {
         }
 
         if (validateCounter == validators.length) {
-            let that = this;
 
-            api.SignIn({ login: this._login, password: this._password })
+            api.SignIn({ login: login, password: password })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok.');
@@ -82,13 +81,13 @@ export class SignInFormComponent {
                     return response.json();
                 })
                 .then(data => {
-                    localStorage.setItem("login", that._login);
-                    let event = new CustomEvent('successful_sign_in', { detail: { login: that._login } });
-                    that.form.dispatchEvent(event);
+                    localStorage.setItem("login", login);
+                    let event = new CustomEvent('successful_sign_in', { detail: { login: login } });
+                    this.form.dispatchEvent(event);
                 })
                 .catch(error => {
                     let event = new CustomEvent('unsuccessful_sign_in', { detail: error });
-                    that.form.dispatchEvent(event);
+                    this.form.dispatchEvent(event);
                 });
         }
     }

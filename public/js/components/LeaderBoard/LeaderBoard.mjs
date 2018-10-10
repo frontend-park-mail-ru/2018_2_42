@@ -22,24 +22,23 @@ export class LeaderBoardComponent {
 
         this.leaderBoard = this._el.getElementsByClassName('leaderboard')[0];
 
-        let that = this;
-        this.leaderBoard.getElementsByClassName('leaderboard__moreButton')[0].onclick = function (event) {
+        this.leaderBoard.getElementsByClassName('leaderboard__moreButton')[0].onclick = event => {
             event.preventDefault();
             event.stopPropagation();
 
-            api.Leaders(that._page + 1, that._limit)
-                .then(function (response) {
+            api.Leaders(this._page + 1, this._limit)
+                .then(response => {
                     if (!response.ok) {
                         throw new Error('Server response was not ok.');
                     }
                     return response.json();
                 })
-                .then(function (data) {
-                    that._page += 1;
-                    that._addLeaders(data);
+                .then(data => {
+                    this._page += 1;
+                    this._addLeaders(data);
                 })
-                .catch(function (error) {
-                    let button = that.leaderBoard.getElementsByClassName('leaderboard__moreButton')[0];
+                .catch(error => {
+                    let button = this.leaderBoard.getElementsByClassName('leaderboard__moreButton')[0];
                     button.parentNode.removeChild(button);
                 });
         }

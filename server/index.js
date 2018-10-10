@@ -20,6 +20,6 @@ app.use("*", proxy("http://18.222.251.221:8080/", {
   }
 }))
 
-app.listen(process.env.PORT || 3000, function () {
+app.listen(process.env.PORT || 3000, () => {
 	console.log(`http://localhost:3000`);
 });

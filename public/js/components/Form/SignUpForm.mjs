@@ -27,7 +27,7 @@ export class SignUpFormComponent {
         const template = window.fest['js/components/Form/Form.tmpl'](data);
         this._el.innerHTML += template;
 
-        this.form = this._el.getElementsByClassName('form__sign_up')[0];
+        this.form = this._el.querySelector('.form__sign_up');
         this.form.addEventListener('submit', event => {
             this._submitForm(event)
         });
@@ -46,24 +46,24 @@ export class SignUpFormComponent {
     _submitForm(event) {
         event.preventDefault();
 
-        this._login = this.form["Login"].value;
-        this._password = this.form["Password"].value;
-        this._repPassword = this.form["Repeat Password"].value;
+        let login = this.form["Login"].value;
+        let password = this.form["Password"].value;
+        let repPassword = this.form["Repeat Password"].value;
 
         const validators = [
             { 
                 func: validator.validateLogin, 
-                parameter: this._login, 
+                parameter: login, 
                 errors: [Errors.login.id, Errors.login.required]
             },
             { 
                 func: validator.validatePassword, 
-                parameter: this._password, 
+                parameter: password, 
                 errors: [Errors.password.id, Errors.password.minLength] 
             },
             { 
                 func: validator.validateRepPassword, 
-                parameter: [this._password, this._repPassword], 
+                parameter: [password, repPassword], 
                 errors: [Errors.repPassword.id, Errors.repPassword.doNotMatch] 
             },
         ];
@@ -80,7 +80,7 @@ export class SignUpFormComponent {
 
         if (validateCounter == validators.length) {
             
-            api.SignUp({ login: this._login, password: this._password })
+            api.SignUp({ login: login, password: password })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Server response was not ok.');
@@ -88,8 +88,8 @@ export class SignUpFormComponent {
                     return response.json();
                 })
                 .then(data => {
-                    localStorage.setItem("login", this._login);
-                    let event = new CustomEvent('successful_sign_up', { detail: { login: that._login } });
+                    localStorage.setItem("login", login);
+                    let event = new CustomEvent('successful_sign_up', { detail: { login: login } });
                     this.form.dispatchEvent(event);
                 })
                 .catch(error => {
