@@ -16,7 +16,7 @@ export class APIModule {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
         });
     };
     
@@ -26,12 +26,13 @@ export class APIModule {
      * @returns {promise}
      */
     SignIn(data = {}) {
+    	console.log(data);
         const url = "/api/v1/session";
         return network.promisePost(url, {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
         });
     };
 

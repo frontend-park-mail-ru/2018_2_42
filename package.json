@@ -13,6 +13,7 @@
     "eslint": "^5.6.1",
     "express": "^4.16.3",
     "express-http-proxy": "^1.4.0",
+    "express-history-api-fallback": "^2.2.1",
     "fest": "^0.12.1",
     "jsdoc": "^3.5.5",
     "morgan": "^1.9.0"

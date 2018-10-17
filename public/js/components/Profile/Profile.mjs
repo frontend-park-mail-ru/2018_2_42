@@ -20,24 +20,24 @@ export class ProfileComponent {
         const template = window.fest['js/components/Profile/Profile.tmpl'](data);
         this._el.innerHTML += template;
 
-        if (isSignedInUsersProfile) {
-            const fileInput = document.getElementById('profile__avatarInput');
-
-            fileInput.addEventListener('change', function () {
-                api.Avatar(fileInput.files[0])
-                    .then(function (response) {
-                        if (!response.ok) {
-                            throw new Error('Server response was not ok.');
-                        }
-                        return response.json();
-                    })
-                    .then(function (data) {
-                        DrawerModule.createProfile();
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            }, false);
-        }
+        // if (isSignedInUsersProfile) {
+        //     const fileInput = document.getElementById('profile__avatarInput');
+		//
+        //     fileInput.addEventListener('change', function () {
+        //         api.Avatar(fileInput.files[0])
+        //             .then(function (response) {
+        //                 if (!response.ok) {
+        //                     throw new Error('Server response was not ok.');
+        //                 }
+        //                 return response.json();
+        //             })
+        //             .then(function (data) {
+        //                 DrawerModule.createProfile();
+        //             })
+        //             .catch(function (error) {
+        //                 console.log(error);
+        //             });
+        //     }, false);
+        // }
     }
 }

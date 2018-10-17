@@ -16,12 +16,12 @@
 
         <div class="about__repoButtons">
             <div class="about__repoButton">
-                <a href="{data.fronendtUrl.url}" onclick="event.stopPropagation();">
-                    <fest:value>data.fronendtUrl.caption</fest:value>
+                <a href="{data.frontendUrl.url}" onclick="event.stopPropagation();">
+                    <fest:value>data.frontendUrl.caption</fest:value>
                 </a>
             </div>
             <div class="about__repoButton">
-                <a href="{data.fronendtUrl.url}" onclick="event.stopPropagation();">
+                <a href="{data.backendUrl.url}" onclick="event.stopPropagation();">
                     <fest:value>data.backendUrl.caption</fest:value>
                 </a>
             </div>

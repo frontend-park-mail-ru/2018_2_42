@@ -14,7 +14,7 @@ export class AboutComponent {
                 { name: 'Семёнов Максим', gitHubUrl: 'https://github.com/OlegSchwann', position: "Backend", avatar: "../../images/about/maxim.jpg" },
                 { name: 'Морозенков Олег', gitHubUrl: 'https://github.com/reo7sp', position: "Лучший ментор", avatar: "../../images/about/oleg.jpg" }
             ],
-            fronendtUrl: {
+            frontendUrl: {
                 caption: "Frontend",
                 url: "https://github.com/frontend-park-mail-ru/2018_2_42"
             },
