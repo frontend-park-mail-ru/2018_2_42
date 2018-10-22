@@ -63,17 +63,6 @@ export class DrawerModule {
 
         const form = new SignUpFormComponent({ el: root });
         form.render();
-        
-        form.form.addEventListener('successful_sign_up', function (event) {
-            // console.log("Successful sign up for", event.detail.login);
-            // DrawerModule.createMenu();
-            DrawerModule.createProfile(event.detail.login);
-        });
-
-        form.form.addEventListener('unsuccessful_sign_up', function (event) {
-            // console.log("Unsuccessful sign up.", event.detail.login);
-            form.showServerError(event.detail);
-        });
     }
 
     /**
@@ -84,16 +73,6 @@ export class DrawerModule {
 
         const form = new SignInFormComponent({ el: root });
         form.render();
-
-        form.form.addEventListener('successful_sign_in', function (event) {
-            // console.log("Successful sign in for", event.detail.login);
-            DrawerModule.createMenu();
-        });
-
-        form.form.addEventListener('unsuccessful_sign_in', function (event) {
-            // console.log("Unsuccessful sign in.", event.detail);
-            form.showServerError(event.detail);
-        });
     }
 
     /**

@@ -29,6 +29,4 @@ export class NavbarComponent {
             return;
         }
     }
-    
-    
 }

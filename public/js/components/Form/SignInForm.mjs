@@ -80,14 +80,12 @@ export class SignInFormComponent {
                     }
                     return response.json();
                 })
-                .then(data => {
+                .then(() => {
                     localStorage.setItem("login", login);
-                    let event = new CustomEvent('successful_sign_in', { detail: { login: login } });
-                    this.form.dispatchEvent(event);
+                    window.bus.publish("successful_sign_in", login);
                 })
                 .catch(error => {
-                    let event = new CustomEvent('unsuccessful_sign_in', { detail: error });
-                    this.form.dispatchEvent(event);
+                    this.showServerError(error);
                 });
         }
     }
