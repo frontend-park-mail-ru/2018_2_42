@@ -12,6 +12,8 @@
     src: url('../fonts/PexicoMicro-Regular.otf');
 }
 
+[hidden] { display: none !important; }
+
 /* common styles */
 html,body {
     height:100%;

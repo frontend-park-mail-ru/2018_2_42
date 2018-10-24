@@ -28,6 +28,6 @@
             <a data-href="" href="">Show more</a>
         </div>
 
-        <a href="/menu" data-href="menu" class="leaderboard__back">Back</a>
+        <a id="back_btn" href="/menu" data-href="menu" class="leaderboard__back">Back to menu</a>
     </div>
 </fest:template>

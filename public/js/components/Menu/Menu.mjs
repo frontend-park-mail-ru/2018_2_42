@@ -8,13 +8,27 @@ export class MenuComponent {
     render() {
         const data = { 
             menuTitles: [
-                { caption: 'Singleplayer', url: 'singleplayer', className: "menu__button" },
-                { caption: 'Multiplayer', url: 'multiplayer', className: "menu__button" },
-                { caption: 'Leaderboard', url: 'users', className: "menu__button" },
-                { caption: 'About', url: 'about', className: "menu__button" },
+                { caption: 'Singleplayer', url: 'singleplayer', className: "menu__button", id: "" },
+                { caption: 'Multiplayer', url: 'multiplayer', className: "menu__button", id: "" },
+                { caption: 'Leaderboard', url: 'users', className: "menu__button", id: "leaderboard_btn" },
+                { caption: 'About', url: 'about', className: "menu__button", id: "about_btn" },
             ]
         };
         const template = window.fest['js/components/Menu/Menu.tmpl'](data);
-        this._el.innerHTML += template;
+        let div = document.createElement('div');
+        div.innerHTML = template;
+        this._el.appendChild(div.firstChild);
+
+        document.getElementById("leaderboard_btn").addEventListener("click", (event) => {
+            event.preventDefault();
+            window.bus.publish("draw-leaderboard");
+        });
+
+        document.getElementById("about_btn").addEventListener("click", (event) => {
+            event.preventDefault();
+            window.bus.publish("draw-about");
+        });
+
+        // Добавить листенеры для мультиплеера и синглплеера
     }
 }

@@ -1,10 +1,8 @@
 'use strict'
 
 import { Errors, ValidatorModule } from "../../modules/validation.js";
-import { APIModule } from "../../modules/api.js";
 
 const validator = new ValidatorModule;
-const api = new APIModule;
 
 export class SignInFormComponent {
     constructor({ el = document.body } = {}) {
@@ -24,11 +22,18 @@ export class SignInFormComponent {
             ],
         };
         const template = window.fest['js/components/Form/Form.tmpl'](data);
-        this._el.innerHTML += template;
+        let div = document.createElement('div');
+        div.innerHTML = template;
+        this._el.appendChild(div.firstChild);
 
         this.form = this._el.querySelector('.form__sign_in');
-        this.form.addEventListener('submit', event => {
+        this.form.addEventListener('submit', (event) => {
             this._submitForm(event)
+        });
+
+        document.getElementById("back_btn").addEventListener("click", (event) => {
+            event.preventDefault();
+            window.bus.publish("draw-menu");
         });
     }
     
@@ -72,21 +77,7 @@ export class SignInFormComponent {
         }
 
         if (validateCounter == validators.length) {
-
-            api.SignIn({ login: login, password: password })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok.');
-                    }
-                    return response.json();
-                })
-                .then(() => {
-                    localStorage.setItem("login", login);
-                    window.bus.publish("successful_sign_in", login);
-                })
-                .catch(error => {
-                    this.showServerError(error);
-                });
+            window.bus.publish("sign-in", { login: login, password: password });
         }
     }
 }

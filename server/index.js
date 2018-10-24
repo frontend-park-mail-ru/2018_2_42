@@ -13,6 +13,7 @@ app.use(express.static(path.resolve(__dirname, '..', 'public')));
 app.use(body.json());
 app.use(cookie());
  
+// app.use(fallback('index.html', { root: rootDir }));
 
 app.use("*", proxy("http://18.222.251.221:8080/", {
   proxyReqPathResolver: function(req) {

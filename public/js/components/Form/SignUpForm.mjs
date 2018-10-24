@@ -1,10 +1,8 @@
 'use strict';
 
 import { Errors, ValidatorModule } from "../../modules/validation.js";
-import { APIModule } from "../../modules/api.js";
 
 const validator = new ValidatorModule;
-const api = new APIModule;
 
 export class SignUpFormComponent {
     constructor({ el = document.body } = {}) {
@@ -25,11 +23,18 @@ export class SignUpFormComponent {
             ],
         };
         const template = window.fest['js/components/Form/Form.tmpl'](data);
-        this._el.innerHTML += template;
+        let div = document.createElement('div');
+        div.innerHTML = template;
+        this._el.appendChild(div.firstChild);
 
         this.form = this._el.querySelector('.form__sign_up');
-        this.form.addEventListener('submit', event => {
+        this.form.addEventListener('submit', (event) => {
             this._submitForm(event)
+        });
+
+        document.getElementById("back_btn").addEventListener("click", (event) => {
+            event.preventDefault();
+            window.bus.publish("draw-menu");
         });
     }
 
@@ -79,21 +84,7 @@ export class SignUpFormComponent {
         }
 
         if (validateCounter == validators.length) {
-            
-            api.SignUp({ login: login, password: password })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Server response was not ok.');
-                    }
-                    return response.json();
-                })
-                .then(() => {
-                    localStorage.setItem("login", login);
-                    window.bus.publish("successful_sign_up", login);
-                })
-                .catch(error => {
-                    this.showServerError(error);
-                });
+            window.bus.publish("sign-up", { login: login, password: password });
         }
     }
 }

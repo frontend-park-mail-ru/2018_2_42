@@ -1,43 +1,52 @@
 'use strict';
+import UserService from "../../Services/UserService.js";
 
-import { APIModule } from "../../modules/api.js";
-import { DrawerModule } from "../../modules/drawer.js";
-
-const api = new APIModule;
+const userService = new UserService;
 
 export class ProfileComponent {
-    constructor ({ el = document.body, profileData = null } = {}) {
+    constructor ({ el = document.body, login = null } = {}) {
         this._el = el;
-        this._profileData = profileData;
+        this._login = login;
+        this._profileData = null;
     }
-
+    
     render() {
-        const isSignedInUsersProfile = (localStorage.getItem('login') === this._profileData.login)
-        const data = {
-            profile: this._profileData,
-            isSignedInUsersProfile: isSignedInUsersProfile
-        };
-        const template = window.fest['js/components/Profile/Profile.tmpl'](data);
-        this._el.innerHTML += template;
+        userService.GetProfileData(this._login)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Server response was not ok.');
+                }
+                return response.json();
+            })
+            .then((receivedData) => {
+                this._profileData = receivedData;
+                const isSignedInUsersProfile = (userService.login === this._profileData.login)
+                const data = {
+                    profile: this._profileData,
+                    isSignedInUsersProfile: isSignedInUsersProfile
+                };
 
-        if (isSignedInUsersProfile) {
-            const fileInput = document.getElementById('profile__avatarInput');
+                const template = window.fest['js/components/Profile/Profile.tmpl'](data);
+                let div = document.createElement('div');
+                div.innerHTML = template;
+                this._el.appendChild(div.firstChild);
 
-            fileInput.addEventListener('change', function () {
-                api.Avatar(fileInput.files[0])
-                    .then(function (response) {
-                        if (!response.ok) {
-                            throw new Error('Server response was not ok.');
-                        }
-                        return response.json();
-                    })
-                    .then(function (data) {
-                        DrawerModule.createProfile();
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            }, false);
-        }
+                if (isSignedInUsersProfile) {
+                    const fileInput = document.getElementById('profile__avatarInput');
+
+                    fileInput.addEventListener('change', () => {
+                        window.bus.publish("update-avatar", fileInput.files[0]);
+                    }, false);
+                }
+
+                document.getElementById("back_btn").addEventListener("click", (event) => {
+                    event.preventDefault();
+                    window.bus.publish("draw-menu");
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+
+            });
     }
 }

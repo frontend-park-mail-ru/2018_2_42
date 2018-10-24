@@ -1,6 +1,6 @@
 'use strict';
 
-import { NavbarComponent } from '../components/Navbar/Navbar.mjs';
+import NavbarComponent from '../components/Navbar/Navbar.mjs';
 import { MenuComponent } from "../components/Menu/Menu.mjs";
 import { SignUpFormComponent } from "../components/Form/SignUpForm.mjs";
 import { SignInFormComponent } from "../components/Form/SignInForm.mjs";
@@ -85,23 +85,10 @@ export class DrawerModule {
         }
 
         if (login) {
-            api.Profile(login)
-                .then(function (response) {
-                    if (!response.ok) {
-                        throw new Error('Server response was not ok.');
-                    }
-                    return response.json();
-                })
-                .then(function (data) {
-                    DrawerModule.createNavbar();
+            DrawerModule.createNavbar();
 
-                    const profile = new ProfileComponent({ el: root, profileData: data });
-                    profile.render();
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    DrawerModule.createMenu();
-                });
+            const profile = new ProfileComponent({ el: root, login: login });
+            profile.render();
         } else {
             DrawerModule.createMenu();
         }

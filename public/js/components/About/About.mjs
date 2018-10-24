@@ -24,6 +24,13 @@ export class AboutComponent {
             },
         };
         const template = window.fest['js/components/About/About.tmpl'](data);
-        this._el.innerHTML += template;
+        let div = document.createElement('div');
+        div.innerHTML = template;
+        this._el.appendChild(div.firstChild);
+
+        document.getElementById("back_btn" ).addEventListener("click", (event) => {
+            event.preventDefault();
+            window.bus.publish("draw-menu");
+        });
     }
 }
