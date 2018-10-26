@@ -1,6 +1,5 @@
 'use strict'
-
-export class ButtonComponent {
+export default class ButtonComponent {
     constructor({ el = document.body, className = null, caption = null, url = null, id = null } = {}) {
         this._el = el;
         this._className = className;

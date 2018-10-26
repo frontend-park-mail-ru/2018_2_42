@@ -1,36 +1,28 @@
 'use strict';
-
-import { DrawerModule } from "./modules/drawer.js";
 import UserService from "./Services/UserService.js"
 import EventBus from "./modules/eventBus.js";
 import Router from "./modules/router.js";
 import MenuView from "./views/MenuView.js"
 import LeaderboardView from "./views/LeaderboardView.js"
+import ProfileView from "./views/ProfileView.js"
+import AboutView from "./views/AboutView.js";
+import SignInView from "./views/SigninView.js";
+import SignUpView from "./views/SignUpView.js";
 
 window.bus = new EventBus();
 const userService = new UserService();
 const router = new Router(document.getElementById("root"));
 
-const pages = {
-	menu: DrawerModule.createMenu,
-	sign_in: DrawerModule.createSignIn,
-	sign_up: DrawerModule.createSignUp,
-	sign_out: DrawerModule.createMenuWithSignOut,
-	users: DrawerModule.createLeaderBoard,
-	profile: DrawerModule.createProfile,
-	about: DrawerModule.createAbout
-};
+window.bus.subscribe("draw-menu", () => { router.open({ path: '/' }) });
+window.bus.subscribe("draw-profile", () => { router.open({ path: '/profile' }) });
+window.bus.subscribe("draw-sign-up", () => { router.open({ path: '/signup' }) });
+window.bus.subscribe("draw-sign-in", () => { router.open({ path: '/signin' }) });
+window.bus.subscribe("draw-leaderboard", () => { router.open({ path: '/leaders' }) });
+window.bus.subscribe("draw-about", () => { router.open({ path: '/about' }) });
 
-window.bus.subscribe("draw-menu", DrawerModule.createMenu);
-window.bus.subscribe("draw-profile", DrawerModule.createProfile);
-window.bus.subscribe("draw-sign-up", DrawerModule.createSignUp);
-window.bus.subscribe("draw-sign-in", DrawerModule.createSignIn);
-window.bus.subscribe("draw-leaderboard", () => {router.open({ path: '/leaders' })});
-window.bus.subscribe("draw-about", DrawerModule.createAbout);
-
-window.bus.subscribe("successful_sign_in", DrawerModule.createProfile);
-window.bus.subscribe("successful_sign_up", DrawerModule.createProfile);
-window.bus.subscribe("successful_sign_out", DrawerModule.createMenu);
+window.bus.subscribe("successful_sign_in", () => { router.rerenderViews(['/profile']); router.open({ path: '/profile' }); });
+window.bus.subscribe("successful_sign_up", () => { router.rerenderViews(['/profile']); router.open({ path: '/profile' }); });
+window.bus.subscribe("successful_sign_out", () => { router.rerenderViews([]); router.open({ path: '/' }) });
 
 window.bus.subscribe("sign-out", userService.SignOut);
 window.bus.subscribe("sign-in", userService.SignIn);
@@ -40,21 +32,9 @@ window.bus.subscribe("update-avatar", userService.UpdateAvatar);
 router
 	.register('/', MenuView)
 	.register('/leaders', LeaderboardView)
+	.register('/profile', ProfileView)
+	.register('/about', AboutView)
+	.register('/signin', SignInView)
+	.register('/signup', SignUpView)
 
 router.start();
-
-// window.bus.publish("draw-menu");
-// DrawerModule.createMenu();
-
-// root.addEventListener('click', event => {
-// 	if (!(event.target instanceof HTMLAnchorElement)) {
-// 		return;
-// 	}
-
-// 	event.preventDefault();
-// 	const link = event.target;
-
-// 	root.innerHTML = '';
-
-// 	pages[ link.dataset.href ]();
-// });

@@ -1,5 +1,4 @@
 'use strict';
-
 export default class NavbarComponent {
     constructor({el = document.body, login = null} = {}) {
         this._el = el;
@@ -21,7 +20,7 @@ export default class NavbarComponent {
             
             document.getElementById("profile_btn").addEventListener("click", (event) => {
                 event.preventDefault();
-                window.bus.publish("draw-profile");
+                window.bus.publish("draw-profile", );
             });
 
             document.getElementById("sign_out_btn").addEventListener("click", (event) => {

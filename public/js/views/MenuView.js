@@ -1,15 +1,15 @@
-import { MenuComponent } from "../components/Menu/Menu.mjs";
+'use strict';
+import MenuComponent from "../components/Menu/Menu.mjs";
 import BaseView from "./BaseView.js";
 
 export default class MenuView extends BaseView {
     constructor({ el = document.body, withNavbar = true } = {}) {
-        super({ el: el, withNavbar: withNavbar})
+        super({ el: el, withNavbar: withNavbar});
     }
 
     render() {
-        // fetch leaders
-        const menu = new MenuComponent({el: this._el});
+        this._el.appendChild(this._section);
+        const menu = new MenuComponent({el: this._section});
         menu.render();
-        this.hide();
     }
 }

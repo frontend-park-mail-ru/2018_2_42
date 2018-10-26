@@ -3,10 +3,10 @@ import UserService from "../../Services/UserService.js";
 
 const userService = new UserService;
 
-export class ProfileComponent {
+export default class ProfileComponent {
     constructor ({ el = document.body, login = null } = {}) {
         this._el = el;
-        this._login = login;
+        this._login = login || localStorage.getItem("login");
         this._profileData = null;
     }
     
@@ -39,14 +39,14 @@ export class ProfileComponent {
                     }, false);
                 }
 
-                document.getElementById("back_btn").addEventListener("click", (event) => {
+                document.getElementById("profile_back_btn").addEventListener("click", (event) => {
                     event.preventDefault();
                     window.bus.publish("draw-menu");
                 });
             })
             .catch((error) => {
                 console.log(error);
-
+                window.bus.publish("draw-menu");
             });
     }
 }

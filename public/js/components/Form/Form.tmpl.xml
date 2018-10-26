@@ -16,6 +16,6 @@
 
             </fest:each>
         </form>
-        <a id="back_btn" href="/menu" data-href="menu" class="form__back">Back to menu</a>
+        <a id="{data.classForm}_back_btn" href="/menu" data-href="menu" class="form__back">Back to menu</a>
     </div>
 </fest:template>

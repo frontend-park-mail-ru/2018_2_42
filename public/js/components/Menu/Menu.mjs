@@ -1,6 +1,5 @@
 'use strict'
-
-export class MenuComponent {
+export default class MenuComponent {
     constructor({ el = document.body } = {}) {
         this._el = el;
     }

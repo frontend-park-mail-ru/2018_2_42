@@ -1,10 +1,9 @@
 'use strict';
-
 import { Errors, ValidatorModule } from "../../modules/validation.js";
 
 const validator = new ValidatorModule;
 
-export class SignUpFormComponent {
+export default class SignUpFormComponent {
     constructor({ el = document.body } = {}) {
         this._el = el;
     }
@@ -32,7 +31,7 @@ export class SignUpFormComponent {
             this._submitForm(event)
         });
 
-        document.getElementById("back_btn").addEventListener("click", (event) => {
+        document.getElementById(`${data.classForm}_back_btn`).addEventListener("click", (event) => {
             event.preventDefault();
             window.bus.publish("draw-menu");
         });

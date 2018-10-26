@@ -27,6 +27,6 @@
             </div>
         </div>
 
-        <a id="back_btn" class="about__back" href="/menu" data-href="menu">Back to menu</a>
+        <a id="about_back_btn" class="about__back" href="/menu" data-href="menu">Back to menu</a>
     </div>
 </fest:template>

@@ -1,5 +1,4 @@
 'use strict';
-
 export default class Router {
     constructor(root) {
         this.routes = {};
@@ -64,11 +63,14 @@ export default class Router {
         if (!view.active) {
             Object.values(this.routes).forEach(({ view }) => {
                 if (view && view.active) {
-                    view.destroy();
+                    view.hide();
                 }
             });
 
             view.show();
+        } else {
+            view.destroyNavbar();
+            view.createNavbar();
         }
 
         this.routes[page.path] = { View, view, el };
@@ -82,5 +84,15 @@ export default class Router {
 
         const currentPath = window.location.pathname;
         this.open({ path: currentPath, params: {} });
+    }
+
+    rerenderViews(paths) {
+        paths.forEach((path) => {
+            const route = this.routes[path];
+            if (route.view) {
+                route.view.destroy();
+                route.view.render();
+            }
+        });
     }
 }

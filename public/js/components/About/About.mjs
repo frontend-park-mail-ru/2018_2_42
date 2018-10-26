@@ -1,6 +1,5 @@
 'use strict'
-
-export class AboutComponent {
+export default class AboutComponent {
     constructor({ el = document.body } = {}) {
         this._el = el;
     }
@@ -28,7 +27,7 @@ export class AboutComponent {
         div.innerHTML = template;
         this._el.appendChild(div.firstChild);
 
-        document.getElementById("back_btn" ).addEventListener("click", (event) => {
+        document.getElementById("about_back_btn" ).addEventListener("click", (event) => {
             event.preventDefault();
             window.bus.publish("draw-menu");
         });

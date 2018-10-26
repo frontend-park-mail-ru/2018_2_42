@@ -1,5 +1,5 @@
 'use strict';
-import { APIModule } from "../modules/api.js";
+import APIModule from "../modules/api.js";
 
 const api = new APIModule;
 
@@ -92,6 +92,10 @@ export default class UserService {
     }
 
     GetProfileData(login) {
-        return api.Profile(login)
+        return api.Profile(login);
+    }
+
+    GetLeaders(page = 1, limit = 20) {
+        return api.Leaders(page, limit);
     }
 }

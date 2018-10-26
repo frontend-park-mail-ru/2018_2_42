@@ -1,10 +1,9 @@
 'use strict';
+import UserService from "../../Services/UserService.js";
 
-import { APIModule } from "../../modules/api.js";
+const userService = new UserService;
 
-const api = new APIModule;
-
-export class LeaderBoardComponent {
+export default class LeaderBoardComponent {
     constructor({ el = document.body, leaders = [], page = 1, limit = 20 } = {}) {
         this._el = el;
         this._leaders = leaders;
@@ -22,7 +21,7 @@ export class LeaderBoardComponent {
         div.innerHTML = template;
         this._el.appendChild(div.firstChild);
 
-        document.getElementById("back_btn").addEventListener("click", (event) => {
+        document.getElementById("leaderboard_back_btn").addEventListener("click", (event) => {
             event.preventDefault();
             window.bus.publish("draw-menu");
         });
@@ -33,7 +32,7 @@ export class LeaderBoardComponent {
             event.preventDefault();
             event.stopPropagation();
 
-            api.Leaders(this._page + 1, this._limit)
+            userService.GetLeaders(this._page + 1, this._limit)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Server response was not ok.');

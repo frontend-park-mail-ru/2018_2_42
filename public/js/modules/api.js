@@ -1,10 +1,9 @@
 'use strict';
-
-import { NetworkModule } from "./network.js";
+import NetworkModule from "./network.js";
 
 const network = new NetworkModule;
 
-export class APIModule {
+export default class APIModule {
     /**
      * Signs up user
      * @param {json} data request body with fields "login", "password"
