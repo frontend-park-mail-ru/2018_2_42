@@ -1,3 +1,4 @@
+@import './fontsKit.css';
 @import '../js/components/Navbar/Navbar.css';
 @import '../js/components/Logo/Logo.css';
 @import '../js/components/Menu/Menu.css';
@@ -7,10 +8,6 @@
 @import '../js/components/LeaderBoard/LeaderBoard.css';
 @import '../js/components/About/About.css';
 
-@font-face {
-    font-family: "Pexico Micro";
-    src: url('../fonts/PexicoMicro-Regular.otf');
-}
 
 [hidden] { display: none !important; }
 
@@ -35,7 +32,7 @@ a {
 }
 
 * {
-    font-family: Pexico Micro;
+    font-family: 'PexicoMicro-Regular';
 }
 
 section {
