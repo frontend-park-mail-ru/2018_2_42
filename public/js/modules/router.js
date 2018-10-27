@@ -57,7 +57,9 @@ export default class Router {
         
         if (!view) {
             view = new View({el: el});
-            view.render();
+            if (view.render() === "redirect") {
+                return;
+            }
         }
 
         if (!view.active) {
