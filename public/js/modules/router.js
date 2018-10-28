@@ -33,8 +33,6 @@ export default class Router {
             return;
         }
 
-        // typeof route.callback == 'function' && route.callback();
-
         if (route.View == null) {
             this.open({ path: '/', params: {} });
             return;
@@ -49,11 +47,6 @@ export default class Router {
         }
 
         let { View, view, el } = route;
-        
-        // if (!el) {
-        //     el = document.createElement('section');
-        //     this.root.appendChild(el);
-        // }
         
         if (!view) {
             view = new View({el: el});

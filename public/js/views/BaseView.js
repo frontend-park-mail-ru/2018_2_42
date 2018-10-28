@@ -63,6 +63,7 @@ export default class BaseView {
 
         const navbar = new Navbar({ el: section, login: login });
         navbar.render();
+        this._el.dataset.view = this.constructor.name;
     }
 
     destroyNavbar() {

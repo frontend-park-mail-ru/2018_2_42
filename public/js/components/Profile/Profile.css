@@ -27,7 +27,6 @@
     transition: .5s ease;
     backface-visibility: hidden;
     object-fit: cover;
-    margin-top: 2rem;
 }
 
 .profile__container:hover .profile__middle {

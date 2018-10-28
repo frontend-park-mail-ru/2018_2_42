@@ -22,7 +22,7 @@ html,body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
+    justify-content: row;
     align-items: center;
 }
 
@@ -40,5 +40,9 @@ section {
 }
 
 section + section {
-    margin-top: 3rem;
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
