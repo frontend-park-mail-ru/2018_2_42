@@ -6,7 +6,7 @@ import MenuView from "./views/MenuView.js"
 import LeaderboardView from "./views/LeaderboardView.js"
 import ProfileView from "./views/ProfileView.js"
 import AboutView from "./views/AboutView.js";
-import SignInView from "./views/SigninView.js";
+import SignInView from "./views/SignInView.js";
 import SignUpView from "./views/SignUpView.js";
 
 window.bus = new EventBus();
