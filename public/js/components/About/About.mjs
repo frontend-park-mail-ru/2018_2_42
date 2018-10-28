@@ -1,4 +1,7 @@
 'use strict'
+
+import "/js/components/About/About.tmpl.js"
+
 export default class AboutComponent {
     constructor({ el = document.body } = {}) {
         this._el = el;

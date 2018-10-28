@@ -1,4 +1,7 @@
 'use strict'
+
+import "/js/components/Menu/Menu.tmpl.js"
+
 export default class MenuComponent {
     constructor({ el = document.body } = {}) {
         this._el = el;

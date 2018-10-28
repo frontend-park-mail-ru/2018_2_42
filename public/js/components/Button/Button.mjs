@@ -1,4 +1,7 @@
 'use strict'
+
+import "/js/components/Button/Button.tmpl.js"
+
 export default class ButtonComponent {
     constructor({ el = document.body, className = null, caption = null, url = null, id = null } = {}) {
         this._el = el;

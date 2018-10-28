@@ -1,4 +1,7 @@
 'use strict';
+
+import "/js/components/Form/Form.tmpl.js"
+
 import { Errors, ValidatorModule } from "../../modules/validation.js";
 
 const validator = new ValidatorModule;

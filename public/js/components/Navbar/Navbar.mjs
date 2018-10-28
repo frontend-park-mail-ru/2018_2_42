@@ -1,4 +1,7 @@
 'use strict';
+
+import "/js/components/Navbar/Navbar.tmpl.js"
+
 export default class NavbarComponent {
     constructor({el = document.body, login = null} = {}) {
         this._el = el;

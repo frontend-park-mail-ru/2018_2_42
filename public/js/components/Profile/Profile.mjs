@@ -1,5 +1,7 @@
 'use strict';
+
 import UserService from "../../Services/UserService.js";
+import "/js/components/Profile/Profile.tmpl.js"
 
 const userService = new UserService;
 
