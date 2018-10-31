@@ -27,6 +27,9 @@ export default class Router {
 	 * @param {path: string, params: {}} page
 	 */
     open(page) {
+        const currentPath = window.location.pathname;
+        this._prevPath = currentPath;
+
         const route = this.routes[page.path];
 
         if (!route) {
@@ -79,7 +82,6 @@ export default class Router {
     start() {
         window.addEventListener('popstate', () => {
             const currentPath = window.location.pathname;
-            this._prevPath = currentPath;
             this.open({ path: currentPath, params: {} });
         });
 
