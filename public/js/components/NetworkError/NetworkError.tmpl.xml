@@ -1,0 +1,7 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="networkError">
+        <h1>Ooooops, something went wrong with network connection:(</h1>
+        <small><fest:value>data.errorText</fest:value></small>
+        <a id="error_back_btn" href="/menu" data-href="menu" class="error__back">Go back</a>
+    </div>
+</fest:template>

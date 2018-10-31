@@ -1,6 +1,6 @@
 'use strict';
 
-import UserService from "../../Services/UserService.js";
+import UserService from "../../services/UserService.js";
 import "/js/components/Profile/Profile.tmpl.js"
 
 const userService = new UserService;
@@ -48,7 +48,7 @@ export default class ProfileComponent {
             })
             .catch((error) => {
                 console.log(error);
-                window.bus.publish("draw-menu");
+                window.bus.publish("draw-networkError");
             });
     }
 }

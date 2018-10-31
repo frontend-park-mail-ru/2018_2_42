@@ -37,7 +37,7 @@ export default class UserService {
                 window.bus.publish("successful_sign_out");
             })
             .catch((error) => {
-                // window.bus.publish("draw-menu");
+                window.bus.publish("draw-networkError");
             });
     }
 
@@ -54,7 +54,7 @@ export default class UserService {
                 window.bus.publish("successful_sign_in", login);
             })
             .catch((error) => {
-                // this.showServerError(error);
+                window.bus.publish("draw-networkError");
             });
     }
 
@@ -71,7 +71,7 @@ export default class UserService {
                 window.bus.publish("successful_sign_up", login);
             })
             .catch((error) => {
-                // this.showServerError(error);
+                window.bus.publish("draw-networkError");
             });
     }
 
@@ -87,7 +87,7 @@ export default class UserService {
                 window.bus.publish("draw-profile", this.login);
             })
             .catch((error) => {
-                console.log(error);
+                window.bus.publish("draw-networkError");
             });
     }
 

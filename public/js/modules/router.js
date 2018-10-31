@@ -4,6 +4,7 @@ export default class Router {
         this.routes = {};
 
         this.root = root;
+        this._prevPath = "";
     }
 
 	/**
@@ -71,9 +72,14 @@ export default class Router {
         this.routes[page.path] = { View, view, el };
     }
 
+    goBack() {
+        this.open({ path: this._prevPath, params: {} });
+    }
+
     start() {
         window.addEventListener('popstate', () => {
             const currentPath = window.location.pathname;
+            this._prevPath = currentPath;
             this.open({ path: currentPath, params: {} });
         });
 

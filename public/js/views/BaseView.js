@@ -1,6 +1,6 @@
 'use strict';
 import Navbar from "../components/Navbar/Navbar.mjs";
-import UserService from "../Services/UserService.js";
+import UserService from "../services/UserService.js";
 
 const userService = new UserService();
 
