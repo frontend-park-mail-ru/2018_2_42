@@ -1,6 +1,6 @@
 'use strict';
 import Navbar from "../components/Navbar/Navbar.mjs";
-import UserService from "../Services/UserService.js";
+import UserService from "../services/UserService.js";
 
 const userService = new UserService();
 
@@ -63,6 +63,7 @@ export default class BaseView {
 
         const navbar = new Navbar({ el: section, login: login });
         navbar.render();
+        this._el.dataset.view = this.constructor.name;
     }
 
     destroyNavbar() {

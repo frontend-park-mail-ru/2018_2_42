@@ -1,7 +1,7 @@
 'use strict';
 import SignInFormComponent from "../components/Form/SignInForm.mjs";
 import BaseView from "./BaseView.js";
-import UserService from "../Services/UserService.js";
+import UserService from "../services/UserService.js";
 
 const userService = new UserService();
 

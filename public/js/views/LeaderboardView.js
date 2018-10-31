@@ -1,7 +1,7 @@
 'use strict';
 import LeaderBoardComponent from "../components/LeaderBoard/LeaderBoard.mjs";
 import BaseView from "./BaseView.js";
-import UserService from "../Services/UserService.js";
+import UserService from "../services/UserService.js";
 
 const userService = new UserService();
 

@@ -7,6 +7,7 @@
 @import '../js/components/Profile/Profile.css';
 @import '../js/components/LeaderBoard/LeaderBoard.css';
 @import '../js/components/About/About.css';
+@import '../js/components/NetworkError/NetworkError.css';
 
 
 [hidden] { display: none !important; }

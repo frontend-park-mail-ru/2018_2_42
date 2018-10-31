@@ -1,5 +1,5 @@
 'use strict';
-import UserService from "../../Services/UserService.js";
+import UserService from "../../services/UserService.js";
 
 const userService = new UserService;
 
