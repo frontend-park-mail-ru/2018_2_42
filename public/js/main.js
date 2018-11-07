@@ -9,6 +9,7 @@ import AboutView from "./views/AboutView.js";
 import SignInView from "./views/SignInView.js";
 import SignUpView from "./views/SignUpView.js";
 import NetworkErrorView from "./views/NetworkErrorView.js";
+import GameFieldView from "./views/GameFieldView.js";
 import registerCachingSW from "./modules/registerCachingSW.js"
 
 window.bus = new EventBus();
@@ -23,6 +24,8 @@ window.bus.subscribe("draw-sign-in", () => { router.open({ path: '/signin' }) })
 window.bus.subscribe("draw-leaderboard", () => { router.open({ path: '/leaders' }) });
 window.bus.subscribe("draw-about", () => { router.open({ path: '/about' }) });
 window.bus.subscribe("draw-networkError", () => { router.open({ path: '/error' }) });
+window.bus.subscribe("draw-game-offline", () => { router.open({ path: '/play-offline' }) });
+window.bus.subscribe("draw-game-online", () => { router.open({ path: '/play-online' }) });
 window.bus.subscribe("router-go-back", () => { router.goBack() });
 
 window.bus.subscribe("successful_sign_in", () => { router.rerenderViews(['/profile']); router.open({ path: '/profile' }); });
@@ -42,5 +45,7 @@ router
 	.register('/signin', SignInView)
 	.register('/signup', SignUpView)
 	.register('/error', NetworkErrorView)
+	.register('/play-online', GameFieldView)
+	.register('/play-offline', GameFieldView)
 
 router.start();

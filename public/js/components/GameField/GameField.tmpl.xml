@@ -1,0 +1,6 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="game">
+        <div class="gamefield"><h1>Здесь рисуем поле</h1></div>
+        <a id="gamefield_back_btn" href="/menu" data-href="menu" class="gamefield__back">Quit game</a>
+    </div>
+</fest:template>
