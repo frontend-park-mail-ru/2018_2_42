@@ -1,5 +1,5 @@
 function resizeUnits(event) {
-    var td = document.getElementsByTagName('td')[0];
+    var td = document.getElementsByClassName('cell')[0];
 
     var units = document.getElementsByClassName('unit');
     console.log(units.array)
