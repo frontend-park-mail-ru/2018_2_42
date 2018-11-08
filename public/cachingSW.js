@@ -49,6 +49,9 @@ const cacheUrls = [
     '/js/components/NetworkError/NetworkError.tmpl.js',
     '/js/components/NetworkError/NetworkError.mjs',
     '/js/components/NetworkError/NetworkError.css',
+    '/js/components/GameField/GameField.tmpl.js',
+    '/js/components/GameField/GameField.mjs',
+    '/js/components/GameField/GameField.css',
 
     '/js/modules/api.js',
     '/js/modules/eventBus.js',
@@ -56,6 +59,12 @@ const cacheUrls = [
     '/js/modules/router.js',
     '/js/modules/validation.js',
     '/js/modules/registerCachingSW.js',
+    '/js/modules/game/game.js',
+    '/js/modules/game/core/gamecore.js',
+    '/js/modules/game/core/offline.js',
+    '/js/modules/game/core/teams.js',
+    '/js/modules/game/core/unit.js',
+    '/js/modules/game/core/weapons.js',
 
     '/js/services/UserService.js',
 
@@ -67,6 +76,7 @@ const cacheUrls = [
     '/js/views/SignInView.js',
     '/js/views/SignUpView.js',
     '/js/views/NetworkErrorView.js',
+    '/js/views/GameFieldView.js',
     
     '/js/main.js',    
     '/cachingSW.js',    
