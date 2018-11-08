@@ -1,4 +1,6 @@
 @import './fontsKit.css';
+@import './sprites.css';
+@import './animation.css';
 @import '../js/components/Navbar/Navbar.css';
 @import '../js/components/Logo/Logo.css';
 @import '../js/components/Menu/Menu.css';

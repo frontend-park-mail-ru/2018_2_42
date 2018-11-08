@@ -5,6 +5,8 @@ const cacheUrls = [
 
     '/css/main.css',
     '/css/fontsKit.css',
+    '/css/animation.css',
+    '/css/sprites.css',
 
     '/fonts/37DEB7_0_0.eot',
     '/fonts/37DEB7_0_0.svg',
