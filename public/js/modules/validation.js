@@ -1,5 +1,4 @@
 'use strict';
-
 export const Errors = {
     login: { id: "login_error", required: "Login is required" },
     password: { id: "password_error", minLength: "Password must be at least 6 characters long", wrongFormat: "Wrong password format" },

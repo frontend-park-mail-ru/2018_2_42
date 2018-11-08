@@ -1,6 +1,8 @@
 'use strict'
 
-export class AboutComponent {
+import "/js/components/About/About.tmpl.js"
+
+export default class AboutComponent {
     constructor({ el = document.body } = {}) {
         this._el = el;
     }
@@ -24,6 +26,13 @@ export class AboutComponent {
             },
         };
         const template = window.fest['js/components/About/About.tmpl'](data);
-        this._el.innerHTML += template;
+        let div = document.createElement('div');
+        div.innerHTML = template;
+        this._el.appendChild(div.firstChild);
+
+        document.getElementById("about_back_btn" ).addEventListener("click", (event) => {
+            event.preventDefault();
+            window.bus.publish("draw-menu");
+        });
     }
 }

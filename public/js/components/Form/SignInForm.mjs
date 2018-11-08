@@ -1,12 +1,12 @@
 'use strict'
 
+import "/js/components/Form/Form.tmpl.js"
+
 import { Errors, ValidatorModule } from "../../modules/validation.js";
-import { APIModule } from "../../modules/api.js";
 
 const validator = new ValidatorModule;
-const api = new APIModule;
 
-export class SignInFormComponent {
+export default class SignInFormComponent {
     constructor({ el = document.body } = {}) {
         this._el = el;
     }
@@ -24,11 +24,18 @@ export class SignInFormComponent {
             ],
         };
         const template = window.fest['js/components/Form/Form.tmpl'](data);
-        this._el.innerHTML += template;
+        let div = document.createElement('div');
+        div.innerHTML = template;
+        this._el.appendChild(div.firstChild);
 
         this.form = this._el.querySelector('.form__sign_in');
-        this.form.addEventListener('submit', event => {
+        this.form.addEventListener('submit', (event) => {
             this._submitForm(event)
+        });
+
+        document.getElementById(`${data.classForm}_back_btn`).addEventListener("click", (event) => {
+            event.preventDefault();
+            window.bus.publish("draw-menu");
         });
     }
     
@@ -72,23 +79,7 @@ export class SignInFormComponent {
         }
 
         if (validateCounter == validators.length) {
-
-            api.SignIn({ login: login, password: password })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok.');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    localStorage.setItem("login", login);
-                    let event = new CustomEvent('successful_sign_in', { detail: { login: login } });
-                    this.form.dispatchEvent(event);
-                })
-                .catch(error => {
-                    let event = new CustomEvent('unsuccessful_sign_in', { detail: error });
-                    this.form.dispatchEvent(event);
-                });
+            window.bus.publish("sign-in", { login: login, password: password });
         }
     }
 }

@@ -25,6 +25,6 @@
             <div>Wins:<fest:space/><fest:value>data.profile.wins</fest:value></div>
         </div>
 
-        <a href="/menu" data-href="menu" class="about__back">Back</a>
+        <a id="profile_back_btn" href="/menu" data-href="menu" class="back_btn about__back">Back to menu</a>
     </div>
 </fest:template>

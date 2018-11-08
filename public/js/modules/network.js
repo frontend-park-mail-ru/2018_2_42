@@ -1,6 +1,5 @@
 'use strict';
-
-export class NetworkModule {
+export default class NetworkModule {
     /**
      * Perfoms GET request
      * @param {string} url requests's url

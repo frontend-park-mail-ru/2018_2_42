@@ -1,0 +1,14 @@
+.networkError {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-top: 10rem;
+}
+
+.error__back {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
+}

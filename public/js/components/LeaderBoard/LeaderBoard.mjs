@@ -1,10 +1,11 @@
 'use strict';
 
-import { APIModule } from "../../modules/api.js";
+import UserService from "../../services/UserService.js";
+import "/js/components/LeaderBoard/LeaderBoard.tmpl.js"
 
-const api = new APIModule;
+const userService = new UserService;
 
-export class LeaderBoardComponent {
+export default class LeaderBoardComponent {
     constructor({ el = document.body, leaders = [], page = 1, limit = 20 } = {}) {
         this._el = el;
         this._leaders = leaders;
@@ -18,15 +19,22 @@ export class LeaderBoardComponent {
             page: this._page
         }
         const template = window.fest['js/components/LeaderBoard/LeaderBoard.tmpl'](data);
-        this._el.innerHTML += template;
+        let div = document.createElement('div');
+        div.innerHTML = template;
+        this._el.appendChild(div.firstChild);
+
+        document.getElementById("leaderboard_back_btn").addEventListener("click", (event) => {
+            event.preventDefault();
+            window.bus.publish("draw-menu");
+        });
 
         this.leaderBoard = this._el.getElementsByClassName('leaderboard')[0];
 
-        this.leaderBoard.getElementsByClassName('leaderboard__moreButton')[0].onclick = event => {
+        this.leaderBoard.getElementsByClassName('leaderboard__moreButton')[0].addEventListener("click", (event) => {
             event.preventDefault();
             event.stopPropagation();
 
-            api.Leaders(this._page + 1, this._limit)
+            userService.GetLeaders(this._page + 1, this._limit)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Server response was not ok.');
@@ -41,7 +49,7 @@ export class LeaderBoardComponent {
                     let button = this.leaderBoard.getElementsByClassName('leaderboard__moreButton')[0];
                     button.parentNode.removeChild(button);
                 });
-        }
+        });
     }
 
     _addLeaders(leaders) {

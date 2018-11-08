@@ -1,6 +1,8 @@
 'use strict';
 
-export class LogoComponent {
+import "/js/components/Logo/Logo.tmpl.js"
+
+export default class LogoComponent {
     constructor ({el = document.body, logo = null} = {}) {
         this._el = el;
         this._logo = logo;
