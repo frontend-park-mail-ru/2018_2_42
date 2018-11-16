@@ -1,25 +1,75 @@
-class GameControllers {
+'use strict';
+import TEAMS from "./core/teams.js";
+
+export default class GameControllers {
     constructor(root) {
         this.root = root;
         this.action = {};
-
-        this.color = "blue";
-        this.selectedCell = null;
         this.reachableCells = [];
+        this.team = null;
+        this.selectedCell = null;
+        
+        this.bindedHandler = this._onMousedown.bind(this);
+        this.bindedSetTeam = this.setTeam.bind(this);
+        window.bus.subscribe("team-picked", this.bindedSetTeam);
     }
 
+    setTeam(clr = "blue") {
+        this.team = clr;
+        window.bus.unsubscribe("team-picked", this.bindedSetTeam);
+    }
+    
     start() {
-        this.root.addEventListener('mousedown', this._onMousedown.bind(this));
+        this.root.addEventListener('mousedown', this.bindedHandler);
     }
 
-    destroy() {
-        this.root.removeEventListener('mousedown', this._onMousedown.bind(this));
+    stop() {
+        this.root.removeEventListener('mousedown', this.bindedHandler);
+       
+        this.removeMarkers();
+    }
+
+    /**
+     * Обработчик события
+     */
+    _onMousedown(event) {
+        const clicked = event.target
+        
+        if (this.reachableCells.includes(clicked)) {
+            // bus.emit(unit moves!)
+        }
+
+        this.removeMarkers();
+
+        if (clicked.classList.contains("unit") && this.containsAlly(clicked.parentElement)) {
+            const parentCell = clicked.parentElement;
+            console.log(parentCell);
+            parentCell.classList.add('selected-cell')
+            this.selectedCell = parentCell;
+
+            this.markAvailableCells(clicked)
+        }
+    }
+
+    removeMarkers(){
+        if (this.reachableCells) {
+            this.reachableCells.forEach(cell=>{
+                cell.classList.remove("near-cell")
+            });
+        }
+        
+        if (this.selectedCell) {
+            this.selectedCell.classList.remove("selected-cell");
+        }
+
+        this.reachableCells = [];
+        this.selectedCell = null;
     }
 
     containsAlly(cell){
         const cellInner = cell.firstChild;
         if (cellInner == null) return false
-        switch (this.color){
+        switch (this.team){
             case "blue":
                 return cellInner.classList.contains("blue-back");
             case "red":
@@ -59,40 +109,5 @@ class GameControllers {
 
     getRightCell(cell){
         return document.getElementById((+cell.getAttribute("id") + 1) + '')
-    }
-    
-    /**
-     * Обработчик события
-     * @param  {string} type
-     * @param  {MouseEvent} event
-     */
-    _onMousedown(event) {
-        const clicked = event.target
-        
-        if (this.reachableCells.includes(clicked)) {
-            // bus.emit(unit moves!)
-            console.log("send move action to server");
-        }
-
-        if (this.reachableCells) {
-            this.reachableCells.forEach(cell=>{
-                cell.classList.remove("near-cell")
-            });
-        }
-        
-        if (this.selectedCell) {
-            this.selectedCell.classList.remove("selected-cell");
-        }
-
-        this.reachableCells = [];
-        this.selectedCell = null;
-
-        if (clicked.classList.contains("unit") && this.containsAlly(clicked.parentElement)) {
-            const parentCell = clicked.parentElement;
-            parentCell.classList.add('selected-cell')
-            this.selectedCell = parentCell;
-
-            this.markAvailableCells(clicked)
-        }
     }
 }
