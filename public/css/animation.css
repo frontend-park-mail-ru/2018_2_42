@@ -25,6 +25,14 @@
     display: table-row-group;
 }
 
+.selected-cell {
+    background-color: rgb(3, 247, 3);
+}
+
+.near-cell {
+    background-color: blue;
+}
+
 @media only screen and (max-width : 480px) {
     .table { width: 90%};
 }

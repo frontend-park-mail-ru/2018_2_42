@@ -1,7 +1,7 @@
 'use strict';
 import TEAMS from "./core/teams.js";
 
-export default class GameControllers {
+export default class GameController {
     constructor(root) {
         this.root = root;
         this.action = {};
@@ -14,7 +14,7 @@ export default class GameControllers {
         window.bus.subscribe("team-picked", this.bindedSetTeam);
     }
 
-    setTeam(clr = "blue") {
+    setTeam(clr) {
         this.team = clr;
         window.bus.unsubscribe("team-picked", this.bindedSetTeam);
     }
@@ -70,9 +70,9 @@ export default class GameControllers {
         const cellInner = cell.firstChild;
         if (cellInner == null) return false
         switch (this.team){
-            case "blue":
+            case TEAMS.BLUE:
                 return cellInner.classList.contains("blue-back");
-            case "red":
+            case TEAMS.RED:
                 return cellInner.classList.contains("red-back");
             default:
                 return false
