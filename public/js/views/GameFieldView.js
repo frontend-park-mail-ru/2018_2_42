@@ -3,6 +3,7 @@ import GameFieldComponent from "../components/GameField/GameField.mjs";
 import BaseView from "./BaseView.js";
 import UserService from "../services/UserService.js";
 import Game from "../modules/game/game.js";
+import TEAMS from "../modules/game/core/teams.js"
 
 const userService = new UserService();
 
@@ -36,6 +37,21 @@ export default class GameFieldView extends BaseView {
 
     moveUnit({ from = null, to = null }) {
 
+    }
+
+    drawUnit({ x = null, y = null, unit = null }) {
+        // let div = document.createElement('div');
+        // switch (unit.team) {
+        //     case TEAMS.RED:
+        //         div.innerHTML = '<div class="unit red-front"></div>';
+        //         break;
+        //     case TEAMS.BLUE:
+        //         div.innerHTML = '<div class="unit blue-front"></div>';
+        //         break;
+        //     default:
+        //         break;
+        // }
+        // this._el.appendChild(div.firstChild);
     }
 
     destroy() {

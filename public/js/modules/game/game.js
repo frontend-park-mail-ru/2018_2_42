@@ -19,7 +19,8 @@ export default class Game {
                 throw new Error('Invalid game mode ' + mode);
         }
 
-        this.gameScene = new GameScene();
+        // this.gameScene = new GameScene();
+        this.gameScene = null;
 
         this.gameCore = new GameConstructor({ scene: this.gameScene });
     }

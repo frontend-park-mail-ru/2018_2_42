@@ -15,21 +15,21 @@ export default class OfflineGame extends GameCore {
             field: [],
         };
 
-        redTeam = Array.from(new Array(7), () => {
-            return new Unit({ team: TEAMS.RED });
-        });
-
-        blueTeam = Array.from(new Array(7), () => {
-            return new Unit({ team: TEAMS.BLUE });
-        });
-
         this.state.field = [
-            redTeam,
+            Array.from(new Array(7), () => {
+                return new Unit({ team: TEAMS.RED });
+            }),
+            Array.from(new Array(7), () => {
+                return new Unit({ team: TEAMS.RED });
+            }),
             new Array(7).fill(null),
             new Array(7).fill(null),
-            new Array(7).fill(null),
-            new Array(7).fill(null),
-            blueTeam,
+            Array.from(new Array(7), () => {
+                return new Unit({ team: TEAMS.RED });
+            }),
+            Array.from(new Array(7), () => {
+                return new Unit({ team: TEAMS.RED });
+            }),
         ];
 
         setTimeout(function () {
