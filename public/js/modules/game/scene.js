@@ -30,10 +30,12 @@ export default class GameScene {
     }
 
     start() {
+        window.bus.subscribe("shuffle-weapons", this.shuffleWeapon);
         //sunscribes
     }
 
     stop() {
+        window.bus.unsubscribe("shuffle-weapons", this.shuffleWeapon);
         //unsibscribes
     }
 

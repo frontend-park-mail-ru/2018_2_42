@@ -1,0 +1,12 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="weaponsShuffler shuffler-modal">
+        <div class="shuffler-modal-content">
+            <div class="shuffler-modal-header">SHUFFLE WEAPONS</div>
+
+            <div class="shuffler-container">
+                <a class="shuffle" id="shuffleButton" href="">Shuffle</a>
+                <a class="start" id="startButton" href="">Start game</a>
+            </div>
+        </div>
+    </div>
+</fest:template>

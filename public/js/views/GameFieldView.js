@@ -1,9 +1,11 @@
 'use strict';
 import GameFieldComponent from "../components/GameField/GameField.mjs";
+import TeamChooserComponent from "../components/TeamChooser/TeamChooser.mjs";
 import BaseView from "./BaseView.js";
 import UserService from "../services/UserService.js";
 import Game from "../modules/game/game.js";
 import TEAMS from "../modules/game/core/teams.js"
+import WeaponsShufflerComponent from "../components/WeaponsShuffler/WeaponsShuffler.mjs";
 
 const userService = new UserService();
 
@@ -30,28 +32,37 @@ export default class GameFieldView extends BaseView {
         this._el.appendChild(this._section);
         const gameField = new GameFieldComponent({ el: this._section });
         gameField.render();
-        // create game object
-        this.game = new Game({ mode: this._mode });
-        // this.game.start();
+
+        const gameFieldNode = document.getElementsByClassName("game")[0];
+        this.game = new Game({ mode: this._mode, gameField: gameFieldNode });
+        this.renderTeamChooser();
+        this.game.start();
     }
 
-    moveUnit({ from = null, to = null }) {
+    renderTeamChooser() {
+        const teamChooser = new TeamChooserComponent({ el: this._section });
+        teamChooser.render();
 
+        document.getElementById("redTeamChooser").addEventListener("click", (event) => {
+            event.preventDefault();
+            this.chooseTeam({ team: TEAMS.RED });
+        });
+
+        document.getElementById("blueTeamChooser").addEventListener("click", (event) => {
+            event.preventDefault();
+            this.chooseTeam({ team: TEAMS.BLUE });
+        });
     }
 
-    drawUnit({ x = null, y = null, unit = null }) {
-        // let div = document.createElement('div');
-        // switch (unit.team) {
-        //     case TEAMS.RED:
-        //         div.innerHTML = '<div class="unit red-front"></div>';
-        //         break;
-        //     case TEAMS.BLUE:
-        //         div.innerHTML = '<div class="unit blue-front"></div>';
-        //         break;
-        //     default:
-        //         break;
-        // }
-        // this._el.appendChild(div.firstChild);
+    renderShuffler() {
+        const weaponsShuffler = new WeaponsShufflerComponent({ el: this._section });
+        weaponsShuffler.render();
+    }
+
+    chooseTeam({ team = null }) {
+        document.getElementsByClassName("teamChooser")[0].remove();
+        window.bus.publish("team-picked", team);
+        this.renderShuffler();
     }
 
     destroy() {
