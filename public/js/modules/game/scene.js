@@ -11,15 +11,17 @@ export default class GameScene {
         
         this.bindedSetTeam = this.setTeam.bind(this);
         window.bus.subscribe("team-picked", this.bindedSetTeam);
+        this.bindedShuffleWeapon = this.shuffleWeapon.bind(this);
+        window.bus.subscribe("shuffle-weapons", this.bindedShuffleWeapon);
     }
 
     setTeam(clr) {
         switch (clr){
-            case "BLUE": 
+            case TEAMS.BLUE: 
                 this.me = "blue";
                 this.enemy = "red";
             break;
-            case "RED": 
+            case TEAMS.RED: 
                 this.me = "red";
                 this.enemy = "blue";
             break;
@@ -27,19 +29,18 @@ export default class GameScene {
             return; 
         }
         window.bus.unsubscribe("team-picked", this.bindedSetTeam);
+        this.fillScene();
+        this.shuffleWeapon();
     }
 
     start() {
-        window.bus.subscribe("shuffle-weapons", this.shuffleWeapon);
-        //sunscribes
+        window.bus.unsubscribe("shuffle-weapons", this.bindedShuffleWeapon);
     }
 
     stop() {
-        window.bus.unsubscribe("shuffle-weapons", this.shuffleWeapon);
-        //unsibscribes
     }
 
-    changeTurn(clr = "BLUE"){
+    changeTurn(clr = TEAMS.BLUE){
         let indicatorClasses = document.getElementById("indicator").classList;
         indicatorClasses.remove("red-turn", "blue-turn");
         switch (clr){

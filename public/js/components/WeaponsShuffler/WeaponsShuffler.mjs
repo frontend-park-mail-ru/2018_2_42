@@ -13,15 +13,5 @@ export default class WeaponsShufflerComponent {
         let div = document.createElement('div');
         div.innerHTML = template;
         this._el.appendChild(div.firstChild);
-
-        document.getElementById("shuffleButton").addEventListener("click", (event) => {
-            event.preventDefault();
-            window.bus.publish("shuffle-weapons");
-        });
-
-        document.getElementById("startButton").addEventListener("click", (event) => {
-            event.preventDefault();
-            window.bus.publish("start-game"); //search-game?
-        });
     }
 }

@@ -54,15 +54,26 @@ export default class GameFieldView extends BaseView {
         });
     }
 
-    renderShuffler() {
-        const weaponsShuffler = new WeaponsShufflerComponent({ el: this._section });
-        weaponsShuffler.render();
-    }
-
     chooseTeam({ team = null }) {
         document.getElementsByClassName("teamChooser")[0].remove();
         window.bus.publish("team-picked", team);
         this.renderShuffler();
+    }
+
+    renderShuffler() {
+        const weaponsShuffler = new WeaponsShufflerComponent({ el: this._section });
+        weaponsShuffler.render();
+        
+        document.getElementById("shuffleButton").addEventListener("click", (event) => {
+            event.preventDefault();
+            window.bus.publish("shuffle-weapons");
+        });
+
+        document.getElementById("startButton").addEventListener("click", (event) => {
+            event.preventDefault();
+            window.bus.publish("game-upload-team"); //search-game?
+            document.getElementsByClassName("weaponsShuffler")[0].remove();
+        });
     }
 
     destroy() {

@@ -8,16 +8,19 @@ export default class OfflineGame extends GameCore {
         super({ mode: "offline", scene: scene });
         this.state = {};
     }
-
+    
     start() {
         super.start();
-
+        
         setTimeout(function () {
             window.bus.publish("start-game", this.state);
         }.bind(this));
     }
-
+    
     onGameStarted(state) {
+    }
+    
+    onGameUploadTeam(state) {
         this.scene.start();
     }
 

@@ -5,23 +5,30 @@ export default class GameCore {
         this.mode = mode;
         this.scene = scene;
         this.onGameStarted = this.onGameStarted.bind(this);
+        this.onGameUploadTeam = this.onGameUploadTeam.bind(this);
         this.onGameFinished = this.onGameFinished.bind(this);
         this.onGameStateChanged = this.onGameStateChanged.bind(this);
     }
 
     start() {
         window.bus.subscribe("start-game", this.onGameStarted);
+        window.bus.subscribe("game-upload-team", this.onGameUploadTeam);
         window.bus.subscribe("finish-game", this.onGameFinished);
         window.bus.subscribe("game-state-changed", this.onGameStateChanged);
     }
-
+    
     destroy() {
         window.bus.unsubscribe("start-game", this.onGameStarted);
+        window.bus.unsubscribe("game-upload-team", this.onGameUploadTeam);
         window.bus.unsubscribe("finish-game", this.onGameFinished);
         window.bus.unsubscribe("game-state-changed", this.onGameStateChanged);
     }
 
     onGameStarted(state) {
+        throw new Error('This method must be overridden');
+    }
+
+    onGameUploadTeam(state) {
         throw new Error('This method must be overridden');
     }
 
