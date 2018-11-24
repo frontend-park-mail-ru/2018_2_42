@@ -1,53 +1,83 @@
 'use strict';
+
 import TEAMS from "./core/teams.js";
+import WEAPONS from "./core/weapons.js";
 
 export default class GameController {
     constructor(root) {
         this.root = root;
         this.action = {};
         this.reachableCells = [];
-        this.team = null;
+        this.me = null;
+        this.enemy = null;
         this.selectedCell = null;
         
-        this.bindedHandler = this._onMousedown.bind(this);
-        this.bindedSetTeam = this.setTeam.bind(this);
-        window.bus.subscribe("team-picked", this.bindedSetTeam);
+        this.handler = this._onMousedown.bind(this);
+        this.setTeam = this.setTeam.bind(this);
+        this.changeTurn = this.changeTurn.bind(this);
+        this.start = this.start.bind(this);
+        this.stop = this.stop.bind(this);
+        window.bus.subscribe("team-picked", this.setTeam);
+        window.bus.subscribe("change-turn", this.changeTurn);
+        window.bus.subscribe("start-controller", this.start);
+        window.bus.subscribe("stop-controller", this.stop);
     }
 
     setTeam(clr) {
-        this.team = clr;
+        this.me = clr;
+        this.enemy = (this.me === TEAMS.RED) ? TEAMS.BLUE : TEAMS.RED;
         window.bus.unsubscribe("team-picked", this.bindedSetTeam);
     }
     
     start() {
-        this.root.addEventListener('mousedown', this.bindedHandler);
+        this.root.addEventListener('mousedown', this.handler);
     }
 
     stop() {
-        this.root.removeEventListener('mousedown', this.bindedHandler);
-       
+        this.root.removeEventListener('mousedown', this.handler);
         this.removeMarkers();
+    }
+
+    changeTurn(clr = TEAMS.BLUE){
+        if (clr === this.me) {
+            this.start()
+        } else {
+            this.stop();
+        }
     }
 
     /**
      * Обработчик события
      */
     _onMousedown(event) {
-        const clicked = event.target
+        let clicked = event.target;
         
+        if (clicked.classList.contains(WEAPONS.ROCK) ||
+            clicked.classList.contains(WEAPONS.PAPER) ||
+            clicked.classList.contains(WEAPONS.SCISSORS)){
+                clicked = clicked.parentNode;
+        }
+            
+        if (clicked.className.indexOf(this.enemy) > 0){
+                clicked = clicked.parentNode;
+        }
+
+
+
         if (this.reachableCells.includes(clicked)) {
-            // bus.emit(unit moves!)
+            let from = +this.selectedCell.getAttribute("id");
+            let to = +clicked.getAttribute("id");
+            window.bus.publish("game-unit-moved", {from ,to} );
         }
 
         this.removeMarkers();
-
-        if (clicked.classList.contains("unit") && this.containsAlly(clicked.parentElement)) {
-            const parentCell = clicked.parentElement;
-            console.log(parentCell);
-            parentCell.classList.add('selected-cell')
-            this.selectedCell = parentCell;
-
-            this.markAvailableCells(clicked)
+        if (clicked.classList.contains("unit") &&
+            this.containsAlly(clicked.parentElement, this.me) &&
+            clicked.className.indexOf("flag") == -1) {
+                const parentCell = clicked.parentElement;
+                parentCell.classList.add('selected-cell');
+                this.selectedCell = parentCell;
+                this.markAvailableCells(clicked, this.me)
         }
     }
 
@@ -66,10 +96,10 @@ export default class GameController {
         this.selectedCell = null;
     }
 
-    containsAlly(cell){
+    containsAlly(cell, allyClr){
         const cellInner = cell.firstChild;
         if (cellInner == null) return false
-        switch (this.team){
+        switch (allyClr){
             case TEAMS.BLUE:
                 return cellInner.classList.contains("blue-back");
             case TEAMS.RED:
@@ -79,19 +109,38 @@ export default class GameController {
         }
     }
 
-    markAvailableCells(clicked){
+    getAvailableCells(clicked, allyClr){
         const parentCell = clicked.parentElement;
 
-        this.markAvailableCell(this.getUpperCell(parentCell))
-        this.markAvailableCell(this.getUnderCell(parentCell))
-        this.markAvailableCell(this.getLeftCell(parentCell))
-        this.markAvailableCell(this.getRightCell(parentCell))
+        let availableCells = [];
+
+        let upCell = this.getUpperCell(parentCell);
+        if ((upCell != null) && !this.containsAlly(upCell, allyClr)) availableCells.push(upCell);
+
+        let underCell = this.getUnderCell(parentCell);
+        if ((underCell != null) && !this.containsAlly(underCell, allyClr)) availableCells.push(underCell);
+
+        let leftCell = this.getLeftCell(parentCell);
+        if ((leftCell != null) && !this.containsAlly(leftCell, allyClr)) availableCells.push(leftCell);
+
+        let rightCell = this.getRightCell(parentCell);
+        if ((rightCell != null) && !this.containsAlly(rightCell, allyClr)) availableCells.push(rightCell);
+
+        return availableCells;
     }
 
-    markAvailableCell(cell){
-        if ((cell != null) && !this.containsAlly(cell)) {
+    markAvailableCells(clicked, allyClr){
+        this.reachableCells = this.getAvailableCells(clicked, allyClr);
+
+        this.reachableCells.forEach(element => {
+            this.markAvailableCell(element, allyClr)
+        });
+    }
+
+    markAvailableCell(cell, allyClr){
+        if ((cell != null) && !this.containsAlly(cell, allyClr)) {
             cell.classList.add('near-cell')
-            this.reachableCells.push(cell)
+            // this.reachableCells.push(cell)
         }
     }
 
@@ -104,10 +153,14 @@ export default class GameController {
     }
 
     getLeftCell(cell){
-        return document.getElementById((+cell.getAttribute("id") - 1) + '')
+        if ((+cell.getAttribute("id") % 7) !== 0) {
+            return document.getElementById((+cell.getAttribute("id") - 1) + '')
+        }
     }
 
     getRightCell(cell){
-        return document.getElementById((+cell.getAttribute("id") + 1) + '')
+        if (((+cell.getAttribute("id") + 1) % 7) !== 0) {
+            return document.getElementById((+cell.getAttribute("id") + 1) + '')
+        }
     }
 }

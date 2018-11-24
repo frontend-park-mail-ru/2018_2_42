@@ -9,21 +9,26 @@ export default class GameScene {
         this.me = null;
         this.enemy = null;
         
-        this.bindedSetTeam = this.setTeam.bind(this);
-        window.bus.subscribe("team-picked", this.bindedSetTeam);
-        this.bindedShuffleWeapon = this.shuffleWeapon.bind(this);
-        window.bus.subscribe("shuffle-weapons", this.bindedShuffleWeapon);
+        this.setTeam = this.setTeam.bind(this);
+        this.shuffleWeapon = this.shuffleWeapon.bind(this);
+        this.moveUnit = this.moveUnit.bind(this);
+        this.fight = this.fight.bind(this);
+        this.showGetFlag = this.showGetFlag.bind(this);
+
+        window.bus.subscribe("team-picked", this.setTeam);
+        window.bus.subscribe("shuffle-weapons", this.shuffleWeapon);
+        window.bus.subscribe("change-turn", this.changeTurn);
     }
 
     setTeam(clr) {
         switch (clr){
             case TEAMS.BLUE: 
-                this.me = "blue";
-                this.enemy = "red";
+                this.me = TEAMS.BLUE;
+                this.enemy = TEAMS.RED;
             break;
             case TEAMS.RED: 
-                this.me = "red";
-                this.enemy = "blue";
+                this.me = TEAMS.RED;
+                this.enemy = TEAMS.BLUE;
             break;
             default: throw "Incorrect color";
             return; 
@@ -34,14 +39,20 @@ export default class GameScene {
     }
 
     start() {
+        //вынести, мб понадобится делать старт несколько раз
         window.bus.unsubscribe("shuffle-weapons", this.bindedShuffleWeapon);
+
+        window.bus.subscribe("finish-game", this.showGetFlag);
+        window.bus.subscribe("move-unit", this.moveUnit);
+        window.bus.subscribe("fight", this.fight);
     }
 
     stop() {
+
     }
 
     changeTurn(clr = TEAMS.BLUE){
-        let indicatorClasses = document.getElementById("indicator").classList;
+        let indicatorClasses = document.getElementsByClassName("indicator")[0].classList;
         indicatorClasses.remove("red-turn", "blue-turn");
         switch (clr){
             case "blue": indicatorClasses.add("blue-turn");
@@ -83,7 +94,7 @@ export default class GameScene {
     shuffleWeapon(){
         for (let i = 0; i < 14; i++) {
             let weapon = document.createElement("div");
-            weapon.classList.add(this.RandomWeapon().toLowerCase());
+            weapon.classList.add(WEAPONS.RandomWeapon());
             let targetUnit = document.getElementById(41 - i).firstChild;
             if (!targetUnit) throw "units not in start position";
             targetUnit.classList.remove(this.me + '-flag');
@@ -96,7 +107,9 @@ export default class GameScene {
         document.getElementById(flagPos).firstChild.classList.add(this.me + '-flag');
     }
 
-    moveUnit(from, to){
+    moveUnit({from, to}){
+        window.bus.publish("stop-controller");
+
         let unitFrom = null;
         if (this.validatePositionId(from)) {
             unitFrom = document.getElementById(from).firstChild;
@@ -129,12 +142,121 @@ export default class GameScene {
             unitFrom.classList.remove(moveAnimationClass);
             if (weapon) weapon.classList.remove("animate-jump");
             unitFrom.removeEventListener("webkitAnimationEnd", afterMove);
+            window.bus.publish("start-controller");
         }
 
         unitFrom.classList.add(moveAnimationClass);
         unitFrom.addEventListener("webkitAnimationEnd", afterMove, false);
     }
     
+    fight({	winner = {position, weapon}, loser = {position, weapon}}){
+        window.bus.publish("stop-controller");
+
+        if (!(this.validateUnit(winner) && this.validateUnit(loser))) return;
+
+        const winnerCell = document.getElementById(winner.position);
+        const loserCell = document.getElementById(loser.position);
+
+        const winnerUnit = winnerCell.firstChild;
+        const loserUnit = loserCell.firstChild;
+
+        if (((winnerUnit.className.indexOf(this.me) > 0) &&	(loserUnit.className.indexOf(this.me) > 0)) ||
+            ((winnerUnit.className.indexOf(this.enemy) > 0) && (loserUnit.className.indexOf(this.enemy) > 0))) {
+            throw "fight between teammates";
+            return;
+        }
+
+        let allyCell = null;
+        let enemyCell = null;
+
+        let fightAnimationClass = null;
+        //определение команды победителя
+        if (winnerUnit.className.indexOf(this.me) > 0) {
+            allyCell = winnerCell;
+            enemyCell = loserCell;
+            fightAnimationClass = this.fightAnimationClassBuilder(this.me, winner.weapon, loser.weapon)
+        } else {
+            allyCell = loserCell;
+            enemyCell = winnerCell;
+            fightAnimationClass = this.fightAnimationClassBuilder(this.enemy, winner.weapon, loser.weapon)
+        }
+        
+        let fightCell = null;
+        let attackerCell = null;
+
+        //определение атаковавшего юнита
+        if (document.getElementById('indicator').classList.contains(this.me + "-turn")) {
+            fightCell = enemyCell;
+            attackerCell = allyCell;
+            // fightAnimationClass = this.fightAnimationClassBuilder(this.me, winner.weapon, loser.weapon)
+        } else {
+            fightCell = allyCell;
+            attackerCell = enemyCell;
+            // fightAnimationClass = this.fightAnimationClassBuilder(this.enemy, winner.weapon, loser.weapon)
+        }
+
+        let moveAnimationClass = "animate-" + this.validateAvailableCells(+attackerCell.getAttribute("id"),
+        +fightCell.getAttribute("id"));
+        if (moveAnimationClass == "animate-0") {
+            debugger;
+            throw "unreachable cell";
+        }
+
+        this.doFight(fightCell, attackerCell, winnerUnit, winner, moveAnimationClass, fightAnimationClass);
+    }
+
+    doFight(fightCell, attackerCell, winnerUnit, winner, moveAnimationClass, fightAnimationClass){
+        let fightDiv = document.createElement("div");
+        let eventDiv = document.getElementById("game-event");
+        let weapon = attackerCell.firstChild.firstChild;
+
+        var afterAttackMove = ()=>{
+            eventDiv.innerHTML = "";
+            eventDiv.append(fightDiv);
+            fightDiv.classList.add('animate-fight-' + fightAnimationClass);
+            fightDiv.addEventListener("webkitAnimationEnd", afterAttackEvent, false);
+            attackerCell.firstChild.removeEventListener("webkitAnimationEnd", afterAttackMove);
+        }
+
+        var afterAttackEvent = ()=>{
+            if (weapon) weapon.classList.remove("animate-jump");
+            attackerCell.firstChild.classList.remove(moveAnimationClass);		
+            eventDiv.innerHTML = "";
+            attackerCell.innerHTML = "";
+            fightCell.innerHTML = "";
+            fightCell.appendChild(winnerUnit);
+            if (!(winnerUnit.firstChild)) this.addWeapon(fightCell.getAttribute("id"), winner.weapon);
+            fightDiv.removeEventListener("webkitAnimationEnd", afterAttackEvent);
+            window.bus.publish("start-controller");
+        }
+
+        attackerCell.firstChild.classList.add(moveAnimationClass);
+        if (weapon) weapon.classList.add("animate-jump");
+        attackerCell.firstChild.addEventListener("webkitAnimationEnd", afterAttackMove, false);
+    }
+
+    addWeapon(positionId, weaponName){
+        if (this.validateWeapon(weaponName)) {
+            if (this.validatePositionId(positionId)) {
+                let enemyUnit = document.getElementById(positionId).firstChild;
+                if (enemyUnit && enemyUnit.classList.contains(this.enemy + "-front")) {
+                    let weapon = document.createElement("div");
+                    weapon.classList.add(weaponName.toLowerCase());
+                    enemyUnit.innerHTML = "";
+                    enemyUnit.appendChild(weapon);
+                } else throw "not enemy unit in cell";
+            }
+        }
+    }
+
+    showGetFlag(clr){
+        let eventDiv = document.getElementById("game-event");
+        let getFlagDiv = document.createElement("div");
+        eventDiv.innerHTML = "";
+        eventDiv.append(getFlagDiv);
+        getFlagDiv.classList.add("animate-" + clr + "-get-flag");
+    }
+
     validateAvailableCells(cell1, cell2){
         switch (cell1 - cell2) {
             case 7:
@@ -163,117 +285,6 @@ export default class GameScene {
         
             default:
                 return 0;
-        }
-    }
-
-    RandomWeapon(){
-        const num = Math.floor(Math.random() * 3);
-        switch (num) {
-            case 0:
-                return 'ROCK';
-                break;
-            case 1:
-                return 'PAPER';
-                break;
-            case 2:
-                return 'SCISSORS';
-                break;
-            default:
-                break;
-        }
-    }
-
-    fight({	winner = {position, weapon}, loser = {position, weapon}}){
-
-        if (!(this.validateUnit(winner) && this.validateUnit(loser))) return;
-
-        const winnerCell = document.getElementById(winner.position);
-        const loserCell = document.getElementById(loser.position);
-
-        const winnerUnit = winnerCell.firstChild;
-        const loserUnit = loserCell.firstChild;
-
-        if (((winnerUnit.className.indexOf(this.me) > 0) &&	(loserUnit.className.indexOf(this.me) > 0)) ||
-            ((winnerUnit.className.indexOf(this.enemy) > 0) && (loserUnit.className.indexOf(this.enemy) > 0))) {
-            throw "fight between teammates";
-            return;
-        }
-
-        let allyCell = null;
-        let enemyCell = null;
-
-        //определение команды победителя
-        if (winnerUnit.className.indexOf(this.me) > 0) {
-            allyCell = winnerCell;
-            enemyCell = loserCell;
-        } else {
-            allyCell = loserCell;
-            enemyCell = winnerCell;
-        }
-        
-        let fightCell = null;
-        let attackerCell = null;
-
-        let fightAnimationClass = null;
-
-        //определение атаковавшего юнита
-        if (document.getElementById('indicator').classList.contains(this.me + "-turn")) {
-            fightCell = enemyCell;
-            attackerCell = allyCell;
-            fightAnimationClass = this.fightAnimationClassBuilder(this.me, winner.weapon, loser.weapon)
-        } else {
-            fightCell = allyCell;
-            attackerCell = enemyCell;
-            fightAnimationClass = this.fightAnimationClassBuilder(this.enemy, winner.weapon, loser.weapon)
-        }
-
-        let moveAnimationClass = "animate-" + this.validateAvailableCells(attackerCell.getAttribute("id"),
-        fightCell.getAttribute("id"));
-        if (moveAnimationClass == "animate-0") throw "unreachable cell";
-
-        this.doFight(fightCell, attackerCell, winnerUnit, winner, moveAnimationClass, fightAnimationClass);
-    }
-
-    doFight(fightCell, attackerCell, winnerUnit, winner, moveAnimationClass, fightAnimationClass){
-        let fightDiv = document.createElement("div");
-        let eventDiv = document.getElementById("game-event");
-        let weapon = attackerCell.firstChild.firstChild;
-
-        var afterAttackMove = ()=>{
-            eventDiv.innerHTML = "";
-            eventDiv.append(fightDiv);
-            fightDiv.classList.add('animate-fight-' + fightAnimationClass);
-            fightDiv.addEventListener("webkitAnimationEnd", afterAttackEvent, false);
-            attackerCell.firstChild.removeEventListener("webkitAnimationEnd", afterAttackMove);
-        }
-
-        var afterAttackEvent = ()=>{
-            if (weapon) weapon.classList.remove("animate-jump");
-            attackerCell.firstChild.classList.remove(moveAnimationClass);		
-            eventDiv.innerHTML = "";
-            attackerCell.innerHTML = "";
-            fightCell.innerHTML = "";
-            fightCell.appendChild(winnerUnit);
-            if (!(winnerUnit.firstChild)) this.addWeapon(fightCell.getAttribute("id"), winner.weapon);
-            fightDiv.removeEventListener("webkitAnimationEnd", afterAttackEvent);
-        }
-
-        attackerCell.firstChild.classList.add(moveAnimationClass);
-        if (weapon) weapon.classList.add("animate-jump");
-        attackerCell.firstChild.addEventListener("webkitAnimationEnd", afterAttackMove, false);
-    }
-
-    addWeapon(positionId, weaponName){
-        if (this.validateWeapon(weaponName)) {
-            if (this.validatePositionId(positionId)) {
-                let enemyUnit = document.getElementById(positionId).firstChild;
-                if (enemyUnit && enemyUnit.classList.contains(this.enemy + "-front")) {
-                    let weapon = document.createElement("div");
-                    weapon.classList.add(weaponName.toLowerCase());
-                    enemyUnit.innerHTML = "";
-                    enemyUnit.appendChild(weapon);
-                } else throw "not enemy unit in cell";
-            }
         }
     }
 
@@ -309,7 +320,7 @@ export default class GameScene {
     }
 
     validateWeapon(weaponName){
-        if (weaponName == "ROCK" || weaponName == "PAPER" || weaponName == "SCISSORS"){
+        if (weaponName == WEAPONS.ROCK || weaponName == WEAPONS.PAPER || weaponName == WEAPONS.SCISSORS){
             return true;
         } else {
             throw "incorrect weapon";	
@@ -329,13 +340,13 @@ export default class GameScene {
     fightAnimationClassBuilder(winnerColor, winnerWeapon, loserWeapon){
         let fightAnimationClass = winnerColor;
         switch (winnerWeapon + loserWeapon) {
-            case "ROCKSCISSORS":
+            case "rockscissors":
                 fightAnimationClass += "-rs";
                 break;
-            case "PAPERROCK":
+            case "paperrock":
                 fightAnimationClass += "-pr";
                 break;
-            case "SCISSORSPAPER":
+            case "scissorspaper":
                 fightAnimationClass += "-sp";		
                 break;
             default:

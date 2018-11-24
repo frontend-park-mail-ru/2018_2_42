@@ -368,7 +368,7 @@
 
 .animate-fight-blue-pr {
     z-index: 2;
-    background: var(--blue-pe);
+    background: var(--blue-pr);
     height: 84px;
     width: 140px;
     animation: fight-pr-rs 1s steps(7);
