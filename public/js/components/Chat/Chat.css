@@ -22,6 +22,11 @@
   	grid-row-start: row1;
 }
 
+.new_tab{
+  	grid-column-start: col4;
+  	grid-row-start: row1;
+}
+
 .roll_btn{
   	grid-column-start: colprevlast;
   	grid-row-start: row1;
