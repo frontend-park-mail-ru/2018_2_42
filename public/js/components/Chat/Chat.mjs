@@ -85,14 +85,17 @@ export default class ChatComponent {
             document.getElementById("new_login").hidden = false;
         });
 
-        // this.newChat(null);
+        window.bus.subscribe("sock-opened", () => {
+            this.newChat(null);
+        });
     }
 
     _initWS() {
-        const socket = new WebSocket("ws://18.222.251.221:8000/chat/v1/");
+        const socket = new WebSocket("ws://localhost:8080/chat/v1/");
         
         socket.onopen = () => {
             console.log("Socket opened");
+            window.bus.publish("sock-opened");
         };
         
         socket.onmessage = (message) => {
@@ -149,7 +152,9 @@ export default class ChatComponent {
                 before: lastMsgId,
             },
         };
-        this.webSocket.send(historyRequest);
+        console.log(historyRrequest);
+        
+        this.webSocket.send(JSON.stringify(historyRequest));
     }
 
     receiveHistory(history) {
@@ -183,7 +188,7 @@ export default class ChatComponent {
                 time: time.toISOString(),
             }
         };
-        this.webSocket.send(newMessage);
+        this.webSocket.send(JSON.stringify(newMessage));
         if (to === "global") {
             this._history["global"].messages.push(newMessage.parameter);
         } else {
