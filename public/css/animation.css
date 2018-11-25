@@ -1,3 +1,54 @@
+.table{
+    display: table;
+    margin: auto;
+    position: relative;
+}
+
+.row {
+	display: table-row;
+}
+
+.cell {
+    background-color: gray;
+    border: 1px solid white;
+    position: relative;
+    display: table-cell;
+}
+
+.cell:after {
+    content: '';
+    display: block;
+    margin-top: 100%;
+} 
+
+.tableBody {
+    display: table-row-group;
+}
+
+.selected-cell {
+    background-color: rgb(3, 247, 3);
+}
+
+.near-cell {
+    background-color: blue;
+}
+
+@media only screen and (max-width : 480px) {
+    .table { width: 90%};
+}
+
+@media only screen and (min-width: 480px) {
+    .table { width: 70%};
+}
+
+@media only screen  and (min-width: 1224px) {
+    .table { width: 45%};
+}
+
+@media only screen  and (min-width: 1824px) {
+    .table { width: 35%};
+}
+
 @keyframes end {
     from {
         background-position-x: 0;
@@ -71,7 +122,7 @@
     animation: red-turn 0.5s steps(3) forwards;
 }
 
-.game-event {
+#game-event {
     z-index: 3;
     position: absolute;
     top: 50%;
@@ -317,7 +368,7 @@
 
 .animate-fight-blue-pr {
     z-index: 2;
-    background: var(--blue-pe);
+    background: var(--blue-pr);
     height: 84px;
     width: 140px;
     animation: fight-pr-rs 1s steps(7);

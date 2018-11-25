@@ -1,19 +1,20 @@
 export default {
-    ROCK: 'ROCK',
-    PAPER: 'PAPER',
-    SCISSORS: "SCISSORS",
-
+    ROCK: 'rock',
+    PAPER: 'paper',
+    SCISSORS: 'scissors',
+    FLAG: 'flag',
+    
     RandomWeapon: () => {
         const num = Math.floor(Math.random() * 3);
         switch (num) {
+            case 0:
+                return 'rock';
+                break;
             case 1:
-                return this.ROCK;
+                return 'paper';
                 break;
             case 2:
-                return this.PAPER;
-                break;
-            case 3:
-                return this.SCISSORS;
+                return 'scissors';
                 break;
             default:
                 break;

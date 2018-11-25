@@ -2,7 +2,7 @@
 import WEAPONS from "./weapons.js";
 
 export default class Unit {
-    constructor({ team = null, weapon = null } = {}) {
+    constructor(team = null, weapon = null) {
         this.team = team;
         this.weapon = weapon || WEAPONS.RandomWeapon();
     }
@@ -27,10 +27,10 @@ export default class Unit {
                     return null;
                 }
                 break;
-            case WEAPONS.PAPER:
-                if (unit2.weapon === WEAPONS.SCISSORS) {
+            case WEAPONS.SCISSORS:
+                if (unit2.weapon === WEAPONS.ROCK) {
                     return unit2;
-                } else if (unit2.weapon === WEAPONS.ROCK) {
+                } else if (unit2.weapon === WEAPONS.PAPER) {
                     return unit1;
                 } else {
                     return null;

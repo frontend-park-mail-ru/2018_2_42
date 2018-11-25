@@ -10,6 +10,8 @@
 @import '../js/components/LeaderBoard/LeaderBoard.css';
 @import '../js/components/About/About.css';
 @import '../js/components/NetworkError/NetworkError.css';
+@import '../js/components/TeamChooser/TeamChooser.css';
+@import '../js/components/WeaponsShuffler/WeaponsShuffler.css';
 
 
 [hidden] { display: none !important; }
@@ -42,10 +44,10 @@ section {
     width: 100%;
 }
 
-section + section {
+/* section + section {
     margin-top: 10%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-}
+} */
