@@ -1,0 +1,71 @@
+.chat{
+	display: grid;
+	grid-template-columns: 	[col1] 50px	[col2] auto [col3] 50px [col4] 50px [colprevlast] 50px [collast] 50px [end];
+	grid-template-rows: 	[row1] 50px [row2] auto [rowlast] 50px;
+	align-items: center;
+	justify-content: center;
+	justify-items: center;
+}
+
+.prev_tab{
+  	grid-column-start: col1;
+  	grid-row-start: row1;
+}
+
+.tab{
+  	grid-column-start: col2;
+  	grid-row-start: row1;
+}
+
+.next_tab{
+  	grid-column-start: col3;
+  	grid-row-start: row1;
+}
+
+.roll_btn{
+  	grid-column-start: colprevlast;
+  	grid-row-start: row1;
+}
+
+.close_btn{
+  	grid-column-start: collast;
+  	grid-row-start: row1;
+}
+
+
+.chat_body{
+  	grid-column-start: col1;
+  	grid-column-end: end;
+  	grid-row-start: row2;
+  	grid-row-end: rowlast;
+  	overflow: auto;
+  	height: 400px;
+  	width: 100%;
+}
+
+.text_input{
+  	grid-column-start: col1;
+  	grid-column-end: colprevlast;
+  	grid-row-start: rowlast;
+}
+
+.send_btn{
+  	grid-column-start: colprevlast;
+  	grid-column-end: end;
+  	grid-row-start: rowlast;
+}
+
+.item{
+}
+
+.item_from_me{
+	text-align: left;
+}
+
+.item_to_me{
+	text-align: right;
+}
+
+.load_more{
+	text-align: center;
+}

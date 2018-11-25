@@ -1,0 +1,25 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+        <div class="chat">
+            <div class="prev_tab">prev</div>
+            <div class="tab">Current tab</div>
+            <div class="next_tab">next</div>
+            <div class="roll_btn"> -- </div>
+            <div class="close_btn"> X   </div>
+            <div id="chat_body" class="chat_body">
+                <div class="load_more">BTN</div>
+                <div class="item item_to_me">jopa</div>
+                <div class="item">jopa</div>
+                <div class="item">jopa</div>
+                <div class="item">jopa</div>
+                <div class="item">jopa</div>
+                <div class="item">jopa</div>
+                <div class="item">jopa</div>
+                <div class="item">jopa</div>
+                <div class="item">jopa</div>
+                <div class="item">jopa</div>
+                <div class="item">jopa</div>
+            </div>
+            <div id="text_input" class="text_input"><input type="text" name="message" placeholder="ASDADADAS"></input></div>
+            <div id="send_btn" class="send_btn"><button>Отправить</button></div>
+        </div>
+</fest:template>

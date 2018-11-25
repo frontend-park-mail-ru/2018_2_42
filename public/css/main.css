@@ -12,6 +12,7 @@
 @import '../js/components/NetworkError/NetworkError.css';
 @import '../js/components/TeamChooser/TeamChooser.css';
 @import '../js/components/WeaponsShuffler/WeaponsShuffler.css';
+@import '../js/components/Chat/Chat.css';
 
 
 [hidden] { display: none !important; }
