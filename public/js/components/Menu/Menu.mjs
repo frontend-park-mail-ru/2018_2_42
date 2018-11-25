@@ -13,6 +13,7 @@ export default class MenuComponent {
                 { caption: 'Singleplayer', url: 'singleplayer', className: "menu__button", id: "singleplayer_btn" },
                 { caption: 'Multiplayer', url: 'multiplayer', className: "menu__button", id: "multiplayer_btn" },
                 { caption: 'Leaderboard', url: 'users', className: "menu__button", id: "leaderboard_btn" },
+                { caption: 'Chat', url: 'chat', className: "menu__button", id: "chat_btn" },
                 { caption: 'About', url: 'about', className: "menu__button", id: "about_btn" },
             ]
         };
@@ -39,6 +40,11 @@ export default class MenuComponent {
         document.getElementById("multiplayer_btn").addEventListener("click", (event) => {
             event.preventDefault();
             window.bus.publish("draw-game-online");
+        });
+
+        document.getElementById("chat_btn").addEventListener("click", (event) => {
+            event.preventDefault();
+            window.bus.publish("draw-chat");
         });
 
         // Добавить листенеры для мультиплеера и синглплеера

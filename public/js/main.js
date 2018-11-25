@@ -16,7 +16,7 @@ import registerCachingSW from "./modules/registerCachingSW.js"
 window.bus = new EventBus();
 const userService = new UserService();
 const router = new Router(document.getElementById("root"));
-registerCachingSW();
+// registerCachingSW();
 
 window.bus.subscribe("draw-menu", () => { router.open({ path: '/' }) });
 window.bus.subscribe("draw-profile", () => { router.open({ path: '/profile' }) });

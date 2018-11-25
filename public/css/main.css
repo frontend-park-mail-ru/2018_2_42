@@ -52,3 +52,9 @@ section {
     justify-content: space-between;
     align-items: center;
 } */
+
+.bottomright {
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+}

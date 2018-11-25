@@ -12,4 +12,14 @@ export default class ChatView extends BaseView {
         const chat = new ChatComponent({ el: this._section });
         chat.render();
     }
+
+    show() {
+        super.show();
+        document.getElementById("chatIframe").hidden = true;
+    }
+
+    hide() {
+        super.hide();
+        document.getElementById("chatIframe").hidden = false;
+    }
 }

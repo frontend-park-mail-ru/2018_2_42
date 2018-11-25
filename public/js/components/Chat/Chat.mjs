@@ -74,10 +74,22 @@ export default class ChatComponent {
             msgInput.value = '';
         });
 
+        document.getElementById("new_login_btn").addEventListener('click', (event) => {
+            event.preventDefault();
+            document.getElementById("new_login").hidden = true;
+            this.newChat(document.getElementById("new_login_input").value);
+        });
+
+        document.getElementById("new_tab").addEventListener('click', (event) => {
+            event.preventDefault();
+            document.getElementById("new_login").hidden = false;
+        });
+
+        // this.newChat(null);
     }
 
     _initWS() {
-        const socket = new WebSocket(`ws://chat/v1`);
+        const socket = new WebSocket("ws://18.222.251.221:8000/chat/v1/");
         
         socket.onopen = () => {
             console.log("Socket opened");
@@ -126,6 +138,7 @@ export default class ChatComponent {
         this._history[login].lastMsgId = null;
         this._history[login].messages = [];
         this.requestHistory({ from: login, lastMsgId: this._history[login].lastMsgId });
+        this.newTab(login);
     }
 
     requestHistory({ from = null, lastMsgId = null }) {
@@ -183,7 +196,14 @@ export default class ChatComponent {
         if (message.from === null) {
             this._history["global"].messages.push(message);
         } else {
-            this._history[message.from].messages.push(message);
+            if (!this._history[message.from]) {
+                this._history[message.from] = {};
+                this._history[message.from].lastMsgId = message.id;
+                this._history[message.from].messages.push(message);
+                this.newChat(message.from);
+            } else {
+                this._history[message.from].messages.push(message);
+            }
         }
         this._drawMessage({ message: message, history: false });
     }
