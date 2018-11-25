@@ -22,7 +22,7 @@ export default class ChatComponent {
         }
 
         this._history = {};
-        this._currentChat = null;
+        this._currentChat = "global";
 
         // history = {
         //     login: {
@@ -120,7 +120,7 @@ export default class ChatComponent {
         if (tab.innerHTML === this._currentChat) throw "try to recreate current";
         
         if (login === null) {
-            login = "Global chat";
+            login = "global";
         }
 
         let prevTab = document.getElementById(`{$this._currentChat}_chat_body`);
@@ -141,7 +141,11 @@ export default class ChatComponent {
         this._history[login].lastMsgId = null;
         this._history[login].messages = [];
         this.requestHistory({ from: login, lastMsgId: this._history[login].lastMsgId });
-        this.newTab(login);
+        // this.newTab(login);
+        let newTab = document.createElement("div");
+        newTab.setAttribute("id", `${this._currentChat}_chat_body`);
+
+        document.getElementById("chat").appendChild(newTab);
     }
 
     requestHistory({ from = null, lastMsgId = null }) {
