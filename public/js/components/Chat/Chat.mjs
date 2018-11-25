@@ -152,8 +152,6 @@ export default class ChatComponent {
                 before: lastMsgId,
             },
         };
-        console.log(historyRrequest);
-        
         this.webSocket.send(JSON.stringify(historyRequest));
     }
 
