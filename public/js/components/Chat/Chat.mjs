@@ -101,6 +101,27 @@ export default class ChatComponent {
         return socket;
     }
 
+    newTab(login){
+        let tab = document.getElementById("tab");
+
+        if (tab.innerHTML === this._currentChat) throw "try to recreate current";
+        
+        if (login === null) {
+            login = "Global chat";
+        }
+
+        let prevTab = document.getElementById(`{$this._currentChat}_chat_body`);
+        prevTab.setAttribute("hidden", true);
+        
+        this._currentChat = login;
+        tab.innerHTML = login;
+
+        let newTab = document.createElement("div");
+        newTab.setAttribute("id", `{$this._currentChat}_chat_body`);
+
+        document.getElementById("chat").appendChild(newTab);
+    }
+
     newChat(login) {
         login = login || "global";
         this._history[login] = this._history[login] || {};
@@ -163,6 +184,5 @@ export default class ChatComponent {
 
     _drawMessage(message) {
         const chatBody = document.getElementById("chat_body");
-        
     }
 }

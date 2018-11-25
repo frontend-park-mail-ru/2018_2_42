@@ -1,8 +1,8 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
-        <div class="chat">
-            <div class="prev_tab">prev</div>
-            <div class="tab">Current tab</div>
-            <div class="next_tab">next</div>
+        <div id="chat" class="chat">
+            <div id="prev_tab" class="prev_tab">prev</div>
+            <div id="tab" class="tab">Current tab</div>
+            <div id="next_tab" class="next_tab">next</div>
             <div class="roll_btn"> -- </div>
             <div class="close_btn"> X   </div>
             <div id="chat_body" class="chat_body">
