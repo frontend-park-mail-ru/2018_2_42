@@ -16,8 +16,6 @@ export default class ChatComponent {
         }
 
         if (window.WebSocket === undefined) {
-            // document.getElementById('container').append("Your browser does not support WebSockets");
-            // WebSocket is not supported
             this.webSocket = null;
         } else {
             this.webSocket = this._initWS();
@@ -25,7 +23,6 @@ export default class ChatComponent {
 
         this._history = {};
         this._currentChat = null;
-        // eventListener на вкладки
 
         // history = {
         //     login: {
@@ -73,9 +70,10 @@ export default class ChatComponent {
         document.getElementById("send_btn").addEventListener('click', (event) => {
             event.preventDefault();
             const msgInput = document.getElementById("text_input");
-            this.sendMessage({ to: this._currentChat, text: msgInput.innerText });
-            msgInput.innerText = '';
+            this.sendMessage({ to: this._currentChat, text: msgInput.value });
+            msgInput.value = '';
         });
+
     }
 
     _initWS() {
@@ -151,7 +149,7 @@ export default class ChatComponent {
         this._history[from].lastMsgId = history[0].id;
         history.forEach(msg => {
             this._history[from].messages.unshift(msg);
-            // this._drawMessage(msg);
+            this._drawMessage({ message: msg, history: true });
         });
     }
 
@@ -173,16 +171,36 @@ export default class ChatComponent {
             }
         };
         this.webSocket.send(newMessage);
-        this._history[to].messages.push(newMessage.parameter);
-        this._drawMessage(newMessage.parameter);
+        if (to === "global") {
+            this._history["global"].messages.push(newMessage.parameter);
+        } else {
+            this._history[to].messages.push(newMessage.parameter);
+        }
+        this._drawMessage({ message: newMessage.parameter, history: false });
     }
 
     receiveMessage(message) {
-        this._history[message.from].messages.push(message);
-        this._drawMessage(message);
+        if (message.from === null) {
+            this._history["global"].messages.push(message);
+        } else {
+            this._history[message.from].messages.push(message);
+        }
+        this._drawMessage({ message: message, history: false });
     }
 
-    _drawMessage(message) {
-        const chatBody = document.getElementById("chat_body");
+    _drawMessage({ message = null, history = false }) {
+        message.from = message.from || "global";
+        const chatBody = document.getElementById(`${message.from}_chat_body`);
+        const msgDiv = document.createElement('div');
+        msgDiv.classList.add("item");
+        if (message.to === this._login) {
+            msgDiv.classList.add("item_to_me");
+        }
+        msgDiv.innerText = message.text;
+        if (history) {
+            chatBody.insertBefore(msgDiv, chatBody.children[1]);
+        } else {
+            chatBody.appendChild(msgDiv);
+        }
     }
 }
