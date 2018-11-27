@@ -91,7 +91,7 @@ export default class ChatComponent {
     }
 
     _initWS() {
-        const socket = new WebSocket("ws://localhost:8080/chat/v1/");
+        const socket = new WebSocket("ws://18.222.251.221:8001/chat/v1/");
         
         socket.onopen = () => {
             console.log("Socket opened");
@@ -149,6 +149,9 @@ export default class ChatComponent {
     }
 
     requestHistory({ from = null, lastMsgId = null }) {
+        if (from === "global") {
+            from = null;
+        }
         const historyRequest = {
             method: "history",
             parameter: {
@@ -160,6 +163,9 @@ export default class ChatComponent {
     }
 
     receiveHistory(history) {
+        if (!history) {
+            return;
+        }
         const from = null;
         if (history[0].to === null) {
             from = "global";
@@ -167,7 +173,7 @@ export default class ChatComponent {
             from = history[0].from;
         }
         this._history[from].lastMsgId = history[0].id;
-        history.forEach(msg => {
+        history.forEach((msg) => {
             this._history[from].messages.unshift(msg);
             this._drawMessage({ message: msg, history: true });
         });
