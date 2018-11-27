@@ -6,19 +6,17 @@ import WEAPONS from "./core/weapons.js";
 export default class GameController {
     constructor(root) {
         this.root = root;
-        this.action = {};
         this.reachableCells = [];
         this.me = null;
         this.enemy = null;
         this.selectedCell = null;
         
-        this.handler = this._onMousedown.bind(this);
+        this._onMousedown = this._onMousedown.bind(this);
         this.setTeam = this.setTeam.bind(this);
-        this.changeTurn = this.changeTurn.bind(this);
+        // this.changeTurn = this.changeTurn.bind(this);
         this.start = this.start.bind(this);
         this.stop = this.stop.bind(this);
         window.bus.subscribe("team-picked", this.setTeam);
-        window.bus.subscribe("change-turn", this.changeTurn);
         window.bus.subscribe("start-controller", this.start);
         window.bus.subscribe("stop-controller", this.stop);
     }
@@ -30,21 +28,21 @@ export default class GameController {
     }
     
     start() {
-        this.root.addEventListener('mousedown', this.handler);
+        this.root.addEventListener('mousedown', this._onMousedown);
     }
 
     stop() {
-        this.root.removeEventListener('mousedown', this.handler);
+        this.root.removeEventListener('mousedown', this._onMousedown);
         this.removeMarkers();
     }
 
-    changeTurn(clr = TEAMS.BLUE){
-        if (clr === this.me) {
-            this.start()
-        } else {
-            this.stop();
-        }
-    }
+    // changeTurn(clr){
+    //     if (clr === this.me) {
+    //         this.start()
+    //     } else {
+    //         this.stop();
+    //     }
+    // }
 
     /**
      * Обработчик события
@@ -52,33 +50,38 @@ export default class GameController {
     _onMousedown(event) {
         let clicked = event.target;
         
-        if (clicked.classList.contains(WEAPONS.ROCK) ||
-            clicked.classList.contains(WEAPONS.PAPER) ||
-            clicked.classList.contains(WEAPONS.SCISSORS)){
-                clicked = clicked.parentNode;
-        }
-            
-        if (clicked.className.indexOf(this.enemy) > 0){
-                clicked = clicked.parentNode;
-        }
+        // if (this.selectedCell === null || this.containsAlly(this.selectedCell, this.me)) {
+            if (clicked.classList.contains(WEAPONS.ROCK) ||
+                clicked.classList.contains(WEAPONS.PAPER) ||
+                clicked.classList.contains(WEAPONS.SCISSORS)){
+                    clicked = clicked.parentNode;
+            }
+                
+            if (clicked.className.indexOf(this.enemy) > 0){
+                    clicked = clicked.parentNode;
+            }
 
 
 
-        if (this.reachableCells.includes(clicked)) {
-            let from = +this.selectedCell.getAttribute("id");
-            let to = +clicked.getAttribute("id");
-            window.bus.publish("game-unit-moved", {from ,to} );
-        }
+            if (this.reachableCells.includes(clicked)) {
+                let from = +this.selectedCell.getAttribute("id");
+                let to = +clicked.getAttribute("id");
+                window.bus.publish("game-unit-moved", {from ,to} );
+                this.stop();
+            }
 
-        this.removeMarkers();
-        if (clicked.classList.contains("unit") &&
-            this.containsAlly(clicked.parentElement, this.me) &&
-            clicked.className.indexOf("flag") == -1) {
-                const parentCell = clicked.parentElement;
-                parentCell.classList.add('selected-cell');
-                this.selectedCell = parentCell;
-                this.markAvailableCells(clicked, this.me)
-        }
+            this.removeMarkers();
+            if (clicked.classList.contains("unit") &&
+                this.containsAlly(clicked.parentElement, this.me) &&
+                clicked.className.indexOf("flag") == -1) {
+                    const parentCell = clicked.parentElement;
+                    parentCell.classList.add('selected-cell');
+                    this.selectedCell = parentCell;
+                    this.markAvailableCells(clicked, this.me)
+            }
+        // } else {
+        //     this.removeMarkers;
+        // }
     }
 
     removeMarkers(){
@@ -98,7 +101,7 @@ export default class GameController {
 
     containsAlly(cell, allyClr){
         const cellInner = cell.firstChild;
-        if (cellInner == null) return false
+        if (cellInner == null) return false;
         switch (allyClr){
             case TEAMS.BLUE:
                 return cellInner.classList.contains("blue-back");

@@ -3,9 +3,7 @@ import TEAMS from "./core/teams.js";
 import WEAPONS from "./core/weapons.js";
 
 export default class GameScene {
-    constructor(root) {
-        this.root = root;
-        
+    constructor() {
         this.me = null;
         this.enemy = null;
         
@@ -14,10 +12,10 @@ export default class GameScene {
         this.moveUnit = this.moveUnit.bind(this);
         this.fight = this.fight.bind(this);
         this.showGetFlag = this.showGetFlag.bind(this);
+        this.changeTurn = this.changeTurn.bind(this);
 
         window.bus.subscribe("team-picked", this.setTeam);
         window.bus.subscribe("shuffle-weapons", this.shuffleWeapon);
-        window.bus.subscribe("change-turn", this.changeTurn);
     }
 
     setTeam(clr) {
@@ -39,25 +37,28 @@ export default class GameScene {
     }
 
     start() {
-        //вынести, мб понадобится делать старт несколько раз
         window.bus.unsubscribe("shuffle-weapons", this.bindedShuffleWeapon);
 
         window.bus.subscribe("finish-game", this.showGetFlag);
+
         window.bus.subscribe("move-unit", this.moveUnit);
         window.bus.subscribe("fight", this.fight);
     }
 
     stop() {
+        window.bus.unsubscribe("finish-game", this.showGetFlag);
 
+        window.bus.unsubscribe("move-unit", this.moveUnit);
+        window.bus.unsubscribe("fight", this.fight);
     }
 
-    changeTurn(clr = TEAMS.BLUE){
+    changeTurn(clr){
         let indicatorClasses = document.getElementsByClassName("indicator")[0].classList;
         indicatorClasses.remove("red-turn", "blue-turn");
         switch (clr){
-            case "blue": indicatorClasses.add("blue-turn");
+            case TEAMS.BLUE: indicatorClasses.add("blue-turn");
             break;
-            case "red": indicatorClasses.add("red-turn");
+            case TEAMS.RED: indicatorClasses.add("red-turn");
             break;
             default: throw "incorrect color";
         }
@@ -108,8 +109,6 @@ export default class GameScene {
     }
 
     moveUnit({from, to}){
-        window.bus.publish("stop-controller");
-
         let unitFrom = null;
         if (this.validatePositionId(from)) {
             unitFrom = document.getElementById(from).firstChild;
@@ -135,6 +134,7 @@ export default class GameScene {
 
         let weapon = null;
         weapon = unitFrom.firstChild;
+        // window.bus.publish("animation-started");
         if (weapon) weapon.classList.add("animate-jump");
 
         function afterMove(){
@@ -142,7 +142,7 @@ export default class GameScene {
             unitFrom.classList.remove(moveAnimationClass);
             if (weapon) weapon.classList.remove("animate-jump");
             unitFrom.removeEventListener("webkitAnimationEnd", afterMove);
-            window.bus.publish("start-controller");
+            window.bus.publish("animation-finished");
         }
 
         unitFrom.classList.add(moveAnimationClass);
@@ -150,8 +150,6 @@ export default class GameScene {
     }
     
     fight({	winner = {position, weapon}, loser = {position, weapon}}){
-        window.bus.publish("stop-controller");
-
         if (!(this.validateUnit(winner) && this.validateUnit(loser))) return;
 
         const winnerCell = document.getElementById(winner.position);
@@ -198,7 +196,6 @@ export default class GameScene {
         let moveAnimationClass = "animate-" + this.validateAvailableCells(+attackerCell.getAttribute("id"),
         +fightCell.getAttribute("id"));
         if (moveAnimationClass == "animate-0") {
-            debugger;
             throw "unreachable cell";
         }
 
@@ -218,7 +215,7 @@ export default class GameScene {
             attackerCell.firstChild.removeEventListener("webkitAnimationEnd", afterAttackMove);
         }
 
-        var afterAttackEvent = ()=>{
+        var afterAttackEvent = () => {
             if (weapon) weapon.classList.remove("animate-jump");
             attackerCell.firstChild.classList.remove(moveAnimationClass);		
             eventDiv.innerHTML = "";
@@ -227,9 +224,10 @@ export default class GameScene {
             fightCell.appendChild(winnerUnit);
             if (!(winnerUnit.firstChild)) this.addWeapon(fightCell.getAttribute("id"), winner.weapon);
             fightDiv.removeEventListener("webkitAnimationEnd", afterAttackEvent);
-            window.bus.publish("start-controller");
+            window.bus.publish("animation-finished");
         }
 
+        // window.bus.publish("animation-started");
         attackerCell.firstChild.classList.add(moveAnimationClass);
         if (weapon) weapon.classList.add("animate-jump");
         attackerCell.firstChild.addEventListener("webkitAnimationEnd", afterAttackMove, false);

@@ -1,3 +1,176 @@
- 'use strict';
+'use strict';
 
- 
+import TEAMS from "./teams.js";
+import WEAPONS from "./weapons.js";
+
+export default class Bot{
+    constructor(field, color){
+        this.field = field;
+        this.me = color;
+        this.enemy = (color ===  TEAMS.RED ? TEAMS.BLUE : TEAMS.RED);
+        this.changeTurn = this.changeTurn.bind(this);
+        this.makeMove = this.makeMove.bind(this);
+        window.bus.subscribe("change-turn", this.changeTurn);
+    }
+
+    changeTurn(clr = TEAMS.BLUE){
+        if (clr === this.me) {
+            let rand = Math.round(Math.random() * (4000 - 1500)) + 1500;
+            console.log(rand);
+            setTimeout(this.makeMove, rand);
+        }
+    }
+
+   makeMove(){
+        const team = this.getTeamIndexes(this.me);
+        let closestEnemies = [];
+        team.forEach((element) => {
+            if (this.field[element].weapon !== WEAPONS.FLAG){
+                let enemies = this.getClosestEnemies(element);
+                if (enemies.length !== 0) enemies.forEach(el => {
+                    el.from = element;
+                    closestEnemies.push(el);
+                });;
+            }
+        });
+
+        closestEnemies.sort((a, b) => {
+            return Math.random() - 0.5;;
+        })
+
+        closestEnemies.sort((a, b) => {
+            return a.way - b.way;
+        })
+
+        closestEnemies = closestEnemies.slice(0, closestEnemies[0].way + 1);
+
+
+        closestEnemies.sort((a, b) => {
+            return Math.random() - 0.5;;
+        })
+
+        const target = closestEnemies[0];
+
+        let from = closestEnemies[0].from;
+        let to = this.getStepFromTo(closestEnemies[0].from, closestEnemies[0].to);
+
+        window.bus.publish("game-unit-moved", {from, to} );
+    }
+
+    getTeamIndexes(color){
+        let team = [];
+        this.field.forEach((element, idx) => {
+            if ((element !== null) && (element.team === color)) team.push(idx);
+        });
+        return team;
+    }
+
+    getStepFromTo(from, to){
+
+        const fromLine = Math.floor(from / 7);
+        const fromCol = from % 7;
+        const toLine = Math.floor(to / 7);
+        const toCol = to % 7;
+
+        //клетки на 1 вертикали
+        if (fromCol === toCol){
+            if (from < to) {
+                return this.getUnderCell(from);
+            } else return this.getUpperCell(from);
+        }
+        //клетки на 1 горизонтали
+        if (fromLine === toLine){
+            if (from < to) {
+                return this.getRightCell(from);
+            } else return this.getLeftCell(from);
+        }
+
+        let lineDiff = fromLine - toLine;
+        let colDiff = fromCol - toCol;
+
+        if (Math.abs(lineDiff) > Math.abs(colDiff)){
+            if (lineDiff > 0) return this.getUpperCell(from);
+                else return this.getUnderCell(from);
+        } else {
+            if (colDiff > 0) return this.getLeftCell(from);
+            else return this.getRightCell(from);
+        }
+    }
+
+    getUpperCell(cellIdx){
+        if ((this.validateAvailableCell(cellIdx)) && (cellIdx > 7)) {
+            return cellIdx - 7;
+        } else return null;
+    }
+    
+    getUnderCell(cellIdx){
+        if ((this.validateAvailableCell(cellIdx)) && (cellIdx < 41 - 7)) {
+            return cellIdx + 7;
+        } else return null;
+    }
+    
+    getLeftCell(cellIdx){
+        if (this.validateAvailableCell(cellIdx)) {
+            if ((cellIdx % 7) !== 0) return cellIdx - 1;
+        } else return null;
+    }
+    
+    getRightCell(cellIdx){
+        if (this.validateAvailableCell(cellIdx)) {
+            if (((cellIdx + 1) % 7) !== 0) return cellIdx + 1;
+        } else return null;
+    }
+
+    validateAvailableCell(cellIdx){
+        if ((0 <= cellIdx) && (cellIdx <= 41)) return true;
+            else return false;
+    }
+
+    //возвращает ближайшую клетку к любому противнику
+    getClosestEnemies(cellIdx){
+        let reachableEnemies = new Map();
+        let alreadyReached = this.getTeamIndexes(this.me);
+
+        let search = (cellIdx, stepsNum)=> {
+            if (stepsNum > 10) return;
+
+            //клетки вокруг
+            let cellsAround = [
+                this.getUpperCell(cellIdx),
+                this.getUnderCell(cellIdx),
+                this.getLeftCell(cellIdx),
+                this.getRightCell(cellIdx),
+            ];
+
+            //непосещенные доступные к шагу клетки вокруг
+            cellsAround = cellsAround.filter(element => element);
+
+            //посещаем клетки    
+            cellsAround.forEach(element => {
+                if (!alreadyReached.includes(element)) {
+                    //если в ячейке пусто то ищем из этой ячейки
+                    if (this.field[element] === null){
+                        search(element, stepsNum + 1); 
+                        //если в ячеке враг записываем путь до него и завершаем цепочку рекурсивных вызовов
+                    } else if (this.field[element].team === this.enemy) {
+                        if ((reachableEnemies.get(element) > stepsNum) || (reachableEnemies.get(element) === undefined)) {
+                            reachableEnemies.set(element, stepsNum);
+                        }
+                    }
+                    //для ячеек с союзниками вызова поиска нет 
+                }
+            });
+        }
+
+        search(cellIdx, 0);
+
+        const minWay = Math.min(...reachableEnemies.values());
+        let closestEnemies = [];
+        reachableEnemies.forEach((value, key) => {
+            if (value === minWay) closestEnemies.push({to: key, way: value});
+        })
+
+        return closestEnemies;
+    }
+
+};

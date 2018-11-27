@@ -1,5 +1,6 @@
 'use strict';
 import GameCore from "./gamecore.js";
+import Bot from "./bot.js";
 import Unit from "./unit.js";
 import TEAMS from "./teams.js";
 import WEAPONS from "./weapons.js";
@@ -11,6 +12,7 @@ export default class OfflineGame extends GameCore {
         this.currentTurn = null;
         this.clientColor = null;
         this.botColor = null;
+        this.bot = null;
     }
     
     start() {
@@ -20,11 +22,7 @@ export default class OfflineGame extends GameCore {
             field: [],
         };
 
-        //createBot
 
-        setTimeout(function () {
-            window.bus.publish("start-game", this.state);
-        }.bind(this));
     }
     
     onGameStarted(state) {
@@ -43,6 +41,8 @@ export default class OfflineGame extends GameCore {
             this.botColor = TEAMS.BLUE;
             this.clientColor = TEAMS.RED;
         } else throw "incorrect color";
+
+        this.bot = new Bot(this.state.field, this.botColor);
 
         //рандомно заполняем часть поля бота 
         uploadMap.parameter.weapons.forEach(element => {
@@ -68,6 +68,11 @@ export default class OfflineGame extends GameCore {
         this.scene.start();
 
         this.changeTurn();
+
+        setTimeout(function () {
+            window.bus.publish("start-game", this.state);
+        }.bind(this));
+        
     }
 
     onGameFinished(state) {
@@ -84,16 +89,13 @@ export default class OfflineGame extends GameCore {
         }
 
         window.bus.publish("change-turn", this.currentTurn);
-
-        // if (this.currentTurn === bot.color) {
-            // bot.makemove;
-            // send move
-        // }
     }
 
     onGameUnitMoved(movement) {
         // validate move, later
         // from should contain client unit , later ??
+        console.log(this.state.field);
+        console.log(movement);
         const toCell = this.state.field[movement.to];
         const fromCell = this.state.field[movement.from];
         
@@ -128,9 +130,7 @@ export default class OfflineGame extends GameCore {
             }
         }
 
-        console.log(this.state.field);
-
-        // this.changeTurn();
+        this.changeTurn();
     }
 
     moveUnit(fromIdx, toIdx){

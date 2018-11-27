@@ -3,6 +3,7 @@ import OnlineGame from "./core/online.js";
 import OfflineGame from "./core/offline.js";
 import GameScene from "./scene.js";
 import GameController from "./controller.js";
+import TEAMS from "./core/teams.js";
 
 export default class Game {
     constructor({ mode = "offline", gameField = document.getElementsByClassName("game")[0] }) {
@@ -24,6 +25,17 @@ export default class Game {
         this.gameScene = new GameScene(this.gameField);
         this.gameController = new GameController(this.gameField);
         this.gameCore = new GameConstructor({ scene: this.gameScene });
+
+        this.currentTurn = null;
+
+        this.animating = false;
+
+        this.changeTurn = this.changeTurn.bind(this);
+        
+        this.resetAnimating = this.resetAnimating.bind(this);
+
+        window.bus.subscribe("change-turn", this.changeTurn);
+        window.bus.subscribe("animation-finished", this.resetAnimatin);
     }
 
     start() {
@@ -33,4 +45,31 @@ export default class Game {
     destroy() {
         this.gameCore.destroy();
     }
+
+    changeTurn(clr){
+
+        switch (clr){
+            case TEAMS.BLUE: this.currentTurn = clr;
+            break;
+            case TEAMS.RED: this.currentTurn = clr;
+            break;
+            default: throw "incorrect color";
+        }
+
+        if (!this.animating) {
+            this.gameScene.changeTurn(this.currentTurn);
+            if (this.gameScene.me === this.currentTurn) this.gameController.start();
+        } else setTimeout(()=>{
+            this.gameScene.changeTurn(this.currentTurn);
+            if (this.gameScene.me === this.currentTurn) this.gameController.start();
+        }, 2000);
+
+        this.animating = true;
+        
+    }
+
+    resetAnimating(){
+        this.animating = false;
+    }
+
 };
