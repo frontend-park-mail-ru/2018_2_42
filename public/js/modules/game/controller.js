@@ -13,7 +13,6 @@ export default class GameController {
         
         this._onMousedown = this._onMousedown.bind(this);
         this.setTeam = this.setTeam.bind(this);
-        // this.changeTurn = this.changeTurn.bind(this);
         this.start = this.start.bind(this);
         this.stop = this.stop.bind(this);
         window.bus.subscribe("team-picked", this.setTeam);
@@ -36,52 +35,34 @@ export default class GameController {
         this.removeMarkers();
     }
 
-    // changeTurn(clr){
-    //     if (clr === this.me) {
-    //         this.start()
-    //     } else {
-    //         this.stop();
-    //     }
-    // }
-
-    /**
-     * Обработчик события
-     */
     _onMousedown(event) {
         let clicked = event.target;
-        
-        // if (this.selectedCell === null || this.containsAlly(this.selectedCell, this.me)) {
-            if (clicked.classList.contains(WEAPONS.ROCK) ||
-                clicked.classList.contains(WEAPONS.PAPER) ||
-                clicked.classList.contains(WEAPONS.SCISSORS)){
-                    clicked = clicked.parentNode;
-            }
-                
-            if (clicked.className.indexOf(this.enemy) > 0){
-                    clicked = clicked.parentNode;
-            }
+        if (clicked.classList.contains(WEAPONS.ROCK) ||
+            clicked.classList.contains(WEAPONS.PAPER) ||
+            clicked.classList.contains(WEAPONS.SCISSORS)){
+                clicked = clicked.parentNode;
+        }
+            
+        if (clicked.className.indexOf(this.enemy) > 0){
+                clicked = clicked.parentNode;
+        }
 
+        if (this.reachableCells.includes(clicked)) {
+            let from = +this.selectedCell.getAttribute("id");
+            let to = +clicked.getAttribute("id");
+            window.bus.publish("game-unit-moved", {from ,to} );
+            this.stop();
+        }
 
-
-            if (this.reachableCells.includes(clicked)) {
-                let from = +this.selectedCell.getAttribute("id");
-                let to = +clicked.getAttribute("id");
-                window.bus.publish("game-unit-moved", {from ,to} );
-                this.stop();
-            }
-
-            this.removeMarkers();
-            if (clicked.classList.contains("unit") &&
-                this.containsAlly(clicked.parentElement, this.me) &&
-                clicked.className.indexOf("flag") == -1) {
-                    const parentCell = clicked.parentElement;
-                    parentCell.classList.add('selected-cell');
-                    this.selectedCell = parentCell;
-                    this.markAvailableCells(clicked, this.me)
-            }
-        // } else {
-        //     this.removeMarkers;
-        // }
+        this.removeMarkers();
+        if (clicked.classList.contains("unit") &&
+            this.containsAlly(clicked.parentElement, this.me) &&
+            clicked.className.indexOf("flag") == -1) {
+                const parentCell = clicked.parentElement;
+                parentCell.classList.add('selected-cell');
+                this.selectedCell = parentCell;
+                this.markAvailableCells(clicked, this.me)
+        }
     }
 
     removeMarkers(){
@@ -143,7 +124,6 @@ export default class GameController {
     markAvailableCell(cell, allyClr){
         if ((cell != null) && !this.containsAlly(cell, allyClr)) {
             cell.classList.add('near-cell')
-            // this.reachableCells.push(cell)
         }
     }
 

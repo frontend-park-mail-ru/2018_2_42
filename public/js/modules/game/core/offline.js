@@ -21,8 +21,6 @@ export default class OfflineGame extends GameCore {
         this.state = {
             field: [],
         };
-
-
     }
     
     onGameStarted(state) {
@@ -72,7 +70,6 @@ export default class OfflineGame extends GameCore {
         setTimeout(function () {
             window.bus.publish("start-game", this.state);
         }.bind(this));
-        
     }
 
     onGameFinished(state) {
@@ -87,13 +84,11 @@ export default class OfflineGame extends GameCore {
             break;
             default: this.currentTurn = TEAMS.BLUE;
         }
-
         window.bus.publish("change-turn", this.currentTurn);
     }
 
     onGameUnitMoved(movement) {
         // validate move, later
-        // from should contain client unit , later ??
         console.log(this.state.field);
         console.log(movement);
         const toCell = this.state.field[movement.to];
@@ -129,7 +124,6 @@ export default class OfflineGame extends GameCore {
                 } else alert("same weapons, feature in development");
             }
         }
-
         this.changeTurn();
     }
 

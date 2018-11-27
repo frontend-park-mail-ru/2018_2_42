@@ -25,17 +25,9 @@ export default class Game {
         this.gameScene = new GameScene(this.gameField);
         this.gameController = new GameController(this.gameField);
         this.gameCore = new GameConstructor({ scene: this.gameScene });
-
         this.currentTurn = null;
-
-        this.animating = false;
-
         this.changeTurn = this.changeTurn.bind(this);
-        
-        this.resetAnimating = this.resetAnimating.bind(this);
-
         window.bus.subscribe("change-turn", this.changeTurn);
-        window.bus.subscribe("animation-finished", this.resetAnimatin);
     }
 
     start() {
@@ -47,7 +39,6 @@ export default class Game {
     }
 
     changeTurn(clr){
-
         switch (clr){
             case TEAMS.BLUE: this.currentTurn = clr;
             break;
@@ -56,20 +47,9 @@ export default class Game {
             default: throw "incorrect color";
         }
 
-        if (!this.animating) {
-            this.gameScene.changeTurn(this.currentTurn);
-            if (this.gameScene.me === this.currentTurn) this.gameController.start();
-        } else setTimeout(()=>{
+        setTimeout(()=>{
             this.gameScene.changeTurn(this.currentTurn);
             if (this.gameScene.me === this.currentTurn) this.gameController.start();
         }, 2000);
-
-        this.animating = true;
-        
     }
-
-    resetAnimating(){
-        this.animating = false;
-    }
-
 };

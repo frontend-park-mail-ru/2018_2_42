@@ -1,6 +1,7 @@
 'use strict';
-import TEAMS from "./core/teams.js";
-import WEAPONS from "./core/weapons.js";
+
+import TEAMS    from "./core/teams.js";
+import WEAPONS  from "./core/weapons.js";
 
 export default class GameScene {
     constructor() {
@@ -28,8 +29,9 @@ export default class GameScene {
                 this.me = TEAMS.RED;
                 this.enemy = TEAMS.BLUE;
             break;
-            default: throw "Incorrect color";
-            return; 
+            default: 
+                throw "Incorrect color";
+                return; 
         }
         window.bus.unsubscribe("team-picked", this.bindedSetTeam);
         this.fillScene();
@@ -38,22 +40,19 @@ export default class GameScene {
 
     start() {
         window.bus.unsubscribe("shuffle-weapons", this.bindedShuffleWeapon);
-
-        window.bus.subscribe("finish-game", this.showGetFlag);
-
         window.bus.subscribe("move-unit", this.moveUnit);
         window.bus.subscribe("fight", this.fight);
+        window.bus.subscribe("finish-game", this.showGetFlag);
     }
 
     stop() {
-        window.bus.unsubscribe("finish-game", this.showGetFlag);
-
         window.bus.unsubscribe("move-unit", this.moveUnit);
         window.bus.unsubscribe("fight", this.fight);
+        window.bus.unsubscribe("finish-game", this.showGetFlag);
     }
 
     changeTurn(clr){
-        let indicatorClasses = document.getElementsByClassName("indicator")[0].classList;
+        let indicatorClasses = document.getElementById("indicator").classList;
         indicatorClasses.remove("red-turn", "blue-turn");
         switch (clr){
             case TEAMS.BLUE: indicatorClasses.add("blue-turn");
@@ -74,17 +73,17 @@ export default class GameScene {
         let enemyUnit = document.createElement("div");
         
         switch (this.me){
-            case "blue":
+            case TEAMS.BLUE:
                 myUnit.className = "unit blue-back";
                 enemyUnit.className = "unit red-front";
             break;
-            case "red": 
+            case TEAMS.RED: 
                 myUnit.className = "unit red-back";
                 enemyUnit.className = "unit blue-front";
             break; 
         }
 
-        for (var i = 0; i < 14; i++) {
+        for (let i = 0; i < 14; i++) {
             document.getElementById(41 - i).innerHTML = "";
             document.getElementById(41 - i).appendChild(myUnit.cloneNode(false));
             document.getElementById(i).innerHTML = "";
@@ -134,7 +133,6 @@ export default class GameScene {
 
         let weapon = null;
         weapon = unitFrom.firstChild;
-        // window.bus.publish("animation-started");
         if (weapon) weapon.classList.add("animate-jump");
 
         function afterMove(){
@@ -142,7 +140,6 @@ export default class GameScene {
             unitFrom.classList.remove(moveAnimationClass);
             if (weapon) weapon.classList.remove("animate-jump");
             unitFrom.removeEventListener("webkitAnimationEnd", afterMove);
-            window.bus.publish("animation-finished");
         }
 
         unitFrom.classList.add(moveAnimationClass);
@@ -186,11 +183,9 @@ export default class GameScene {
         if (document.getElementById('indicator').classList.contains(this.me + "-turn")) {
             fightCell = enemyCell;
             attackerCell = allyCell;
-            // fightAnimationClass = this.fightAnimationClassBuilder(this.me, winner.weapon, loser.weapon)
         } else {
             fightCell = allyCell;
             attackerCell = enemyCell;
-            // fightAnimationClass = this.fightAnimationClassBuilder(this.enemy, winner.weapon, loser.weapon)
         }
 
         let moveAnimationClass = "animate-" + this.validateAvailableCells(+attackerCell.getAttribute("id"),
@@ -224,10 +219,8 @@ export default class GameScene {
             fightCell.appendChild(winnerUnit);
             if (!(winnerUnit.firstChild)) this.addWeapon(fightCell.getAttribute("id"), winner.weapon);
             fightDiv.removeEventListener("webkitAnimationEnd", afterAttackEvent);
-            window.bus.publish("animation-finished");
         }
 
-        // window.bus.publish("animation-started");
         attackerCell.firstChild.classList.add(moveAnimationClass);
         if (weapon) weapon.classList.add("animate-jump");
         attackerCell.firstChild.addEventListener("webkitAnimationEnd", afterAttackMove, false);

@@ -15,7 +15,7 @@ export default class Bot{
 
     changeTurn(clr = TEAMS.BLUE){
         if (clr === this.me) {
-            let rand = Math.round(Math.random() * (4000 - 1500)) + 1500;
+            let rand = Math.round(Math.random() * (4000 - 2000)) + 2000;
             console.log(rand);
             setTimeout(this.makeMove, rand);
         }
@@ -65,8 +65,8 @@ export default class Bot{
         return team;
     }
 
+    //не проверяет что в клетке to
     getStepFromTo(from, to){
-
         const fromLine = Math.floor(from / 7);
         const fromCol = from % 7;
         const toLine = Math.floor(to / 7);
