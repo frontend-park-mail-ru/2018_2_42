@@ -1,4 +1,4 @@
 export default {
-    RED: 'RED',
-    BLUE: 'BLUE'
+    RED: 'red',
+    BLUE: 'blue'
 }
