@@ -1,0 +1,94 @@
+.weaponsChooser-modal {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.weaponsChooser-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 2px solid black;
+    border-radius: 3px;
+    width: 50%;
+    font-weight: bold;
+}
+
+.weaponsChooser-modal-header {
+    text-align: center;
+    font-size: 200%;
+}
+
+.weaponsChooser-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.weaponTypeChooser {
+    transform: scale(1.5);
+}
+
+.grow {
+    transition: all .2s ease-in-out;
+}
+
+.grow:hover {
+    transform: scale(1.8);
+}
+
+.scissors-chooser {
+    z-index: 2;
+    background: var(--weapons);
+    background-position-y: 20%;
+    height: 55px;
+    width: 58px;
+}
+
+.rock-chooser {
+    z-index: 2;
+    background: var(--weapons);
+    background-position-y: 60%;
+    height: 55px;
+    width: 58px; 
+}
+
+.paper-chooser {
+    z-index: 2;
+    background: var(--weapons);
+    background-position-y: 100%;
+    height: 55px;
+    width: 58px; 
+}
+
+@keyframes bounce {
+	0%, 20%, 60%, 100% {
+		-webkit-transform: translateY(0);
+		transform: translateY(0);
+	}
+
+	40% {
+		-webkit-transform: translateY(-20px);
+		transform: translateY(-20px);
+	}
+
+	80% {
+		-webkit-transform: translateY(-10px);
+		transform: translateY(-10px);
+	}
+}
+
+/* .weaponTypeChooser:hover {
+	animation: bounce 1s infinite;
+} */
+
+.weaponsChooser__back {
+    text-align: center;
+    margin-top: 5rem;
+    font-weight: bold;
+}

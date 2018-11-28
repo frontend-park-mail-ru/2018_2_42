@@ -1,0 +1,13 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="weaponsChooser weaponsChooser-modal">
+        <div class="weaponsChooser-modal-content">
+            <div class="weaponsChooser-modal-header">CHOOSE WEAPON</div>
+
+            <div class="weaponsChooser-container">
+                <a class="weaponTypeChooser {data.weapon1.name}-chooser grow" id="{data.weapon1.id}" data-weapon="{data.weapon1.name}" href=""></a>
+                <a class="weaponTypeChooser {data.weapon2.name}-chooser grow" id="{data.weapon2.id}" data-weapon="{data.weapon2.name}" href=""></a>
+            </div>
+
+        </div>
+    </div>
+</fest:template>
