@@ -27,7 +27,12 @@ export default class Game {
         this.gameCore = new GameConstructor({ scene: this.gameScene });
         this.currentTurn = null;
         this.changeTurn = this.changeTurn.bind(this);
+        this.animating = false;
+        this.setAnimating = this.setAnimating.bind(this);
+        this.resetAnimating = this.resetAnimating.bind(this);
         window.bus.subscribe("change-turn", this.changeTurn);
+        window.bus.subscribe("animation-started", this.setAnimating);
+        window.bus.subscribe("animation-finished", this.resetAnimating);
     }
 
     start() {
@@ -47,9 +52,14 @@ export default class Game {
             default: throw "incorrect color";
         }
 
-        setTimeout(()=>{
-            this.gameScene.changeTurn(this.currentTurn);
-            if (this.gameScene.me === this.currentTurn) this.gameController.start();
-        }, 2000);
+        if(!this.animating){ this.resetAnimating(); }
+    }
+
+    setAnimating(){ this.animating = true; }
+
+    resetAnimating(){ 
+        this.animating = false;
+        this.gameScene.changeTurn(this.currentTurn);
+        if (this.gameScene.me === this.currentTurn) this.gameController.start();
     }
 };

@@ -65,35 +65,52 @@ export default class Bot{
         return team;
     }
 
+    isAlly(cell){
+        if (this.field[cell] === null) return false;
+        else return (this.field[cell].team === this.me);
+    }
+
     //не проверяет что в клетке to
     getStepFromTo(from, to){
         const fromLine = Math.floor(from / 7);
-        const fromCol = from % 7;
         const toLine = Math.floor(to / 7);
+        const fromCol = from % 7;
         const toCol = to % 7;
+
+        const up = this.getUpperCell(from);
+        const down = this.getUnderCell(from);
+        const left = this.getLeftCell(from);
+        const right = this.getRightCell(from);
 
         //клетки на 1 вертикали
         if (fromCol === toCol){
-            if (from < to) {
-                return this.getUnderCell(from);
-            } else return this.getUpperCell(from);
+            if ((from < to) && (!this.isAlly(down))) return down;
+            if ((from > to) &&  (!this.isAlly(up)))  return up;
+            if (!this.isAlly(right))                 return right;
+            if (!this.isAlly(left))                  return left;
         }
+
         //клетки на 1 горизонтали
         if (fromLine === toLine){
-            if (from < to) {
-                return this.getRightCell(from);
-            } else return this.getLeftCell(from);
+            if ((from < to) && (!this.isAlly(right)))  return right;
+            if ((from > to) &&  (!this.isAlly(left)))  return left;
+            if (!this.isAlly(up))                      return up;
+            if (!this.isAlly(down))                    return down;
         }
 
         let lineDiff = fromLine - toLine;
         let colDiff = fromCol - toCol;
 
         if (Math.abs(lineDiff) > Math.abs(colDiff)){
-            if (lineDiff > 0) return this.getUpperCell(from);
-                else return this.getUnderCell(from);
+            if ((lineDiff > 0) && (!this.isAlly(up)))    return up;
+            if ((lineDiff < 0) && (!this.isAlly(down))) return down;
+            if (!this.isAlly(left))                        return left;
+            if (!this.isAlly(right))                      return right;
         } else {
-            if (colDiff > 0) return this.getLeftCell(from);
-            else return this.getRightCell(from);
+            if ((colDiff > 0) && (!this.isAlly(left)))    return left;
+            if (!(colDiff > 0) && (!this.isAlly(right))) return right;
+            if (!this.isAlly(up))                        return up;
+            if (!this.isAlly(down))                      return down;
         }
     }
 

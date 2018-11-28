@@ -95,16 +95,12 @@ export default class OfflineGame extends GameCore {
         const fromCell = this.state.field[movement.from];
         
         if (toCell === null ) {
-            
             if (!this.moveUnit(movement.from, movement.to)){
                 throw "to cell not null";
             }
-
             window.bus.publish("move-unit", movement);
         } else {
-    
-            if (toCell.weapon == WEAPONS.FLAG) {
-                console.log("unit", fromCell, "get enemy flag");
+            if ((toCell.weapon == WEAPONS.FLAG) && (fromCell.team !== toCell.team)) {
                 window.bus.publish("finish-game", fromCell.team);
             } else {
                 let winner = Unit.GetWinner(fromCell, toCell);
@@ -121,7 +117,13 @@ export default class OfflineGame extends GameCore {
 
                     window.bus.publish("fight", {   winner: {position: winnerIdx, weapon: winnerWeapon},
                                                     loser:  {position: loserIdx, weapon: loserWeapon}});
-                } else alert("same weapons, feature in development");
+                } else {
+                    window.bus.publish("tie", fromCell.weapon);
+                    // if (fromCell.team === this.botColor) fromCell.weapon = WEAPONS.RandomWeapon;
+                    // else toCell.weapon = WEAPONS.RandomWeapon;
+                    //send show rechoice to client
+                    // alert("same weapons, feature in development");
+                }
             }
         }
         this.changeTurn();

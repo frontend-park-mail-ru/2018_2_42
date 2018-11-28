@@ -12,6 +12,7 @@ export default class GameScene {
         this.shuffleWeapon = this.shuffleWeapon.bind(this);
         this.moveUnit = this.moveUnit.bind(this);
         this.fight = this.fight.bind(this);
+        this.showTie = this.showTie.bind(this);
         this.showGetFlag = this.showGetFlag.bind(this);
         this.changeTurn = this.changeTurn.bind(this);
 
@@ -42,6 +43,7 @@ export default class GameScene {
         window.bus.unsubscribe("shuffle-weapons", this.bindedShuffleWeapon);
         window.bus.subscribe("move-unit", this.moveUnit);
         window.bus.subscribe("fight", this.fight);
+        window.bus.subscribe("tie", this.showTie);
         window.bus.subscribe("finish-game", this.showGetFlag);
     }
 
@@ -140,8 +142,10 @@ export default class GameScene {
             unitFrom.classList.remove(moveAnimationClass);
             if (weapon) weapon.classList.remove("animate-jump");
             unitFrom.removeEventListener("webkitAnimationEnd", afterMove);
+            window.bus.publish("animation-finished");
         }
-
+        
+        window.bus.publish("animation-started");
         unitFrom.classList.add(moveAnimationClass);
         unitFrom.addEventListener("webkitAnimationEnd", afterMove, false);
     }
@@ -219,11 +223,46 @@ export default class GameScene {
             fightCell.appendChild(winnerUnit);
             if (!(winnerUnit.firstChild)) this.addWeapon(fightCell.getAttribute("id"), winner.weapon);
             fightDiv.removeEventListener("webkitAnimationEnd", afterAttackEvent);
+            window.bus.publish("animation-finished");
         }
-
+        
+        window.bus.publish("animation-started");
         attackerCell.firstChild.classList.add(moveAnimationClass);
         if (weapon) weapon.classList.add("animate-jump");
         attackerCell.firstChild.addEventListener("webkitAnimationEnd", afterAttackMove, false);
+    }
+
+    showTie(weapon){
+        let animationClass;
+        switch (weapon) {
+            case WEAPONS.ROCK:
+                animationClass = "animate-tie-r";
+            break;
+            case WEAPONS.PAPER:
+                animationClass = "animate-tie-p";
+            break;
+            case WEAPONS.SCISSORS:
+                animationClass = "animate-tie-s";
+            break;
+            default:
+                throw "incorrect weapon";
+            break;
+        }
+
+        let tieDiv = document.createElement("div");
+        let eventDiv = document.getElementById("game-event");
+        eventDiv.innerHTML = "";
+
+        let afterTieEvent = () => {
+            // eventDiv.innerHTML = "";
+            tieDiv.removeEventListener("webkitAnimationEnd", afterTieEvent);
+            window.bus.publish("animation-finished");
+        }
+
+        window.bus.publish("animation-started");
+        eventDiv.appendChild(tieDiv);
+        tieDiv.classList.add(animationClass);
+        tieDiv.addEventListener("webkitAnimationEnd", afterTieEvent, false);
     }
 
     addWeapon(positionId, weaponName){
