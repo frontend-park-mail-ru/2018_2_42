@@ -16,8 +16,6 @@ export default class GameController {
         this.start = this.start.bind(this);
         this.stop = this.stop.bind(this);
         window.bus.subscribe("team-picked", this.setTeam);
-        window.bus.subscribe("start-controller", this.start);
-        window.bus.subscribe("stop-controller", this.stop);
     }
 
     setTeam(clr) {

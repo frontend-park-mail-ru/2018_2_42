@@ -44,13 +44,14 @@ export default class GameScene {
         window.bus.subscribe("move-unit", this.moveUnit);
         window.bus.subscribe("fight", this.fight);
         window.bus.subscribe("tie", this.showTie);
-        window.bus.subscribe("finish-game", this.showGetFlag);
+        window.bus.subscribe("get-flag", this.showGetFlag);
     }
-
+    
     stop() {
         window.bus.unsubscribe("move-unit", this.moveUnit);
         window.bus.unsubscribe("fight", this.fight);
-        window.bus.unsubscribe("finish-game", this.showGetFlag);
+        window.bus.unsubscribe("tie", this.showTie);
+        window.bus.unsubscribe("get-flag", this.showGetFlag);
     }
 
     changeTurn(clr){
@@ -302,6 +303,9 @@ export default class GameScene {
         eventDiv.innerHTML = "";
         eventDiv.append(getFlagDiv);
         getFlagDiv.classList.add("animate-" + clr + "-get-flag");
+        setTimeout(()=>{
+            window.bus.publish("destroy-game");
+        }, 2000);
     }
 
     validateAvailableCells(cell1, cell2){

@@ -34,13 +34,18 @@ export default class Game {
         window.bus.subscribe("animation-started", this.setAnimating);
         window.bus.subscribe("animation-finished", this.resetAnimating);
     }
-
+    
     start() {
         this.gameCore.start();
     }
-
+    
     destroy() {
         this.gameCore.destroy();
+        this.gameController.stop();
+        this.gameScene.stop();
+        window.bus.unsubscribe("change-turn", this.changeTurn);
+        window.bus.unsubscribe("animation-started", this.setAnimating);
+        window.bus.unsubscribe("animation-finished", this.resetAnimating);
     }
 
     changeTurn(clr){

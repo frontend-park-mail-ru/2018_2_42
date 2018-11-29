@@ -75,7 +75,6 @@ export default class OfflineGame extends GameCore {
     }
 
     onGameFinished(state) {
-        // window.bus.publish('destroy-game');
     }
 
     changeTurn(){
@@ -103,7 +102,7 @@ export default class OfflineGame extends GameCore {
             window.bus.publish("move-unit", movement);
         } else {
             if ((toCell.weapon == WEAPONS.FLAG) && (fromCell.team !== toCell.team)) {
-                window.bus.publish("finish-game", fromCell.team);
+                window.bus.publish("get-flag", fromCell.team);
             } else {
                 this.handleFight(movement.from, movement.to);
             }
