@@ -14,11 +14,13 @@ const userService = new UserService();
 export default class GameFieldView extends BaseView {
     constructor({ el = document.body, withNavbar = false } = {}) {
         super({ el: el, withNavbar: withNavbar });
-        this._mode = null;
-        window.bus.subscribe("destroy-game", () => { this.destroy(); })
+        this._active = false;
     }
     
     render() {
+        console.log("render");
+        this._active = true;
+        window.bus.subscribe("destroy-game", () => { this.destroy(); })
         this._mode = null;
         if (window.location.pathname === '/play-online') {
             this._mode = "online";
@@ -36,15 +38,15 @@ export default class GameFieldView extends BaseView {
         gameField.render();
         
         this._weaponsChooser = new WeaponsChooserComponent({ el: this._section });
-        window.bus.subscribe("rechoose-weapon", (data) => { this._weaponsChooser.render(data); });
+        window.bus.subscribe("rechoose-weapon", () => { this._weaponsChooser.render(); });
 
         this._winnerShower = new WinnerShowerComponent({ el: this._section });
         window.bus.subscribe("get-flag", (data) => { this._winnerShower.render(data) });
 
         const gameFieldNode = document.getElementsByClassName("game")[0];
         this.game = new Game({ mode: this._mode, gameField: gameFieldNode });
-        this.renderTeamChooser();
         this.game.start();
+        this.renderTeamChooser();
     }
 
     renderTeamChooser() {
@@ -85,10 +87,28 @@ export default class GameFieldView extends BaseView {
     }
 
     destroy() {
+        console.log("destroy");
+        this._active = false;
         window.bus.unsubscribe("destroy-game", () => { this.destroy(); });
-        window.bus.unsubscribe("rechoose-weapon", () => { this.renderWeaponsChooser(); })
+        window.bus.unsubscribe("rechoose-weapon", () => { this._weaponsChooser.render(); });
+        window.bus.unsubscribe("get-flag", (data) => { this._winnerShower.render(data); });
         this.game.destroy();
         this._mode = null;
         super.destroy();
+        window.bus.publish("draw-menu");
+    }
+
+    hide() {
+        super.hide();
+        if (this._active) {
+            window.bus.publish("destroy-game");
+        }
+    }
+
+    show() {
+        super.show();
+        if (!this._active) {
+            this.render();
+        }
     }
 }

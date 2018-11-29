@@ -13,7 +13,7 @@ export default class GameScene {
         this.moveUnit = this.moveUnit.bind(this);
         this.fight = this.fight.bind(this);
         this.showTie = this.showTie.bind(this);
-        this.showGetFlag = this.showGetFlag.bind(this);
+        // this.showGetFlag = this.showGetFlag.bind(this);
         this.changeTurn = this.changeTurn.bind(this);
 
         window.bus.subscribe("team-picked", this.setTeam);
@@ -297,16 +297,16 @@ export default class GameScene {
             }
     }
 
-    showGetFlag(clr){
-        let eventDiv = document.getElementById("game-event");
-        let getFlagDiv = document.createElement("div");
-        eventDiv.innerHTML = "";
-        eventDiv.append(getFlagDiv);
-        getFlagDiv.classList.add("animate-" + clr + "-get-flag");
-        setTimeout(()=>{
-            window.bus.publish("destroy-game");
-        }, 2000);
-    }
+    // showGetFlag(clr){
+    //     let eventDiv = document.getElementById("game-event");
+    //     let getFlagDiv = document.createElement("div");
+    //     eventDiv.innerHTML = "";
+    //     eventDiv.append(getFlagDiv);
+    //     getFlagDiv.classList.add("animate-" + clr + "-get-flag");
+    //     setTimeout(()=>{
+    //         window.bus.publish("destroy-game");
+    //     }, 2000);
+    // }
 
     validateAvailableCells(cell1, cell2){
         switch (cell1 - cell2) {
