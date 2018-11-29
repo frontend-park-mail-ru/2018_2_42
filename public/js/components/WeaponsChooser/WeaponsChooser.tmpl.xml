@@ -4,8 +4,9 @@
             <div class="weaponsChooser-modal-header">CHOOSE WEAPON</div>
 
             <div class="weaponsChooser-container">
-                <a class="weaponTypeChooser {data.weapon1.name}-chooser grow" id="{data.weapon1.id}" data-weapon="{data.weapon1.name}" href=""></a>
-                <a class="weaponTypeChooser {data.weapon2.name}-chooser grow" id="{data.weapon2.id}" data-weapon="{data.weapon2.name}" href=""></a>
+                <fest:each iterate="data.weapons" index="i">
+                    <a class="weaponTypeChooser {data.weapons[i].name}-chooser grow" id="{data.weapons[i].id}" data-weapon="{data.weapons[i].name}" href=""></a>
+                </fest:each>
             </div>
 
         </div>

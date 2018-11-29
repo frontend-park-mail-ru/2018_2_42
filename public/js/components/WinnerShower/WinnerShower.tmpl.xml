@@ -1,0 +1,18 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="teamChooser winner-modal">
+        <div class="winner-modal-content">
+            <div class="winner-modal-header">
+                GAME OVER<br/>
+                <span class="{data.team}TeamWinner"><fest:value>data.team</fest:value></span><fest:space/>TEAM WON
+            </div>
+
+            <div class="winner-container">
+                <a class="animate-{data.team}-win" id="redTeamWinner" data-color="{data.team}" href=""></a>
+            </div>
+
+            <div class="winner__back">
+                <a id="winner_back_btn" href="/menu" data-href="menu" class="back_btn">Quit game</a>
+            </div>
+        </div>
+    </div>
+</fest:template>

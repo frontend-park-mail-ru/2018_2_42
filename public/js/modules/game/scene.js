@@ -276,7 +276,7 @@ export default class GameScene {
             // eventDiv.innerHTML = "";
             tieDiv.removeEventListener("webkitAnimationEnd", afterTieEvent);
             window.bus.publish("animation-finished");
-            window.bus.publish("rechoose-weapon", otherWeapons);
+            window.bus.publish("rechoose-weapon");
         }
 
         window.bus.publish("animation-started");

@@ -7,6 +7,7 @@ import Game from "../modules/game/game.js";
 import TEAMS from "../modules/game/core/teams.js"
 import WeaponsShufflerComponent from "../components/WeaponsShuffler/WeaponsShuffler.mjs";
 import WeaponsChooserComponent from "../components/WeaponsChooser/WeaponsChooser.mjs";
+import WinnerShowerComponent from "../components/WinnerShower/WinnderShower.mjs";
 
 const userService = new UserService();
 
@@ -37,8 +38,8 @@ export default class GameFieldView extends BaseView {
         this._weaponsChooser = new WeaponsChooserComponent({ el: this._section });
         window.bus.subscribe("rechoose-weapon", (data) => { this._weaponsChooser.render(data); });
 
-        this._weaponsChooser = new WeaponsChooserComponent({ el: this._section });
-        window.bus.subscribe("rechoose-weapon", (data) => { this._weaponsChooser.render(data); });
+        this._winnerShower = new WinnerShowerComponent({ el: this._section });
+        window.bus.subscribe("get-flag", (data) => { this._winnerShower.render(data) });
 
         const gameFieldNode = document.getElementsByClassName("game")[0];
         this.game = new Game({ mode: this._mode, gameField: gameFieldNode });

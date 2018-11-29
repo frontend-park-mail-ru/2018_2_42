@@ -13,6 +13,7 @@
 @import '../js/components/TeamChooser/TeamChooser.css';
 @import '../js/components/WeaponsChooser/WeaponsChooser.css';
 @import '../js/components/WeaponsShuffler/WeaponsShuffler.css';
+@import '../js/components/WinnerShower/WinnerShower.css';
 
 
 [hidden] { display: none !important; }
