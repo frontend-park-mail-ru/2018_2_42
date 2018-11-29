@@ -6,6 +6,7 @@ import UserService from "../services/UserService.js";
 import Game from "../modules/game/game.js";
 import TEAMS from "../modules/game/core/teams.js"
 import WeaponsShufflerComponent from "../components/WeaponsShuffler/WeaponsShuffler.mjs";
+import WeaponsChooserComponent from "../components/WeaponsChooser/WeaponsChooser.mjs";
 
 const userService = new UserService();
 
@@ -32,6 +33,9 @@ export default class GameFieldView extends BaseView {
         this._el.appendChild(this._section);
         const gameField = new GameFieldComponent({ el: this._section });
         gameField.render();
+
+        this._weaponsChooser = new WeaponsChooserComponent({ el: this._section });
+        window.bus.subscribe("rechoose-weapon", (data) => { this._weaponsChooser.render(data); });
 
         const gameFieldNode = document.getElementsByClassName("game")[0];
         this.game = new Game({ mode: this._mode, gameField: gameFieldNode });
@@ -78,6 +82,7 @@ export default class GameFieldView extends BaseView {
 
     destroy() {
         window.bus.unsubscribe("destroy-game", () => { this.destroy(); });
+        window.bus.unsubscribe("rechoose-weapon", () => { this.renderWeaponsChooser(); })
         this.game.destroy();
         this._mode = null;
         super.destroy();

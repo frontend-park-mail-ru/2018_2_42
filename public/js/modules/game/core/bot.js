@@ -10,7 +10,14 @@ export default class Bot{
         this.enemy = (color ===  TEAMS.RED ? TEAMS.BLUE : TEAMS.RED);
         this.changeTurn = this.changeTurn.bind(this);
         this.makeMove = this.makeMove.bind(this);
+    }
+    
+    start(){
         window.bus.subscribe("change-turn", this.changeTurn);
+    }
+    
+    stop(){
+        window.bus.unsubscribe("change-turn", this.changeTurn);
     }
 
     changeTurn(clr = TEAMS.BLUE){

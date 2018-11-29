@@ -173,12 +173,17 @@ export default class GameScene {
         if (winnerUnit.className.indexOf(this.me) > 0) {
             allyCell = winnerCell;
             enemyCell = loserCell;
+            this.replaceWeapon(allyCell.getAttribute("id"), winner.weapon);
+            if (enemyCell.firstChild.firstChild) this.replaceWeapon(enemyCell.getAttribute("id"), loser.weapon);
             fightAnimationClass = this.fightAnimationClassBuilder(this.me, winner.weapon, loser.weapon)
         } else {
             allyCell = loserCell;
             enemyCell = winnerCell;
+            this.replaceWeapon(allyCell.getAttribute("id"), loser.weapon);
+            if (enemyCell.firstChild.firstChild) this.replaceWeapon(enemyCell.getAttribute("id"), winner.weapon);
             fightAnimationClass = this.fightAnimationClassBuilder(this.enemy, winner.weapon, loser.weapon)
         }
+
         
         let fightCell = null;
         let attackerCell = null;
@@ -221,7 +226,7 @@ export default class GameScene {
             attackerCell.innerHTML = "";
             fightCell.innerHTML = "";
             fightCell.appendChild(winnerUnit);
-            if (!(winnerUnit.firstChild)) this.addWeapon(fightCell.getAttribute("id"), winner.weapon);
+            this.replaceWeapon(fightCell.getAttribute("id"), winner.weapon);
             fightDiv.removeEventListener("webkitAnimationEnd", afterAttackEvent);
             window.bus.publish("animation-finished");
         }
@@ -233,16 +238,29 @@ export default class GameScene {
     }
 
     showTie(weapon){
+
+        let otherWeapons = {
+            weapon1: null,
+            weaponw: null,
+        };
+
         let animationClass;
+
         switch (weapon) {
             case WEAPONS.ROCK:
                 animationClass = "animate-tie-r";
+                otherWeapons.weapon1 = WEAPONS.PAPER;
+                otherWeapons.weapon2 = WEAPONS.SCISSORS;
             break;
             case WEAPONS.PAPER:
                 animationClass = "animate-tie-p";
+                otherWeapons.weapon1 = WEAPONS.ROCK;
+                otherWeapons.weapon2 = WEAPONS.SCISSORS;
             break;
             case WEAPONS.SCISSORS:
                 animationClass = "animate-tie-s";
+                otherWeapons.weapon1 = WEAPONS.PAPER;
+                otherWeapons.weapon2 = WEAPONS.ROCK;
             break;
             default:
                 throw "incorrect weapon";
@@ -257,6 +275,7 @@ export default class GameScene {
             // eventDiv.innerHTML = "";
             tieDiv.removeEventListener("webkitAnimationEnd", afterTieEvent);
             window.bus.publish("animation-finished");
+            window.bus.publish("rechoose-weapon", otherWeapons);
         }
 
         window.bus.publish("animation-started");
@@ -265,18 +284,16 @@ export default class GameScene {
         tieDiv.addEventListener("webkitAnimationEnd", afterTieEvent, false);
     }
 
-    addWeapon(positionId, weaponName){
+    replaceWeapon(positionId, weaponName){
         if (this.validateWeapon(weaponName)) {
             if (this.validatePositionId(positionId)) {
-                let enemyUnit = document.getElementById(positionId).firstChild;
-                if (enemyUnit && enemyUnit.classList.contains(this.enemy + "-front")) {
+                    let unit = document.getElementById(positionId).firstChild;
                     let weapon = document.createElement("div");
                     weapon.classList.add(weaponName.toLowerCase());
-                    enemyUnit.innerHTML = "";
-                    enemyUnit.appendChild(weapon);
-                } else throw "not enemy unit in cell";
+                    unit.innerHTML = "";
+                    unit.appendChild(weapon);
+                } else throw "not valid position";
             }
-        }
     }
 
     showGetFlag(clr){
@@ -344,7 +361,6 @@ export default class GameScene {
                 throw "unit have no weapon";
                 return false;
             } 
-            if (!unitWeapon.classList.contains(inUnit.weapon.toLowerCase())) return false;
         }
         return true;
     }
