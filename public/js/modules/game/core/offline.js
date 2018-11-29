@@ -67,11 +67,9 @@ export default class OfflineGame extends GameCore {
 
         this.scene.start();
 
-        this.changeTurn();
+        window.bus.publish("start-game", this.state);
 
-        setTimeout(function () {
-            window.bus.publish("start-game", this.state);
-        }.bind(this));
+        this.changeTurn();
     }
 
     onGameFinished(state) {
