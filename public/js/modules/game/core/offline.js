@@ -146,9 +146,9 @@ export default class OfflineGame extends GameCore {
         this.bot.stop();
 
         let newWeapon = WEAPONS.RandomWeapon();
-        while (fromCell.weapon === newWeapon){
-            newWeapon = WEAPONS.RandomWeapon();
-        }
+        // while (fromCell.weapon === newWeapon){
+        //     newWeapon = WEAPONS.RandomWeapon();
+        // }
 
         this.tie =  {
             botUnitPos: null,
