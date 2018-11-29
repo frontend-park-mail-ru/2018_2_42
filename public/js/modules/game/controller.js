@@ -6,21 +6,16 @@ import WEAPONS from "./core/weapons.js";
 export default class GameController {
     constructor(root) {
         this.root = root;
-        this.action = {};
         this.reachableCells = [];
         this.me = null;
         this.enemy = null;
         this.selectedCell = null;
         
-        this.handler = this._onMousedown.bind(this);
+        this._onMousedown = this._onMousedown.bind(this);
         this.setTeam = this.setTeam.bind(this);
-        this.changeTurn = this.changeTurn.bind(this);
         this.start = this.start.bind(this);
         this.stop = this.stop.bind(this);
         window.bus.subscribe("team-picked", this.setTeam);
-        window.bus.subscribe("change-turn", this.changeTurn);
-        window.bus.subscribe("start-controller", this.start);
-        window.bus.subscribe("stop-controller", this.stop);
     }
 
     setTeam(clr) {
@@ -30,28 +25,16 @@ export default class GameController {
     }
     
     start() {
-        this.root.addEventListener('mousedown', this.handler);
+        this.root.addEventListener('mousedown', this._onMousedown);
     }
 
     stop() {
-        this.root.removeEventListener('mousedown', this.handler);
+        this.root.removeEventListener('mousedown', this._onMousedown);
         this.removeMarkers();
     }
 
-    changeTurn(clr = TEAMS.BLUE){
-        if (clr === this.me) {
-            this.start()
-        } else {
-            this.stop();
-        }
-    }
-
-    /**
-     * Обработчик события
-     */
     _onMousedown(event) {
         let clicked = event.target;
-        
         if (clicked.classList.contains(WEAPONS.ROCK) ||
             clicked.classList.contains(WEAPONS.PAPER) ||
             clicked.classList.contains(WEAPONS.SCISSORS)){
@@ -62,12 +45,11 @@ export default class GameController {
                 clicked = clicked.parentNode;
         }
 
-
-
         if (this.reachableCells.includes(clicked)) {
             let from = +this.selectedCell.getAttribute("id");
             let to = +clicked.getAttribute("id");
             window.bus.publish("game-unit-moved", {from ,to} );
+            this.stop();
         }
 
         this.removeMarkers();
@@ -98,7 +80,7 @@ export default class GameController {
 
     containsAlly(cell, allyClr){
         const cellInner = cell.firstChild;
-        if (cellInner == null) return false
+        if (cellInner == null) return false;
         switch (allyClr){
             case TEAMS.BLUE:
                 return cellInner.classList.contains("blue-back");
@@ -140,7 +122,6 @@ export default class GameController {
     markAvailableCell(cell, allyClr){
         if ((cell != null) && !this.containsAlly(cell, allyClr)) {
             cell.classList.add('near-cell')
-            // this.reachableCells.push(cell)
         }
     }
 

@@ -1,5 +1,6 @@
 'use strict';
 import GameCore from "./gamecore.js";
+import Bot from "./bot.js";
 import Unit from "./unit.js";
 import TEAMS from "./teams.js";
 import WEAPONS from "./weapons.js";
@@ -11,6 +12,8 @@ export default class OfflineGame extends GameCore {
         this.currentTurn = null;
         this.clientColor = null;
         this.botColor = null;
+        this.bot = null;
+        this.tie = null;
     }
     
     start() {
@@ -19,15 +22,10 @@ export default class OfflineGame extends GameCore {
         this.state = {
             field: [],
         };
-
-        //createBot
-
-        setTimeout(function () {
-            window.bus.publish("start-game", this.state);
-        }.bind(this));
     }
     
     onGameStarted(state) {
+        this.bot.start();
     }
     
     onGameUploadTeam(state) {
@@ -43,6 +41,8 @@ export default class OfflineGame extends GameCore {
             this.botColor = TEAMS.BLUE;
             this.clientColor = TEAMS.RED;
         } else throw "incorrect color";
+
+        this.bot = new Bot(this.state.field, this.botColor);
 
         //рандомно заполняем часть поля бота 
         uploadMap.parameter.weapons.forEach(element => {
@@ -68,10 +68,13 @@ export default class OfflineGame extends GameCore {
         this.scene.start();
 
         this.changeTurn();
+
+        setTimeout(function () {
+            window.bus.publish("start-game", this.state);
+        }.bind(this));
     }
 
     onGameFinished(state) {
-        // window.bus.publish('close-game');
     }
 
     changeTurn(){
@@ -82,55 +85,98 @@ export default class OfflineGame extends GameCore {
             break;
             default: this.currentTurn = TEAMS.BLUE;
         }
-
         window.bus.publish("change-turn", this.currentTurn);
-
-        // if (this.currentTurn === bot.color) {
-            // bot.makemove;
-            // send move
-        // }
     }
 
     onGameUnitMoved(movement) {
         // validate move, later
-        // from should contain client unit , later ??
+        console.log(this.state.field);
+        console.log(movement);
         const toCell = this.state.field[movement.to];
         const fromCell = this.state.field[movement.from];
         
         if (toCell === null ) {
-            
             if (!this.moveUnit(movement.from, movement.to)){
                 throw "to cell not null";
             }
-
             window.bus.publish("move-unit", movement);
         } else {
-    
-            if (toCell.weapon == WEAPONS.FLAG) {
-                console.log("unit", fromCell, "get enemy flag");
-                window.bus.publish("finish-game", fromCell.team);
+            if ((toCell.weapon == WEAPONS.FLAG) && (fromCell.team !== toCell.team)) {
+                window.bus.publish("get-flag", fromCell.team);
             } else {
-                let winner = Unit.GetWinner(fromCell, toCell);
-                if (winner !== null) {
-                    let loser = (fromCell === winner) ? toCell : fromCell;
-                    let winnerIdx = this.state.field.indexOf(winner);
-                    let loserIdx = this.state.field.indexOf(loser);
-
-                    let winnerWeapon = winner.weapon;
-                    let loserWeapon = loser.weapon;
-
-                    this.state.field[movement.from] = null;
-                    this.state.field[movement.to] = winner;
-
-                    window.bus.publish("fight", {   winner: {position: winnerIdx, weapon: winnerWeapon},
-                                                    loser:  {position: loserIdx, weapon: loserWeapon}});
-                } else alert("same weapons, feature in development");
+                this.handleFight(movement.from, movement.to);
             }
         }
+        if (!this.tie) this.changeTurn();
+    }
 
-        console.log(this.state.field);
+    handleFight(from, to){
+        const toCell = this.state.field[to];
+        const fromCell = this.state.field[from];
+        
+        let winner = Unit.GetWinner(fromCell, toCell);
+        if (winner !== null) {
+            let loser = (fromCell === winner) ? toCell : fromCell;
+            let winnerIdx = this.state.field.indexOf(winner);
+            let loserIdx = this.state.field.indexOf(loser);
 
-        // this.changeTurn();
+            let winnerWeapon = winner.weapon;
+            let loserWeapon = loser.weapon;
+
+            this.state.field[from] = null;
+            this.state.field[to] = winner;
+
+            window.bus.publish("fight", {   winner: {position: winnerIdx, weapon: winnerWeapon},
+                                            loser:  {position: loserIdx, weapon: loserWeapon}});
+
+            if (this.tie) {
+                this.tie = null;
+                this.bot.start();
+                this.changeTurn();
+            }
+                                            
+        } else {
+                this.handleTie(from, to);
+        }
+    }
+
+    handleTie(from, to) {
+        const toCell = this.state.field[to];
+        const fromCell = this.state.field[from];
+
+        window.bus.publish("tie", fromCell.weapon);
+        this.bot.stop();
+
+        let newWeapon = WEAPONS.RandomWeapon();
+        while (fromCell.weapon === newWeapon){
+            newWeapon = WEAPONS.RandomWeapon();
+        }
+
+        this.tie =  {
+            botUnitPos: null,
+            clientUnitPos: null,
+            from: null,
+            to: null,
+        };
+
+        this.tie.to = to;
+        this.tie.from = from;
+
+        if (fromCell.team === this.botColor) {
+            fromCell.weapon = newWeapon;
+            this.tie.clientUnitPos = to;
+            this.tie.botUnitPos = from;
+        }
+        else {
+            toCell.weapon = newWeapon;
+            this.tie.clientUnitPos = from;
+            this.tie.botUnitPos = to;
+        }
+    }
+
+    onGameRechoseWeapon(newWeapon){
+        this.state.field[this.tie.clientUnitPos].weapon = newWeapon;
+        this.handleFight(this.tie.from, this.tie.to);
     }
 
     moveUnit(fromIdx, toIdx){

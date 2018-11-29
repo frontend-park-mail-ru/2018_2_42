@@ -37,6 +37,9 @@ export default class GameFieldView extends BaseView {
         this._weaponsChooser = new WeaponsChooserComponent({ el: this._section });
         window.bus.subscribe("rechoose-weapon", (data) => { this._weaponsChooser.render(data); });
 
+        this._weaponsChooser = new WeaponsChooserComponent({ el: this._section });
+        window.bus.subscribe("rechoose-weapon", (data) => { this._weaponsChooser.render(data); });
+
         const gameFieldNode = document.getElementsByClassName("game")[0];
         this.game = new Game({ mode: this._mode, gameField: gameFieldNode });
         this.renderTeamChooser();

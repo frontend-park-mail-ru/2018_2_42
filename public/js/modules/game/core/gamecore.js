@@ -11,6 +11,7 @@ export default class GameCore {
         this.onGameUploadTeam = this.onGameUploadTeam.bind(this);
         this.onGameFinished = this.onGameFinished.bind(this);
         this.onGameUnitMoved = this.onGameUnitMoved.bind(this);
+        this.onGameRechoseWeapon = this.onGameRechoseWeapon.bind(this);
     }
 
     start() {
@@ -18,6 +19,7 @@ export default class GameCore {
         window.bus.subscribe("game-upload-team", this.onGameUploadTeam);
         window.bus.subscribe("finish-game", this.onGameFinished);
         window.bus.subscribe("game-unit-moved", this.onGameUnitMoved);
+        window.bus.subscribe("rechose-weapon", this.onGameRechoseWeapon);
     }
     
     destroy() {
@@ -25,9 +27,14 @@ export default class GameCore {
         window.bus.unsubscribe("game-upload-team", this.onGameUploadTeam);
         window.bus.unsubscribe("finish-game", this.onGameFinished);
         window.bus.unsubscribe("game-unit-moved", this.onGameUnitMoved);
+        window.bus.unsubscribe("rechose-weapon", this.onGameRechoseWeapon);
     }
 
     onGameStarted(state) {
+        throw new Error('This method must be overridden');
+    }
+
+    onGameRechoseWeapon(state) {
         throw new Error('This method must be overridden');
     }
 
