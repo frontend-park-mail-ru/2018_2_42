@@ -33,6 +33,7 @@ export default class GameFieldView extends BaseView {
             return "redirect";
         }
 
+        this._section.setAttribute("style", "display:initial;");
         this._el.appendChild(this._section);
         const gameField = new GameFieldComponent({ el: this._section });
         gameField.render();
