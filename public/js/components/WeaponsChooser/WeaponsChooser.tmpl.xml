@@ -1,0 +1,14 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="weaponsChooser weaponsChooser-modal">
+        <div class="weaponsChooser-modal-content">
+            <div class="weaponsChooser-modal-header">CHOOSE WEAPON</div>
+
+            <div class="weaponsChooser-container">
+                <fest:each iterate="data.weapons" index="i">
+                    <a class="weaponTypeChooser {data.weapons[i].name}-chooser grow" id="{data.weapons[i].id}" data-weapon="{data.weapons[i].name}" href=""></a>
+                </fest:each>
+            </div>
+
+        </div>
+    </div>
+</fest:template>

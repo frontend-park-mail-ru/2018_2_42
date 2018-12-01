@@ -16,9 +16,7 @@ export default class GameFieldComponent {
 
         document.getElementById("gamefield_back_btn").addEventListener("click", (event) => {
             event.preventDefault();
-            // Закончить игру
-            // window.bus.publish("destroy-game");
-            window.bus.publish("draw-menu");
+            window.bus.publish("destroy-game");
         });
     }
 
