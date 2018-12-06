@@ -26,8 +26,11 @@ export default class Game {
         this.gameController = new GameController(this.gameField);
         this.gameCore = new GameConstructor({ scene: this.gameScene });
         this.currentTurn = null;
-        this.changeTurn = this.changeTurn.bind(this);
+        this.clientColor = null;
+        this.enemyColor = null;
         this.animating = false;
+        this.changeTurn = this.changeTurn.bind(this);
+        this.setTeams = this.setTeams.bind(this);
         this.setAnimating = this.setAnimating.bind(this);
         this.resetAnimating = this.resetAnimating.bind(this);
         window.bus.subscribe("change-turn", this.changeTurn);
@@ -37,27 +40,35 @@ export default class Game {
     
     start() {
         this.gameCore.start();
+        this.gameScene.start();
+        window.bus.subscribe("team-picked", this.setTeams);
     }
     
     destroy() {
         this.gameCore.destroy();
         this.gameController.stop();
         this.gameScene.stop();
+        window.bus.unsubscribe("team-picked", this.setTeams);
         window.bus.unsubscribe("change-turn", this.changeTurn);
         window.bus.unsubscribe("animation-started", this.setAnimating);
         window.bus.unsubscribe("animation-finished", this.resetAnimating);
     }
 
-    changeTurn(clr){
-        switch (clr){
-            case TEAMS.BLUE: this.currentTurn = clr;
-            break;
-            case TEAMS.RED: this.currentTurn = clr;
-            break;
-            default: throw "incorrect color";
+    setTeams(clientColor){
+        this.clientColor = clientColor;
+        this.enemyColor = (this.clientColor === TEAMS.RED) ? TEAMS.BLUE : TEAMS.RED;
+        this.gameScene.setTeam(this.clientColor);
+        this.gameController.setTeam(this.clientColor);
+    }
+
+    changeTurn(turn){
+        if (this.clientColor == null || this.enemyColor == null) {
+            throw "Cannot change turn, color not picked"
         }
 
-        if(!this.animating){ this.resetAnimating(); }
+        this.currentTurn = turn ? this.clientColor : this.enemyColor;
+
+        if (!this.animating) this.resetAnimating();
     }
 
     setAnimating(){ this.animating = true; }

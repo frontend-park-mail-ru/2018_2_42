@@ -9,9 +9,7 @@ export default class OfflineGame extends GameCore {
     constructor({ scene = null } = {}) {
         super({ mode: "offline", scene: scene });
         this.state = {};
-        this.currentTurn = null;
-        this.clientColor = null;
-        this.botColor = null;
+        this.clientTurn = null;
         this.bot = null;
         this.tie = null;
     }
@@ -30,23 +28,28 @@ export default class OfflineGame extends GameCore {
     
     onGameUploadTeam(state) {
         //парсим команду клиента
-        let uploadMap = super.parseClientTeam();
+        const uploadMap = super.parseClientTeam();
         console.log(uploadMap);
 
         //определяем цвет команды клиента и бота
-        if (uploadMap.parameter.color === TEAMS.BLUE) {
-            this.botColor = TEAMS.RED;
-            this.clientColor = TEAMS.BLUE; 
-        } else if (uploadMap.parameter.color === TEAMS.RED) {
-            this.botColor = TEAMS.BLUE;
-            this.clientColor = TEAMS.RED;
+        let enemyColor = null;
+        let clientColor = uploadMap.parameter.color; 
+        
+        if (clientColor === TEAMS.BLUE) {
+            //первым будет ходить юзер
+            this.clientTurn = false;
+            enemyColor = TEAMS.RED;
+        } else if (clientColor === TEAMS.RED) {
+            //первым будет ходить бот
+            this.clientTurn = true;
+            enemyColor = TEAMS.BLUE;
         } else throw "incorrect color";
 
-        this.bot = new Bot(this.state.field, this.botColor);
+        this.bot = new Bot(this.state.field, enemyColor);
 
         //рандомно заполняем часть поля бота 
         uploadMap.parameter.weapons.forEach(element => {
-            let u = new Unit(this.botColor);
+            let u = new Unit(enemyColor);
             this.state.field.push(u);
         });
 
@@ -57,7 +60,7 @@ export default class OfflineGame extends GameCore {
 
         //переносим полученную от клиента расстановку юнитов в стейт игры 
         uploadMap.parameter.weapons.forEach(element => {
-            let u = new Unit(this.clientColor, element);
+            let u = new Unit(clientColor, element);
             this.state.field.push(u);
         });
 
@@ -65,25 +68,12 @@ export default class OfflineGame extends GameCore {
         const botFlagPos = Math.floor(Math.random() * 12);
         this.state.field[botFlagPos].weapon = "flag";
 
-        this.scene.start();
-
         window.bus.publish("start-game", this.state);
 
-        this.changeTurn();
+        window.bus.publish("change-turn", this.getNextTurn());
     }
 
     onGameFinished(state) {
-    }
-
-    changeTurn(){
-        switch (this.currentTurn){
-            case TEAMS.BLUE: this.currentTurn = TEAMS.RED;
-            break;
-            case TEAMS.RED:  this.currentTurn = TEAMS.BLUE;
-            break;
-            default: this.currentTurn = TEAMS.BLUE;
-        }
-        window.bus.publish("change-turn", this.currentTurn);
     }
 
     onGameUnitMoved(movement) {
@@ -105,7 +95,7 @@ export default class OfflineGame extends GameCore {
                 this.handleFight(movement.from, movement.to);
             }
         }
-        if (!this.tie) this.changeTurn();
+        if (!this.tie)  window.bus.publish("change-turn", this.getNextTurn());
     }
 
     handleFight(from, to){
@@ -130,7 +120,7 @@ export default class OfflineGame extends GameCore {
             if (this.tie) {
                 this.tie = null;
                 this.bot.start();
-                this.changeTurn();
+                 window.bus.publish("change-turn", this.getNextTurn());
             }
                                             
         } else {
@@ -142,13 +132,10 @@ export default class OfflineGame extends GameCore {
         const toCell = this.state.field[to];
         const fromCell = this.state.field[from];
 
-        window.bus.publish("tie", fromCell.weapon);
+        window.bus.publish("tie", from);
         this.bot.stop();
 
         let newWeapon = WEAPONS.RandomWeapon();
-        // while (fromCell.weapon === newWeapon){
-        //     newWeapon = WEAPONS.RandomWeapon();
-        // }
 
         this.tie =  {
             botUnitPos: null,
@@ -160,7 +147,7 @@ export default class OfflineGame extends GameCore {
         this.tie.to = to;
         this.tie.from = from;
 
-        if (fromCell.team === this.botColor) {
+        if (fromCell.team === this.bot.botColor) {
             fromCell.weapon = newWeapon;
             this.tie.clientUnitPos = to;
             this.tie.botUnitPos = from;
@@ -186,6 +173,11 @@ export default class OfflineGame extends GameCore {
             this.state.field[fromIdx] = null;
             return true;
         } else return false;
+    }
+
+    getNextTurn(){
+        this.clientTurn = !this.clientTurn;
+        return this.clientTurn;
     }
 
 }

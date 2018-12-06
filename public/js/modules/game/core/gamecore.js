@@ -80,6 +80,9 @@ export default class GameCore {
                 uploadMap.parameter.weapons.push("flag");
             }
         });
+
+        
+
         return uploadMap;
     }
 }

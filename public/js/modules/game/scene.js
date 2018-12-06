@@ -8,33 +8,18 @@ export default class GameScene {
         this.me = null;
         this.enemy = null;
         
-        this.setTeam = this.setTeam.bind(this);
         this.shuffleWeapon = this.shuffleWeapon.bind(this);
         this.moveUnit = this.moveUnit.bind(this);
         this.fight = this.fight.bind(this);
         this.showTie = this.showTie.bind(this);
-        // this.showGetFlag = this.showGetFlag.bind(this);
         this.changeTurn = this.changeTurn.bind(this);
 
-        window.bus.subscribe("team-picked", this.setTeam);
         window.bus.subscribe("shuffle-weapons", this.shuffleWeapon);
     }
 
     setTeam(clr) {
-        switch (clr){
-            case TEAMS.BLUE: 
-                this.me = TEAMS.BLUE;
-                this.enemy = TEAMS.RED;
-            break;
-            case TEAMS.RED: 
-                this.me = TEAMS.RED;
-                this.enemy = TEAMS.BLUE;
-            break;
-            default: 
-                throw "Incorrect color";
-                return; 
-        }
-        window.bus.unsubscribe("team-picked", this.bindedSetTeam);
+        this.me = clr;
+        this.enemy = (this.me === TEAMS.RED) ? TEAMS.BLUE : TEAMS.RED;
         this.fillScene();
         this.shuffleWeapon();
     }
@@ -238,7 +223,18 @@ export default class GameScene {
         attackerCell.firstChild.addEventListener("webkitAnimationEnd", afterAttackMove, false);
     }
 
-    showTie(weapon){
+    showTie(cell){
+        let unit = null;
+        if (this.validatePositionId(cell)) {
+            unit = document.getElementById(cell).firstChild;
+            if (!unit.classList.contains("unit")) {
+                throw "no unit in from-cell";
+            }
+        }
+
+        let weapon = unit.firstChild.className;
+        this.validateWeapon(weapon);
+
 
         let otherWeapons = {
             weapon1: null,
