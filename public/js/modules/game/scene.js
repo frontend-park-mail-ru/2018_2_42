@@ -13,6 +13,7 @@ export default class GameScene {
         this.fight = this.fight.bind(this);
         this.showTie = this.showTie.bind(this);
         this.changeTurn = this.changeTurn.bind(this);
+        this.replaceWeapon = this.replaceWeapon.bind(this);
 
         window.bus.subscribe("shuffle-weapons", this.shuffleWeapon);
     }
@@ -30,6 +31,7 @@ export default class GameScene {
         window.bus.subscribe("fight", this.fight);
         window.bus.subscribe("tie", this.showTie);
         window.bus.subscribe("get-flag", this.showGetFlag);
+        window.bus.subscribe("change-weapon", this.replaceWeapon);
     }
     
     stop() {
@@ -37,6 +39,7 @@ export default class GameScene {
         window.bus.unsubscribe("fight", this.fight);
         window.bus.unsubscribe("tie", this.showTie);
         window.bus.unsubscribe("get-flag", this.showGetFlag);
+        window.bus.unsubscribe("change-weapon", this.replaceWeapon);
     }
 
     changeTurn(clr){
@@ -159,14 +162,14 @@ export default class GameScene {
         if (winnerUnit.className.indexOf(this.me) > 0) {
             allyCell = winnerCell;
             enemyCell = loserCell;
-            this.replaceWeapon(allyCell.getAttribute("id"), winner.weapon);
-            if (enemyCell.firstChild.firstChild) this.replaceWeapon(enemyCell.getAttribute("id"), loser.weapon);
+            this.replaceWeapon({ positionId: allyCell.getAttribute("id"), weaponName: winner.weapon});
+            if (enemyCell.firstChild.firstChild) this.replaceWeapon({ positionId: enemyCell.getAttribute("id"), weaponName: loser.weapon});
             fightAnimationClass = this.fightAnimationClassBuilder(this.me, winner.weapon, loser.weapon)
         } else {
             allyCell = loserCell;
             enemyCell = winnerCell;
-            this.replaceWeapon(allyCell.getAttribute("id"), loser.weapon);
-            if (enemyCell.firstChild.firstChild) this.replaceWeapon(enemyCell.getAttribute("id"), winner.weapon);
+            this.replaceWeapon({ positionId: allyCell.getAttribute("id"), weaponName: loser.weapon});
+            if (enemyCell.firstChild.firstChild) this.replaceWeapon({ positionId: enemyCell.getAttribute("id"), weaponName: winner.weapon});
             fightAnimationClass = this.fightAnimationClassBuilder(this.enemy, winner.weapon, loser.weapon)
         }
 
@@ -212,7 +215,7 @@ export default class GameScene {
             attackerCell.innerHTML = "";
             fightCell.innerHTML = "";
             fightCell.appendChild(winnerUnit);
-            this.replaceWeapon(fightCell.getAttribute("id"), winner.weapon);
+            this.replaceWeapon({ positionId: fightCell.getAttribute("id"), weaponName: winner.weapon});
             fightDiv.removeEventListener("webkitAnimationEnd", afterAttackEvent);
             window.bus.publish("animation-finished");
         }
@@ -238,7 +241,7 @@ export default class GameScene {
 
         let otherWeapons = {
             weapon1: null,
-            weaponw: null,
+            weapon2: null,
         };
 
         let animationClass;
@@ -281,7 +284,7 @@ export default class GameScene {
         tieDiv.addEventListener("webkitAnimationEnd", afterTieEvent, false);
     }
 
-    replaceWeapon(positionId, weaponName){
+    replaceWeapon({positionId, weaponName}){
         if (this.validateWeapon(weaponName)) {
             if (this.validatePositionId(positionId)) {
                     let unit = document.getElementById(positionId).firstChild;

@@ -76,6 +76,7 @@ export default class Game {
     resetAnimating(){ 
         this.animating = false;
         this.gameScene.changeTurn(this.currentTurn);
-        if (this.gameScene.me === this.currentTurn) this.gameController.start();
+        if (this.gameScene.me === this.currentTurn) this.gameController.start()
+        else this.gameController.stop();
     }
 };

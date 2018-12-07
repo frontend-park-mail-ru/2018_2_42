@@ -66,6 +66,9 @@ export default class OnlineGame extends GameCore {
     }
 
     onGameRechoseWeapon(newWeapon){
+        const unitPos = this.tiePos;
+        window.bus.publish("change-weapon",
+         {positionId: unitPos ,weaponName: newWeapon})
         console.log("Отправка выбранного оружия на сервер.");
         console.log(newWeapon);
         const msg = {

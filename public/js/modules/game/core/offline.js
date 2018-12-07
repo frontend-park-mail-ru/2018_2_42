@@ -160,6 +160,8 @@ export default class OfflineGame extends GameCore {
     }
 
     onGameRechoseWeapon(newWeapon){
+        window.bus.publish("change-weapon",
+         {positionId: this.tie.clientUnitPos ,weaponName: newWeapon})
         this.state.field[this.tie.clientUnitPos].weapon = newWeapon;
         this.handleFight(this.tie.from, this.tie.to);
     }
