@@ -14,6 +14,7 @@ COPY './build/nginx.conf' '/etc/nginx/nginx.conf'
 COPY './build/mime.types' '/etc/nginx/mime.types'
 
 # Копируем собранный из 'https://github.com/google/zopfli' архиватор
+# Полезная ссылка: https://www.cambus.net/serving-precompressed-content-with-nginx-and-zopfli/
 # Он собран только под alpine, так как требует динамически подключаемую стандартную библиотеку,
 # не gnu, как в debian based дистрибутивах, а от авторов alpine.
 COPY "./build/zopfli_alpine_amd64" '/usr/local/bin/zopfli'
@@ -26,6 +27,6 @@ RUN find '/var/www/html' -type f | \
         '/var/www/html/js/CachedProjectFiles.json';
 
 # Всю статику проекта жмём до 60% и сохраняем рядом *.gz .
-RUN find '/var/www/html' -exec '/usr/local/bin/zopfli' -v --i200 {} \;
+RUN find '/var/www/html' -type f -exec '/usr/local/bin/zopfli' -v --i200 {} \;
 
 # Стартуем с коммандой nginx -с '/etc/nginx/nginx.conf' .
