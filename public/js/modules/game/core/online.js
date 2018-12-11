@@ -1,5 +1,6 @@
 'use strict';
 import GameCore from "./gamecore.js";
+import WEAPONS from "./weapons.js";
 
 export default class OnlineGame extends GameCore {
     constructor() {
@@ -29,15 +30,20 @@ export default class OnlineGame extends GameCore {
                     window.bus.publish("move-unit", message.parameter);
                     break;
                 case "attack":
+                if (message.parameter.loser.weapon !== WEAPONS.FLAG){
                     message.parameter.winner["position"] = message.parameter.winner["coordinates"];
                     message.parameter.loser["position"] = message.parameter.loser["coordinates"];
                     delete message.parameter.winner["coordinates"];
                     delete message.parameter.loser["coordinates"];
                     window.bus.publish("fight", message.parameter);
-                    break;
+                }
+                break;
                 case "weapon_change_request":
                     this.tiePos = message.parameter.character_position;
-                    window.bus.publish("tie", message.parameter.character_position);
+                    window.bus.publish("tie", this.tiePos);
+                break;
+                case "gameover":
+                    window.bus.publish("finish-game", message.parameter)
             }
         };
         
@@ -46,7 +52,7 @@ export default class OnlineGame extends GameCore {
         };
     }
 
-    onGameUploadTeam(state){
+    onGameStarted(){
         console.log("Отправка команды на сервер.")
         const uploadMap = super.parseClientTeam();
         this.socket.send(JSON.stringify(uploadMap));
@@ -67,8 +73,10 @@ export default class OnlineGame extends GameCore {
 
     onGameRechoseWeapon(newWeapon){
         const unitPos = this.tiePos;
+
         window.bus.publish("change-weapon",
-         {positionId: unitPos ,weaponName: newWeapon})
+         {positionId: unitPos ,weaponName: newWeapon});
+         
         console.log("Отправка выбранного оружия на сервер.");
         console.log(newWeapon);
         const msg = {
@@ -81,5 +89,13 @@ export default class OnlineGame extends GameCore {
         console.log(JSON.stringify(msg));
         this.socket.send(JSON.stringify(msg));
         this.tiePos = null;
+    }
+
+    onGameFinished() {
+        this.socket = null;
+    }
+
+    destroy(){
+        super.destroy();
     }
 }

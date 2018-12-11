@@ -22,41 +22,46 @@ export default class Game {
                 throw new Error('Invalid game mode ' + mode);
         }
 
-        this.gameScene = new GameScene(this.gameField);
+        this.gameScene = new GameScene();
         this.gameController = new GameController(this.gameField);
         this.gameCore = new GameConstructor({ scene: this.gameScene });
+
         this.currentTurn = null;
         this.clientColor = null;
         this.enemyColor = null;
         this.animating = false;
+
         this.changeTurn = this.changeTurn.bind(this);
         this.setTeams = this.setTeams.bind(this);
         this.setAnimating = this.setAnimating.bind(this);
-        this.resetAnimating = this.resetAnimating.bind(this);
-        window.bus.subscribe("change-turn", this.changeTurn);
-        window.bus.subscribe("animation-started", this.setAnimating);
-        window.bus.subscribe("animation-finished", this.resetAnimating);
+        this.setTurn = this.setTurn.bind(this);
     }
     
     start() {
         this.gameCore.start();
         this.gameScene.start();
+
         window.bus.subscribe("team-picked", this.setTeams);
+        window.bus.subscribe("change-turn", this.changeTurn);
+        window.bus.subscribe("animation-started", this.setAnimating);
+        window.bus.subscribe("animation-finished", this.setTurn);
     }
     
     destroy() {
-        this.gameCore.destroy();
         this.gameController.stop();
-        this.gameScene.stop();
+        this.gameScene.destroy();
+        this.gameCore.destroy();
+
         window.bus.unsubscribe("team-picked", this.setTeams);
         window.bus.unsubscribe("change-turn", this.changeTurn);
         window.bus.unsubscribe("animation-started", this.setAnimating);
-        window.bus.unsubscribe("animation-finished", this.resetAnimating);
+        window.bus.unsubscribe("animation-finished", this.setTurn);
     }
 
     setTeams(clientColor){
         this.clientColor = clientColor;
         this.enemyColor = (this.clientColor === TEAMS.RED) ? TEAMS.BLUE : TEAMS.RED;
+        
         this.gameScene.setTeam(this.clientColor);
         this.gameController.setTeam(this.clientColor);
     }
@@ -68,15 +73,14 @@ export default class Game {
 
         this.currentTurn = turn ? this.clientColor : this.enemyColor;
 
-        if (!this.animating) this.resetAnimating();
+        if (!this.animating) this.setTurn();
     }
 
     setAnimating(){ this.animating = true; }
 
-    resetAnimating(){ 
+    setTurn(){ 
         this.animating = false;
         this.gameScene.changeTurn(this.currentTurn);
-        if (this.gameScene.me === this.currentTurn) this.gameController.start()
-        else this.gameController.stop();
+        (this.gameScene.me === this.currentTurn) ? this.gameController.start() : this.gameController.stop();
     }
 };
