@@ -17,9 +17,18 @@
     "express-http-proxy": "^1.4.0",
     "fest": "^0.12.1",
     "jsdoc": "^3.5.5",
+    "lodash": "^4.17.11",
     "morgan": "^1.9.0",
-    "npm": "^6.4.1"
+    "npm": "^6.4.1",
+    "serviceworker-webpack-plugin": "^1.0.1"
   },
   "author": "42",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "babel-loader": "^8.0.4",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2"
+  }
 }
