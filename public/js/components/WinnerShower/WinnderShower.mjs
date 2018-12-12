@@ -1,6 +1,6 @@
 'use strict';
 
-import "/js/components/WinnerShower/WinnerShower.tmpl.js"
+import "./WinnerShower.tmpl.js"
 
 export default class WinnerShowerComponent {
     constructor({ el = document.body } = {}) {

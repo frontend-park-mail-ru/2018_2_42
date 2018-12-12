@@ -1,7 +1,7 @@
 'use strict';
 
 import UserService from "../../services/UserService.js";
-import "/js/components/LeaderBoard/LeaderBoard.tmpl.js"
+import "./LeaderBoard.tmpl.js"
 
 const userService = new UserService;
 

@@ -1,6 +1,6 @@
 'use strict';
 
-import "/js/components/TeamChooser/TeamChooser.tmpl.js"
+import "./TeamChooser.tmpl.js"
 import TEAMS from "../../modules/game/core/teams.js";
 
 export default class TeamChooserComponent {

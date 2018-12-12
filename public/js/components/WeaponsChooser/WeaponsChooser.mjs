@@ -1,6 +1,6 @@
 'use strict';
 
-import "/js/components/WeaponsChooser/WeaponsChooser.tmpl.js"
+import "./WeaponsChooser.tmpl.js"
 import WEAPONS from "../../modules/game/core/weapons.js";
 
 export default class TeamChooserComponent {

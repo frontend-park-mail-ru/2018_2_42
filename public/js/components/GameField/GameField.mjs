@@ -1,6 +1,6 @@
 'use strict';
 
-import "/js/components/GameField/GameField.tmpl.js"
+import "./GameField.tmpl.js"
 
 export default class GameFieldComponent {
     constructor({ el = document.body } = {}) {

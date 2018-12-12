@@ -1,6 +1,6 @@
 'use strict';
 
-import "/js/components/WeaponsShuffler/WeaponsShuffler.tmpl.js"
+import "./WeaponsShuffler.tmpl.js"
 
 export default class WeaponsShufflerComponent {
     constructor({ el = document.body } = {}) {

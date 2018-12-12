@@ -1,6 +1,6 @@
 'use strict'
 
-import "/js/components/NetworkError/NetworkError.tmpl.js"
+import "./NetworkError.tmpl.js"
 
 export default class NetworkErrorComponent {
     constructor({ el = document.body, errorText = null, fallbackEvent = null } = {}) {
