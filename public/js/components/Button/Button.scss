@@ -1,6 +1,7 @@
 /* buttons */
 
 /* menu button */
+
 .menu__button {
     min-width: 5rem;
     width: 12rem;
@@ -13,14 +14,14 @@
     margin-right: auto;
     margin-top: 0.53rem;
     font-weight: bold;
-}
-
-.menu__button:hover, .menu__button:focus, .menu__button:active {
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
-}
-
-/* navbar button */
-.navbar__button {
+    &:hover, &:focus, &:active {
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+    }
+  }
+  
+  /* navbar button */
+  
+  .navbar__button {
     border: 2px solid black;
     border-radius: 3px;
     float: right;
@@ -33,8 +34,7 @@
     min-height: 1rem;
     font-size: 1rem;
     font-weight: bold;
-}
-
-.navbar__button:hover, .navbar__button:focus, .navbar__button:active {
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
-}
+    &:hover, &:focus, &:active {
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+    }
+  }

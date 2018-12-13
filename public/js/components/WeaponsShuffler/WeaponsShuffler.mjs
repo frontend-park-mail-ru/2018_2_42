@@ -1,6 +1,6 @@
 'use strict';
 
-import "./WeaponsShuffler.tmpl.js"
+import tmpl from "./WeaponsShuffler.tmpl.xml"
 
 export default class WeaponsShufflerComponent {
     constructor({ el = document.body } = {}) {
@@ -9,7 +9,7 @@ export default class WeaponsShufflerComponent {
 
     render() {
         const data = {};
-        const template = window.fest['js/components/WeaponsShuffler/WeaponsShuffler.tmpl'](data);
+        const template = tmpl(data);
         let div = document.createElement('div');
         div.innerHTML = template;
         this._el.appendChild(div.firstChild);

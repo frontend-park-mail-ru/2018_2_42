@@ -1,6 +1,6 @@
 'use strict';
 
-import "./GameField.tmpl.js"
+import tmpl from "./GameField.tmpl.xml"
 
 export default class GameFieldComponent {
     constructor({ el = document.body } = {}) {
@@ -9,7 +9,7 @@ export default class GameFieldComponent {
 
     render() {
         const data = null;
-        const template = window.fest['js/components/GameField/GameField.tmpl'](data);
+        const template = tmpl(data);
         let div = document.createElement('div');
         div.innerHTML = template;
         this._el.appendChild(div.firstChild);

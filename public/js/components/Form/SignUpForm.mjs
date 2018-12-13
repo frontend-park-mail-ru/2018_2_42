@@ -1,6 +1,6 @@
 'use strict';
 
-import "./Form.tmpl.js"
+import tmpl from"./Form.tmpl.xml"
 
 import { Errors, ValidatorModule } from "../../modules/validation.js";
 
@@ -24,7 +24,7 @@ export default class SignUpFormComponent {
                 { name: 'Sign Up', type: 'submit', className: 'form__button' },
             ],
         };
-        const template = window.fest['js/components/Form/Form.tmpl'](data);
+        const template = tmpl(data);
         let div = document.createElement('div');
         div.innerHTML = template;
         this._el.appendChild(div.firstChild);

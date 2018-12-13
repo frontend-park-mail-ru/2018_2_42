@@ -1,6 +1,6 @@
 'use strict';
 
-import "./Logo.tmpl.js"
+import tmpl from "./Logo.tmpl.xml"
 
 export default class LogoComponent {
     constructor ({el = document.body, logo = null} = {}) {
@@ -10,7 +10,7 @@ export default class LogoComponent {
     
     render () {
         if (this._logo) {
-            const template = window.fest['js/components/Logo/Logo.tmpl'](this._logo);
+            const template = tmpl(this._logo);
             this._el.innerHTML += template;
             return
         } else {

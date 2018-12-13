@@ -1,6 +1,6 @@
 'use strict'
 
-import "./About.tmpl.js"
+import tmpl from "./About.tmpl.xml"
 
 export default class AboutComponent {
     constructor({ el = document.body } = {}) {
@@ -25,7 +25,7 @@ export default class AboutComponent {
                 url: "https://github.com/go-park-mail-ru/2018_2_42"
             },
         };
-        const template = window.fest['js/components/About/About.tmpl'](data);
+        const template = tmpl(data);
         let div = document.createElement('div');
         div.innerHTML = template;
         this._el.appendChild(div.firstChild);

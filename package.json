@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server",
-    "prestart": "fest-build --dir=public"
+    "prestart": "webpack"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -31,8 +31,9 @@
     "babel-loader": "^8.0.4",
     "clean-webpack-plugin": "^1.0.0",
     "css-loader": "^2.0.0",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "fest-webpack-loader": "^1.1.1",
     "file-loader": "^2.0.0",
+    "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
     "postcss-loader": "^3.0.0",
