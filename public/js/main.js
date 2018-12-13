@@ -1,4 +1,7 @@
 'use strict';
+
+import "../css/main.css";
+
 import UserService from "./services/UserService.js"
 import EventBus from "./modules/eventBus.js";
 import Router from "./modules/router.js";
