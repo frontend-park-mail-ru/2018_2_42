@@ -1,6 +1,6 @@
 'use strict';
 
-import "/js/components/TeamChooser/TeamChooser.tmpl.js"
+import tmpl from  "./TeamChooser.tmpl.xml"
 import TEAMS from "../../modules/game/core/teams.js";
 
 export default class TeamChooserComponent {
@@ -10,7 +10,7 @@ export default class TeamChooserComponent {
 
     render() {
         const data = {};
-        const template = window.fest['js/components/TeamChooser/TeamChooser.tmpl'](data);
+        const template = tmpl(data);
         let div = document.createElement('div');
         div.innerHTML = template;
         this._el.appendChild(div.firstChild);

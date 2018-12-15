@@ -1,0 +1,70 @@
+.gamefield__back {
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .game {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .table {
+    display: table;
+    margin: auto;
+    position: relative;
+  }
+  
+  .row {
+    display: table-row;
+  }
+  
+  .cell {
+    background-color: gray;
+    border: 1px solid white;
+    position: relative;
+    display: table-cell;
+    &:after {
+      content: '';
+      display: block;
+      margin-top: 100%;
+    }
+  }
+  
+  .selected-cell {
+    background-color: rgb(3, 247, 3);
+  }
+  
+  .near-cell {
+    background-color: blue;
+  }
+  
+  .tableBody {
+    display: table-row-group;
+  }
+  
+  @media only screen and (max-width: 480px) {
+    .table {
+      width: 90%;
+    }
+  }
+  
+  @media only screen and (min-width: 480px) {
+    .table {
+      width: 70%;
+    }
+  }
+  
+  @media only screen and (min-width: 1224px) {
+    .table {
+      width: 45%;
+    }
+  }
+  
+  @media only screen and (min-width: 1824px) {
+    .table {
+      width: 35%;
+    }
+  }

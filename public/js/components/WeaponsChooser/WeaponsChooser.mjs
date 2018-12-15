@@ -1,6 +1,6 @@
 'use strict';
 
-import "/js/components/WeaponsChooser/WeaponsChooser.tmpl.js"
+import tmpl from "./WeaponsChooser.tmpl.xml"
 import WEAPONS from "../../modules/game/core/weapons.js";
 
 export default class TeamChooserComponent {
@@ -27,7 +27,7 @@ export default class TeamChooserComponent {
                 },
             ],
         };
-        const template = window.fest['js/components/WeaponsChooser/WeaponsChooser.tmpl'](data);
+        const template = tmpl(data);
         this._div = document.createElement('div');
         this._div.innerHTML = template;
         this._el.appendChild(this._div.firstChild);

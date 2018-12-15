@@ -73,7 +73,7 @@ export default class Bot{
     }
 
     isAlly(cell){
-        if (this.field[cell] === null) return false;
+        if ((this.field[cell] === null) || (this.field[cell] === 'undefined')) return false;
         else return (this.field[cell].team === this.botColor);
     }
 

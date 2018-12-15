@@ -42,7 +42,7 @@ export default class GameFieldView extends BaseView {
         window.bus.subscribe("rechoose-weapon", () => { this._weaponsChooser.render(); });
 
         this._winnerShower = new WinnerShowerComponent({ el: this._section });
-        window.bus.subscribe("get-flag", (data) => { this._winnerShower.render(data) });
+        window.bus.subscribe("show-winner", (data) => { this._winnerShower.render(data) });
 
         const gameFieldNode = document.getElementsByClassName("game")[0];
         this.game = new Game({ mode: this._mode, gameField: gameFieldNode });
@@ -82,7 +82,7 @@ export default class GameFieldView extends BaseView {
 
         document.getElementById("startButton").addEventListener("click", (event) => {
             event.preventDefault();
-            window.bus.publish("game-upload-team"); //search-game?
+            window.bus.publish("start-game"); //search-game?
             document.getElementsByClassName("weaponsShuffler")[0].remove();
         });
     }
@@ -92,7 +92,7 @@ export default class GameFieldView extends BaseView {
         this._active = false;
         window.bus.unsubscribe("destroy-game", () => { this.destroy(); });
         window.bus.unsubscribe("rechoose-weapon", () => { this._weaponsChooser.render(); });
-        window.bus.unsubscribe("get-flag", (data) => { this._winnerShower.render(data); });
+        window.bus.unsubscribe("show-winner", (data) => { this._winnerShower.render(data); });
         this.game.destroy();
         this._mode = null;
         super.destroy();

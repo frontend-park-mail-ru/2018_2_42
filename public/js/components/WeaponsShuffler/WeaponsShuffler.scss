@@ -1,16 +1,16 @@
 .shuffler-modal {
     display: block;
     position: fixed;
-    z-index: 1;
+    z-index: 4;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
     /* background-color: rgba(0,0,0,0.4); */
-}
-
-.shuffler-modal-content {
+  }
+  
+  .shuffler-modal-content {
     background-color: #fefefe;
     margin: 0% auto;
     padding: 20px;
@@ -18,14 +18,14 @@
     border-radius: 3px;
     width: 50%;
     font-weight: bold;
-}
-
-.shuffler-modal-header {
+  }
+  
+  .shuffler-modal-header {
     text-align: center;
     font-size: 150%;
-}
-
-.shuffler-container {
+  }
+  
+  .shuffler-container {
     display: flex;
     justify-content: space-between;
-}
+  }

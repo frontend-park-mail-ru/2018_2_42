@@ -6,50 +6,48 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-.form form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.form__head {
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  
+  .form__head {
     text-align: center;
     font-size: 3rem;
-}
-
-.form__input {
+  }
+  
+  .form__input {
     display: flex;
     padding: 0.5rem;
     margin: 0.53rem;
     box-sizing: border-box;
     border: 2px solid black;
-    border-radius: 3px; 
+    border-radius: 3px;
     font-size: 1rem;
-}
-
-.form__button {
+  }
+  
+  .form__button {
     width: 50%;
-    margin-top: 2rem; 
+    margin-top: 2rem;
     border: 2px solid black;
-    border-radius: 3px; 
+    border-radius: 3px;
     font-size: 1rem;
     padding: 0.5rem;
     background-color: #d0d4d8;
-}
-
-.form__button:hover {
-    background-color: #d0d4d833;
-}
-
-.form__errorMessage {
+    &:hover {
+      background-color: #d0d4d833;
+    }
+  }
+  
+  .form__errorMessage {
     display: flex;
     text-align: center;
     color: red;
-}
-
-.form__back {
+  }
+  
+  .form__back {
     margin-top: 1rem;
     font-weight: bold;
-}
+  }

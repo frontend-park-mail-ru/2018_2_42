@@ -14,15 +14,9 @@ export default class GameScene {
         this.showTie = this.showTie.bind(this);
         this.changeTurn = this.changeTurn.bind(this);
         this.replaceWeapon = this.replaceWeapon.bind(this);
+        this.showGetFlag = this.showGetFlag.bind(this);
 
         window.bus.subscribe("shuffle-weapons", this.shuffleWeapon);
-    }
-
-    setTeam(clr) {
-        this.me = clr;
-        this.enemy = (this.me === TEAMS.RED) ? TEAMS.BLUE : TEAMS.RED;
-        this.fillScene();
-        this.shuffleWeapon();
     }
 
     start() {
@@ -30,16 +24,23 @@ export default class GameScene {
         window.bus.subscribe("move-unit", this.moveUnit);
         window.bus.subscribe("fight", this.fight);
         window.bus.subscribe("tie", this.showTie);
-        window.bus.subscribe("get-flag", this.showGetFlag);
+        window.bus.subscribe("finish-game", this.showGetFlag);
         window.bus.subscribe("change-weapon", this.replaceWeapon);
     }
     
-    stop() {
+    destroy() {
         window.bus.unsubscribe("move-unit", this.moveUnit);
         window.bus.unsubscribe("fight", this.fight);
         window.bus.unsubscribe("tie", this.showTie);
-        window.bus.unsubscribe("get-flag", this.showGetFlag);
+        window.bus.unsubscribe("finish-game", this.showGetFlag);
         window.bus.unsubscribe("change-weapon", this.replaceWeapon);
+    }
+
+    setTeam(clr) {
+        this.me = clr;
+        this.enemy = (this.me === TEAMS.RED) ? TEAMS.BLUE : TEAMS.RED;
+        this.fillScene();
+        this.shuffleWeapon();
     }
 
     changeTurn(clr){
@@ -98,7 +99,7 @@ export default class GameScene {
         document.getElementById(flagPos).firstChild.classList.add(this.me + '-flag');
     }
 
-    moveUnit({from, to}){
+    moveUnit({from, to, callback}){
         let unitFrom = null;
         if (this.validatePositionId(from)) {
             unitFrom = document.getElementById(from).firstChild;
@@ -113,14 +114,13 @@ export default class GameScene {
         let cellTo = null;
         if (this.validatePositionId(to)) {
             cellTo = document.getElementById(to);
-            if (cellTo.innerHTML !== "") {
-                throw "not emty to-cell";
-            }
+            // if (cellTo.innerHTML !== "") {
+            //     throw "not emty to-cell";
+            // }
         }
 
         let moveAnimationClass = "animate-" + this.validateAvailableCells(from, to);
         if (moveAnimationClass == "animate-0") throw "unreachable cell";
-        
 
         let weapon = null;
         weapon = unitFrom.firstChild;
@@ -132,6 +132,7 @@ export default class GameScene {
             if (weapon) weapon.classList.remove("animate-jump");
             unitFrom.removeEventListener("webkitAnimationEnd", afterMove);
             window.bus.publish("animation-finished");
+            if (typeof callback !== 'undefined') callback();
         }
         
         window.bus.publish("animation-started");
@@ -238,29 +239,17 @@ export default class GameScene {
         let weapon = unit.firstChild.className;
         this.validateWeapon(weapon);
 
-
-        let otherWeapons = {
-            weapon1: null,
-            weapon2: null,
-        };
-
         let animationClass;
 
         switch (weapon) {
             case WEAPONS.ROCK:
                 animationClass = "animate-tie-r";
-                otherWeapons.weapon1 = WEAPONS.PAPER;
-                otherWeapons.weapon2 = WEAPONS.SCISSORS;
             break;
             case WEAPONS.PAPER:
                 animationClass = "animate-tie-p";
-                otherWeapons.weapon1 = WEAPONS.ROCK;
-                otherWeapons.weapon2 = WEAPONS.SCISSORS;
             break;
             case WEAPONS.SCISSORS:
                 animationClass = "animate-tie-s";
-                otherWeapons.weapon1 = WEAPONS.PAPER;
-                otherWeapons.weapon2 = WEAPONS.ROCK;
             break;
             default:
                 throw "incorrect weapon";
@@ -272,7 +261,6 @@ export default class GameScene {
         eventDiv.innerHTML = "";
 
         let afterTieEvent = () => {
-            // eventDiv.innerHTML = "";
             tieDiv.removeEventListener("webkitAnimationEnd", afterTieEvent);
             window.bus.publish("animation-finished");
             window.bus.publish("rechoose-weapon");
@@ -296,16 +284,21 @@ export default class GameScene {
             }
     }
 
-    // showGetFlag(clr){
-    //     let eventDiv = document.getElementById("game-event");
-    //     let getFlagDiv = document.createElement("div");
-    //     eventDiv.innerHTML = "";
-    //     eventDiv.append(getFlagDiv);
-    //     getFlagDiv.classList.add("animate-" + clr + "-get-flag");
-    //     setTimeout(()=>{
-    //         window.bus.publish("destroy-game");
-    //     }, 2000);
-    // }
+    showGetFlag({winner, from, to}){
+        let getFlag = ()=>{
+            let winnerClr = winner ? this.me : this.enemy;
+            let eventDiv = document.getElementById("game-event");
+            let getFlagDiv = document.createElement("div");
+            eventDiv.innerHTML = "";
+            eventDiv.append(getFlagDiv);
+            getFlagDiv.classList.add("animate-" + winnerClr + "-get-flag");
+            setTimeout(()=>{
+                window.bus.publish("show-winner", winner ? this.me : this.enemy);
+            }, 3000);
+        }
+
+        this.moveUnit({ from: from, to: to, callback: getFlag});
+    }
 
     validateAvailableCells(cell1, cell2){
         switch (cell1 - cell2) {
@@ -381,7 +374,7 @@ export default class GameScene {
         if ((0 <= positionId) && (positionId <= 41)) {
             return true;
         } else {
-            throw "incorrect positionId";	
+            throw "incorrect positionId";
             return false;
         }
     }
@@ -396,7 +389,7 @@ export default class GameScene {
                 fightAnimationClass += "-pr";
                 break;
             case "scissorspaper":
-                fightAnimationClass += "-sp";		
+                fightAnimationClass += "-sp";
                 break;
             default:
                 throw "incorrect combination of weapon and fiht result"

@@ -1,7 +1,7 @@
 'use strict';
 
 import UserService from "../../services/UserService.js";
-import "/js/components/LeaderBoard/LeaderBoard.tmpl.js"
+import tmpl from "./LeaderBoard.tmpl.xml"
 
 const userService = new UserService;
 
@@ -18,7 +18,7 @@ export default class LeaderBoardComponent {
             leaders: this._leaders,
             page: this._page
         }
-        const template = window.fest['js/components/LeaderBoard/LeaderBoard.tmpl'](data);
+        const template = tmpl(data);
         let div = document.createElement('div');
         div.innerHTML = template;
         this._el.appendChild(div.firstChild);

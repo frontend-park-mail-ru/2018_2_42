@@ -1,0 +1,65 @@
+/* leader board */
+
+.leaderboard {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .leaderboard__tableBlock {
+    display: flex;
+    max-width: 80%;
+    overflow-x: auto;
+    margin-top: 3rem;
+  }
+  
+  .leaderboard {
+    table {
+      width: 100%;
+      border-spacing: 0;
+      border: 2px solid black;
+      text-align: left;
+      border-radius: 3px;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      -khtml-border-radius: 3px;
+    }
+    th {
+      text-align: left;
+      padding: 0.5rem;
+    }
+  }
+  
+  td {
+    text-align: left;
+    padding: 0.5rem;
+  }
+  
+  .leaderboard tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .leaderboard__back {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
+  }
+  
+  .leaderboard__moreButton {
+    min-width: 5rem;
+    width: 12rem;
+    text-align: center;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 3px;
+    padding: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.53rem;
+    font-weight: bold;
+    &:hover, &:focus, &:active {
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+    }
+  }

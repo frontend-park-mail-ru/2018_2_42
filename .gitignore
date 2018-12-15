@@ -63,3 +63,8 @@ typings/
 .DS_Store
 # JetBrains IDE settings
 .idea
+
+#VSCode IDE settings
+.vscode
+
+.editorconfig

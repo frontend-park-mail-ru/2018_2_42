@@ -4,11 +4,10 @@ import TEAMS from "./teams.js";
 import WEAPONS from "./weapons.js";
 
 export default class GameCore {
-    constructor({ mode = "offline", scene = null } = {}) {
+    constructor({ mode = "offline"} = {}) {
         this.mode = mode;
-        this.scene = scene;
+        
         this.onGameStarted = this.onGameStarted.bind(this);
-        this.onGameUploadTeam = this.onGameUploadTeam.bind(this);
         this.onGameFinished = this.onGameFinished.bind(this);
         this.onGameUnitMoved = this.onGameUnitMoved.bind(this);
         this.onGameRechoseWeapon = this.onGameRechoseWeapon.bind(this);
@@ -16,7 +15,6 @@ export default class GameCore {
 
     start() {
         window.bus.subscribe("start-game", this.onGameStarted);
-        window.bus.subscribe("game-upload-team", this.onGameUploadTeam);
         window.bus.subscribe("finish-game", this.onGameFinished);
         window.bus.subscribe("game-unit-moved", this.onGameUnitMoved);
         window.bus.subscribe("rechose-weapon", this.onGameRechoseWeapon);
@@ -24,30 +22,9 @@ export default class GameCore {
     
     destroy() {
         window.bus.unsubscribe("start-game", this.onGameStarted);
-        window.bus.unsubscribe("game-upload-team", this.onGameUploadTeam);
         window.bus.unsubscribe("finish-game", this.onGameFinished);
         window.bus.unsubscribe("game-unit-moved", this.onGameUnitMoved);
         window.bus.unsubscribe("rechose-weapon", this.onGameRechoseWeapon);
-    }
-
-    onGameStarted(state) {
-        throw new Error('This method must be overridden');
-    }
-
-    onGameRechoseWeapon(state) {
-        throw new Error('This method must be overridden');
-    }
-
-    onGameUploadTeam(state) {
-        throw new Error('This method must be overridden');
-    }
-
-    onGameFinished(state) {
-        throw new Error('This method must be overridden');
-    }
-
-    onGameUnitMoved(state) {
-        throw new Error('This method must be overridden');
     }
 
     parseClientTeam(){
@@ -81,8 +58,22 @@ export default class GameCore {
             }
         });
 
-        
-
         return uploadMap;
+    }
+
+    onGameStarted(state) {
+        throw new Error('This method must be overridden');
+    }
+
+    onGameRechoseWeapon(state) {
+        throw new Error('This method must be overridden');
+    }
+
+    onGameUnitMoved(state) {
+        throw new Error('This method must be overridden');
+    }
+
+    onGameFinished(state) {
+        throw new Error('This method must be overridden');
     }
 }

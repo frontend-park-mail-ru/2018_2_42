@@ -1,6 +1,6 @@
 'use strict';
 
-import "/js/components/Navbar/Navbar.tmpl.js"
+import tmpl from "./Navbar.tmpl.xml"
 
 export default class NavbarComponent {
     constructor({el = document.body, login = null} = {}) {
@@ -16,7 +16,7 @@ export default class NavbarComponent {
                     { caption: 'Sign Out', url: "sign_out", className: "navbar__button", id: "sign_out_btn" },
                 ]
             };
-            const template = window.fest['js/components/Navbar/Navbar.tmpl'](data);
+            const template = tmpl(data);
             let div = document.createElement('div');
             div.innerHTML = template;
             this._el.appendChild(div.firstChild);
@@ -39,7 +39,7 @@ export default class NavbarComponent {
                     { caption: 'Sign In', url: "sign_in", className: "navbar__button", id: "sign_in_btn" },
                 ]
             };
-            const template = window.fest['js/components/Navbar/Navbar.tmpl'](data);
+            const template = tmpl(data);
             let div = document.createElement('div');
             div.innerHTML = template;
             this._el.appendChild(div.firstChild);
