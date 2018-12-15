@@ -212,32 +212,32 @@
 
 
 .blue-back {
-  background-position-y: 0%;
+  background-image: var(--blue-back);
   background-position-x: 0%;
 }
 
 .blue-front {
-  background-position-y: 25%;
+  background-image: var(--blue-front);
   background-position-x: 0%;
 }
 
 .red-back {
-  background-position-y: 50%;
+  background-image: var(--red-back);
   background-position-x: 0%;
 }
 
 .red-front {
-  background-position-y: 75%;
+  background-image: var(--red-front);
   background-position-x: 0%;
 }
 
 .blue-flag {
-  background-position-y: 100%;
+  background-image: var(--flag-units);
   background-position-x: 0%;
 }
 
 .red-flag {
-  background-position-y: 100%;
+  background-image: var(--flag-units);
   background-position-x: 50%;
 }
 
@@ -316,33 +316,42 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background-image: var(--units);
-  height: 63px;
-  width: calc(120px / 3);
+  height: 100%;
+  background-size: auto 100%;
+  width: 66%;
 }
 
 .scissors {
   z-index: 2;
-  background: var(--weapons);
-  background-position-y: 20%;
-  height: 55px;
-  width: 58px;
+  background: var(--scissors);
+  // background-position-y: 20%;
+  // height: 55px;
+  // background-size: auto 100%;
+  height: 100%;
+  background-size: auto 100%;
+  width: 150%;
 }
 
 .rock {
   z-index: 2;
-  background: var(--weapons);
-  background-position-y: 60%;
-  height: 55px;
-  width: 58px;
+  background: var(--rock);
+  // background-position-y: 60%;
+  // height: 55px;
+  // background-size: auto 100%;
+  height: 100%;
+  background-size: auto 100%;
+  width: 150%;
 }
 
 .paper {
   z-index: 2;
-  background: var(--weapons);
-  background-position-y: 100%;
-  height: 55px;
-  width: 58px;
+  background: var(--paper);
+  // background-position-y: 100%;
+  // height: 55px;
+  // background-size: auto 100%;
+  height: 100%;
+  background-size: auto 100%;
+  width: 150%;
 }
 
 @keyframes tie {

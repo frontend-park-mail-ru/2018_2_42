@@ -43,24 +43,21 @@
   
   .scissors-chooser {
     z-index: 2;
-    background: var(--weapons);
-    background-position-y: 20%;
+    background: var(--scissors);
     height: 55px;
     width: 58px;
   }
   
   .rock-chooser {
     z-index: 2;
-    background: var(--weapons);
-    background-position-y: 60%;
+    background: var(--rock);
     height: 55px;
     width: 58px;
   }
   
   .paper-chooser {
     z-index: 2;
-    background: var(--weapons);
-    background-position-y: 100%;
+    background: var(--paper);
     height: 55px;
     width: 58px;
   }

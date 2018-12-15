@@ -2,8 +2,12 @@ const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
-var path = require('path');
+const path = require('path');
+const zopfli = require('@gfx/zopfli');
 
 module.exports = {
     mode: 'development',
@@ -36,9 +40,9 @@ module.exports = {
                 ]
               },
               {
-                test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-                loader: 'url-loader?limit=4096'
-              },
+                test: /\.(png|jpg|gif|woff|woff2|eot|ttf|svg)$/,
+                loader: 'url-loader?limit=4096',
+              },       
               {
                 test: /\.css$/,
                 use:['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
@@ -51,6 +55,19 @@ module.exports = {
     },
 
     plugins: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+      }),
+      new OptimizeCSSAssetsPlugin({}),
+      new CompressionPlugin({
+        compressionOptions: {
+           numiterations: 15
+        },
+        algorithm(input, compressionOptions, callback) {
+          return zopfli.gzip(input, compressionOptions, callback);
+        }
+      }),
       new CleanWebpackPlugin('dist', {} ),
       new ServiceWorkerWebpackPlugin({
         entry: path.join(__dirname, 'public/sw.js'),

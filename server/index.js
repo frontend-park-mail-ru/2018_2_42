@@ -1,5 +1,3 @@
-'use strict';
-
 const express = require('express');
 const body = require('body-parser');
 const cookie = require('cookie-parser');
