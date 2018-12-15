@@ -1,32 +1,20 @@
-FROM nginx:1-alpine
+FROM nginx:alpine
 
-RUN apk update && \
-    apk add jq;
-
-# Копируем всю статику проекта: ["/css/*", "/fonts/*", "/images/*", "/js/*", "/index.html"].
-COPY './dist' '/var/www/html'
+# устанавливаем npm, что бы запустить webpack
+RUN apk update && apk add npm;
 
 # Перезатираем nginx конфиг, заставляя отдавать статические файлы проекта
 # и проксировать на сервер авторизации и на сервер игры.
-COPY './build/nginx.conf' '/etc/nginx/nginx.conf'
+COPY './nginx/nginx.conf' '/etc/nginx/nginx.conf'
 
-# Перезатираем конфиг, что бы модули .mjs отдавались как javascript файлы.  
-COPY './build/mime.types' '/etc/nginx/mime.types'
+# Копируем проект для сборки.
+COPY '.' '/tmp/project'
 
-# Копируем собранный из 'https://github.com/google/zopfli' архиватор
-# Полезная ссылка: https://www.cambus.net/serving-precompressed-content-with-nginx-and-zopfli/
-# Он собран только под alpine, так как требует динамически подключаемую стандартную библиотеку,
-# не gnu, как в debian based дистрибутивах, а от авторов alpine.
-COPY "./build/zopfli_alpine_amd64" '/usr/local/bin/zopfli'
+# Собираем проект webpack, подкладываем результат сборки nginx.
+RUN (cd '/tmp/project' && \
+    npm install) && \
+    mkdir --parent '/var/www/html/' && \
+    mv -v '/tmp/project/dist'/* '/var/www/html/' && \
+    rm -rf '/tmp/project';
 
-# Генерируем json список файлов, которые будут кешировать service worker'ы в браузере.
-# Он доступен по '/js/CachedProjectFiles.json', всегда актуален.
-# RUN find '/var/www/html' -type f | \
-#     jq 'sub("\n$"; "") | gsub("/var/www/html/"; "/") | split("\n")' \
-#         --raw-input --slurp --monochrome-output > \
-#         '/var/www/html/js/CachedProjectFiles.json';
-
-# Всю статику проекта жмём до 60% и сохраняем рядом *.gz .
-RUN find '/var/www/html' -type f -exec '/usr/local/bin/zopfli' -v --i200 {} \;
-
-# Стартуем с коммандой nginx -с '/etc/nginx/nginx.conf' 
+# Стартуем с коммандой nginx -с '/etc/nginx/nginx.conf'
