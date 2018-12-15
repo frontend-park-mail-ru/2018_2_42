@@ -8,6 +8,7 @@ script:
 - docker push koretskyhub/front:nginx
 - ssh-keyscan -H 95.163.212.32 >> ~/.ssh/known_hosts
 - ls -la
+- chmod 400 2018_2_42_id_rsa.pem
 - ssh ubuntu@95.163.212.32 -i './2018_2_42_id_rsa.pem' 'sudo docker pull koretskyhub/front:nginx'
 - ssh ubuntu@95.163.212.32 -i './2018_2_42_id_rsa.pem' 'sudo docker run koretskyhub/front:nginx'
 before_install:
