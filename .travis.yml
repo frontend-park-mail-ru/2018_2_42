@@ -15,7 +15,7 @@ script:
 - ssh ubuntu@95.163.212.32 -i './2018_2_42_id_rsa.pem' 'sudo docker pull koretskyhub/front:nginx'
 - ssh ubuntu@95.163.212.32 -i './2018_2_42_id_rsa.pem' 'sudo docker stop frontend'
 - ssh ubuntu@95.163.212.32 -i './2018_2_42_id_rsa.pem' 'sudo docker rm frontend'
-- ssh ubuntu@95.163.212.32 -i '.ssh/2018_2_42_id_rsa.pem' "sudo docker run \
+- ssh ubuntu@95.163.212.32 -i './2018_2_42_id_rsa.pem' "sudo docker run \
                                                         --name 'frontend' \
                                                         --publish 80:80 \
                                                         --publish 443:443 \
