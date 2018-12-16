@@ -1,6 +1,7 @@
 'use strict';
 
 import "../scss/main.scss";
+import "../images/icon.png";
 
 import UserService from "./services/UserService.js"
 import EventBus from "./modules/eventBus.js";

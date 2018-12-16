@@ -11,7 +11,7 @@ export default class OnlineGame extends GameCore {
 
     start(){
         super.start();
-        this.socket = new WebSocket("ws://localhost:8080/game/v1/entrypoint");
+        this.socket = new WebSocket("wss://rpsarena.ru:8080/game/v1/entrypoint");
         this.socket.onopen = ()=> {
             console.log("Соединение установлено.");
         };
