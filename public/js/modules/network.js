@@ -23,7 +23,7 @@ export default class NetworkModule {
         return fetch(url, {
             ...options,
             method: 'POST',
-            mode: 'cors',
+            // mode: 'cors',
             credentials: 'include'
         });
     }
@@ -38,7 +38,7 @@ export default class NetworkModule {
         return fetch(url, {
             ...options,
             method: 'DELETE',
-            mode: 'cors',
+            // mode: 'cors',
             credentials: 'include'
         });
     }
