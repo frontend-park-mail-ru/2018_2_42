@@ -15,13 +15,13 @@ script:
 - ssh ubuntu@95.163.212.32 -i './2018_2_42_id_rsa.pem' 'sudo docker pull koretskyhub/front:nginx'
 - ssh ubuntu@95.163.212.32 -i './2018_2_42_id_rsa.pem' 'sudo docker stop frontend'
 - ssh ubuntu@95.163.212.32 -i './2018_2_42_id_rsa.pem' 'sudo docker rm frontend'
-- ssh ubuntu@95.163.212.32 -i './2018_2_42_id_rsa.pem' "sudo docker run \
-                                                        --name 'frontend' \
-                                                        --publish 80:80 \
-                                                        --publish 443:443 \
-                                                        --network 'rpsarena-net' \
-                                                        --volume '/etc/letsencrypt':'/etc/letsencrypt' \
-                                                        --detach \
+- ssh ubuntu@95.163.212.32 -i './2018_2_42_id_rsa.pem' "sudo docker run
+                                                        --name 'frontend'
+                                                        --publish 80:80
+                                                        --publish 443:443
+                                                        --network 'rpsarena-net'
+                                                        --volume '/etc/letsencrypt':'/etc/letsencrypt'
+                                                        --detach
                                                         --rm koretskyhub/front:nginx"
 before_install:
 - openssl aes-256-cbc -K $encrypted_ec91d67f14aa_key -iv $encrypted_ec91d67f14aa_iv
