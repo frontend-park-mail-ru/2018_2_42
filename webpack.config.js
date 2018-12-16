@@ -4,7 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+// const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 const path = require('path');
 const zopfli = require('@gfx/zopfli');
@@ -12,7 +12,7 @@ const zopfli = require('@gfx/zopfli');
 module.exports = {
     mode: 'development',
     entry: './public/js/main.js',
-    devtool: "source-map",
+    devtool: 'source-map',
     
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -40,8 +40,16 @@ module.exports = {
                 ]
               },
               {
-                test: /\.(png|jpg|gif|woff|woff2|eot|ttf|svg)$/,
+                test: /\.(woff|woff2|eot|ttf|svg)$/,
                 loader: 'url-loader?limit=4096',
+              },
+              {
+                test: /\.(png|jpg|gif|svg)$/,
+                loader: 'url-loader',
+                options: {
+                  name: 'img/[name].[ext]',
+                  limit: 4096
+              },
               },       
               {
                 test: /\.css$/,
@@ -55,10 +63,10 @@ module.exports = {
     },
 
     plugins: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-      }),
+      // new UglifyJsPlugin({
+      //   cache: true,
+      //   parallel: true,
+      // }),
       new OptimizeCSSAssetsPlugin({}),
       new CompressionPlugin({
         compressionOptions: {

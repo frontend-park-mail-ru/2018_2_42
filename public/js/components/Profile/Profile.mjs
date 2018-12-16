@@ -2,6 +2,7 @@
 
 import UserService from "../../services/UserService.js";
 import tmpl  from "./Profile.tmpl.xml"
+import "../../../images/update_avatar.png";
 
 const userService = new UserService;
 
