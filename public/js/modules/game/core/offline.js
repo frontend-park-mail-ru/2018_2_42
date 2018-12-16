@@ -63,9 +63,9 @@ export default class OfflineGame extends GameCore {
         const botFlagPos = Math.floor(Math.random() * 12);
         this.state.field[botFlagPos].weapon = "flag";
 
-        window.bus.publish("change-turn", this.getNextTurn());
-
         this.bot.start();
+        
+        window.bus.publish("change-turn", this.getNextTurn());
     }
 
     onGameUnitMoved(movement) {
