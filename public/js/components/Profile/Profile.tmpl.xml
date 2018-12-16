@@ -9,7 +9,7 @@
                 <div class="profile__middle">
                     <input type="file" id="profile__avatarInput" name="avatarInput" accept="image/*" class="profile__inputFile"></input>
                     <label for="profile__avatarInput">
-                        <img src="/img/update_avatar.png" alt="Choose new avatar"></img>
+                        <img src="/images/update_avatar.png" alt="Choose new avatar"></img>
                     </label>
                     <label for="profile__avatarInput">Choose new avatar</label>
                 </div>
