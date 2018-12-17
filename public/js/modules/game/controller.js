@@ -12,16 +12,13 @@ export default class GameController {
         this.selectedCell = null;
         
         this._onMousedown = this._onMousedown.bind(this);
-        this.setTeam = this.setTeam.bind(this);
         this.start = this.start.bind(this);
         this.stop = this.stop.bind(this);
-        window.bus.subscribe("team-picked", this.setTeam);
     }
 
     setTeam(clr) {
         this.me = clr;
         this.enemy = (this.me === TEAMS.RED) ? TEAMS.BLUE : TEAMS.RED;
-        window.bus.unsubscribe("team-picked", this.bindedSetTeam);
     }
     
     start() {

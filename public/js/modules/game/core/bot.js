@@ -6,8 +6,8 @@ import WEAPONS from "./weapons.js";
 export default class Bot{
     constructor(field, color){
         this.field = field;
-        this.me = color;
-        this.enemy = (color ===  TEAMS.RED ? TEAMS.BLUE : TEAMS.RED);
+        this.botColor = color;
+        this.enemyColor = (color ===  TEAMS.RED ? TEAMS.BLUE : TEAMS.RED);
         this.changeTurn = this.changeTurn.bind(this);
         this.makeMove = this.makeMove.bind(this);
     }
@@ -20,8 +20,8 @@ export default class Bot{
         window.bus.unsubscribe("change-turn", this.changeTurn);
     }
 
-    changeTurn(clr = TEAMS.BLUE){
-        if (clr === this.me) {
+    changeTurn(clientTurn){
+        if (!clientTurn) {
             let rand = Math.round(Math.random() * (4000 - 2000)) + 2000;
             console.log(rand);
             setTimeout(this.makeMove, rand);
@@ -29,7 +29,7 @@ export default class Bot{
     }
 
    makeMove(){
-        const team = this.getTeamIndexes(this.me);
+        const team = this.getTeamIndexes(this.botColor);
         let closestEnemies = [];
         team.forEach((element) => {
             if (this.field[element].weapon !== WEAPONS.FLAG){
@@ -73,8 +73,8 @@ export default class Bot{
     }
 
     isAlly(cell){
-        if (this.field[cell] === null) return false;
-        else return (this.field[cell].team === this.me);
+        if ((this.field[cell] === null) || (this.field[cell] === 'undefined')) return false;
+        else return (this.field[cell].team === this.botColor);
     }
 
     //не проверяет что в клетке to
@@ -153,7 +153,7 @@ export default class Bot{
     //возвращает ближайшую клетку к любому противнику
     getClosestEnemies(cellIdx){
         let reachableEnemies = new Map();
-        let alreadyReached = this.getTeamIndexes(this.me);
+        let alreadyReached = this.getTeamIndexes(this.botColor);
 
         let search = (cellIdx, stepsNum)=> {
             if (stepsNum > 10) return;
@@ -176,7 +176,7 @@ export default class Bot{
                     if (this.field[element] === null){
                         search(element, stepsNum + 1); 
                         //если в ячеке враг записываем путь до него и завершаем цепочку рекурсивных вызовов
-                    } else if (this.field[element].team === this.enemy) {
+                    } else if (this.field[element].team === this.enemyColor) {
                         if ((reachableEnemies.get(element) > stepsNum) || (reachableEnemies.get(element) === undefined)) {
                             reachableEnemies.set(element, stepsNum);
                         }

@@ -1,6 +1,6 @@
 'use strict';
 
-import "/js/components/WinnerShower/WinnerShower.tmpl.js"
+import tmpl from "./WinnerShower.tmpl.xml"
 
 export default class WinnerShowerComponent {
     constructor({ el = document.body } = {}) {
@@ -11,7 +11,7 @@ export default class WinnerShowerComponent {
         const data = {
             team: team,
         };
-        const template = window.fest['js/components/WinnerShower/WinnerShower.tmpl'](data);
+        const template = tmpl(data);
         let div = document.createElement('div');
         div.innerHTML = template;
         this._el.appendChild(div.firstChild);

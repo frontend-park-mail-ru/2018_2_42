@@ -1,6 +1,6 @@
 'use strict'
 
-import "/js/components/Menu/Menu.tmpl.js"
+import tmpl from "./Menu.tmpl.xml"
 
 export default class MenuComponent {
     constructor({ el = document.body } = {}) {
@@ -16,7 +16,7 @@ export default class MenuComponent {
                 { caption: 'About', url: 'about', className: "menu__button", id: "about_btn" },
             ]
         };
-        const template = window.fest['js/components/Menu/Menu.tmpl'](data);
+        const template = tmpl(data);
         let div = document.createElement('div');
         div.innerHTML = template;
         this._el.appendChild(div.firstChild);

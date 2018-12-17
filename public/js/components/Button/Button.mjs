@@ -1,6 +1,6 @@
 'use strict'
 
-import "/js/components/Button/Button.tmpl.js"
+import tmpl from "./Button.tmpl.xml"
 
 export default class ButtonComponent {
     constructor({ el = document.body, className = null, caption = null, url = null, id = null } = {}) {
@@ -18,7 +18,7 @@ export default class ButtonComponent {
             url: this._url,
             id: this._id
         };
-        const template = window.fest['js/components/Button/Button.tmpl'](data);
+        const template = tmpl(data);
         this._el.innerHTML += template;
     }
 }

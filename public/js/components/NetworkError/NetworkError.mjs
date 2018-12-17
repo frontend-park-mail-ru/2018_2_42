@@ -1,6 +1,6 @@
 'use strict'
 
-import "/js/components/NetworkError/NetworkError.tmpl.js"
+import tmpl from "./NetworkError.tmpl.xml"
 
 export default class NetworkErrorComponent {
     constructor({ el = document.body, errorText = null, fallbackEvent = null } = {}) {
@@ -13,7 +13,7 @@ export default class NetworkErrorComponent {
         const data = {
             errorText: this._errorText,
         };
-        const template = window.fest['js/components/NetworkError/NetworkError.tmpl'](data);
+        const template = tmpl(data);
         let div = document.createElement('div');
         div.innerHTML = template;
         this._el.appendChild(div.firstChild);

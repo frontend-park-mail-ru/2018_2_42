@@ -1,4 +1,8 @@
 'use strict';
+
+import "../scss/main.scss";
+import "../images/icon.png";
+
 import UserService from "./services/UserService.js"
 import EventBus from "./modules/eventBus.js";
 import Router from "./modules/router.js";
@@ -10,12 +14,13 @@ import SignInView from "./views/SignInView.js";
 import SignUpView from "./views/SignUpView.js";
 import NetworkErrorView from "./views/NetworkErrorView.js";
 import GameFieldView from "./views/GameFieldView.js";
-import registerCachingSW from "./modules/registerCachingSW.js"
+import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 
 window.bus = new EventBus();
 const userService = new UserService();
 const router = new Router(document.getElementById("root"));
-registerCachingSW();
+
+if ('serviceWorker' in navigator) runtime.register();
 
 window.bus.subscribe("draw-menu", () => { router.open({ path: '/' }) });
 window.bus.subscribe("draw-profile", () => { router.open({ path: '/profile' }) });

@@ -1,7 +1,9 @@
 'use strict';
 
 import UserService from "../../services/UserService.js";
-import "/js/components/Profile/Profile.tmpl.js"
+import tmpl  from "./Profile.tmpl.xml"
+import "../../../images/update_avatar.png";
+import "../../../images/default.png";
 
 const userService = new UserService;
 
@@ -28,7 +30,7 @@ export default class ProfileComponent {
                     isSignedInUsersProfile: isSignedInUsersProfile
                 };
 
-                const template = window.fest['js/components/Profile/Profile.tmpl'](data);
+                const template = tmpl(data);
                 let div = document.createElement('div');
                 div.innerHTML = template;
                 this._el.appendChild(div.firstChild);
