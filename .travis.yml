@@ -12,17 +12,7 @@ script:
 - docker push koretskyhub/front:nginx
 - ssh-keyscan -H 95.163.212.32 >> ~/.ssh/known_hosts
 - chmod 400 2018_2_42_id_rsa.pem
-- ssh ubuntu@95.163.212.32 -i './2018_2_42_id_rsa.pem'
-- sudo docker pull koretskyhub/front:nginx
-- sudo docker stop frontend
-- sudo docker run
-    --name 'frontend'
-    --publish 80:80
-    --publish 443:443
-    --network 'rpsarena-net'
-    --volume '/etc/letsencrypt':'/etc/letsencrypt'
-    --detach
-    --rm koretskyhub/front:nginx
+- cat run-new-build.sh | ssh ubuntu@95.163.212.32 -i '~/.ssh/2018_2_42_id_rsa.pem'
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_ec91d67f14aa_key -iv $encrypted_ec91d67f14aa_iv
