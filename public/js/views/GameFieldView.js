@@ -8,6 +8,8 @@ import TEAMS from '../modules/game/conf/teams.js';
 import WeaponsShufflerComponent from '../components/WeaponsShuffler/WeaponsShuffler.mjs';
 import WeaponsChooserComponent from '../components/WeaponsChooser/WeaponsChooser.mjs';
 import WinnerShowerComponent from '../components/WinnerShower/WinnderShower.mjs';
+import LobbyLoaderComponent from '../components/LobbyLoader/LobbyLoader.mjs';
+import RivalLabelComponent from '../components/RivalLabel/RivalLabel.mjs';
 
 const userService = new UserService();
 
@@ -43,6 +45,19 @@ export default class GameFieldView extends BaseView {
 
 		this._winnerShower = new WinnerShowerComponent({ el: this._section });
 		window.bus.subscribe('show-winner', (data) => { this._winnerShower.render(data); });
+
+		if (this._mode === 'online') {
+			this._lobbyLoader = new LobbyLoaderComponent({ el: this._section });
+			window.bus.subscribe('show-loader', () => { this._lobbyLoader.render(); });
+			window.bus.subscribe('receive-rival-login', (rivalLogin) => {
+				this._rivalLabel = new RivalLabelComponent({ el: this._section, rivalLogin: rivalLogin });
+				this._rivalLabel.render();
+				document.getElementsByClassName('lobbyLoader')[0].remove();
+			});
+		}
+
+		// window.bus.publish('show-loader');
+		// setTimeout(function () { window.bus.publish('receive-rival-login', 'digidon'); }, 3000);
 
 		const gameFieldNode = document.getElementsByClassName('game')[0];
 		this.game = new Game({ mode: this._mode, gameField: gameFieldNode });

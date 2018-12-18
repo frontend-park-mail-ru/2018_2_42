@@ -1,0 +1,11 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="lobbyLoader lobbyLoader-modal">
+        <div class="lobbyLoader-modal-content">
+            <div class="lobbyLoader-modal-header">WAITING FOR RIVAL</div>
+
+            <div class="lobbyLoader-container">
+                <div class="lds-loader"><div></div><div></div><div></div></div>
+            </div>
+        </div>
+    </div>
+</fest:template>

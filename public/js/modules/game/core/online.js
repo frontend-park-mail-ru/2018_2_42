@@ -46,11 +46,16 @@ export default class OnlineGame extends GameCore {
 				break;
 			case 'gameover':
 				window.bus.publish('finish-game', message.parameter);
+				break;
+			case 'your_rival':
+				window.bus.publish('receive-rival-login', message.parameter);
+				break;
 			}
 		};
 		
-		this.socket.onerror = (error)=> {
+		this.socket.onerror = (error) => {
 			alert('Ошибка ' + error.message);
+			// window.bus.publish('draw-networkError');
 		};
 	}
 
@@ -58,6 +63,7 @@ export default class OnlineGame extends GameCore {
 		console.log('Отправка команды на сервер.');
 		const uploadMap = super.parseClientTeam();
 		this.socket.send(JSON.stringify(uploadMap));
+		window.bus.publish('show-loader');
 	}
     
 	onGameUnitMoved(movement){
