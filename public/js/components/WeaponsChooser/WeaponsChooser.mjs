@@ -1,7 +1,7 @@
 'use strict';
 
 import tmpl from "./WeaponsChooser.tmpl.xml"
-import WEAPONS from "../../modules/game/core/weapons.js";
+import WEAPONS from "../../modules/game/conf/weapons.js";
 
 export default class TeamChooserComponent {
     constructor({ el = document.body } = {}) {

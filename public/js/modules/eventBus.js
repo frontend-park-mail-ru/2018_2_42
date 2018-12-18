@@ -1,15 +1,15 @@
 export default class EventBus {
-    constructor() {
-        if (EventBus.__instance) {
-            return EventBus.__instance;
-        }
+	constructor() {
+		if (EventBus.__instance) {
+			return EventBus.__instance;
+		}
 
-        this.listeners = {};
+		this.listeners = {};
 
-        EventBus.__instance = this;
-    }
+		EventBus.__instance = this;
+	}
 
-    subscribe (event, callback) {    // подписываемся на событие
+	subscribe (event, callback) {    // подписываемся на событие
 		this.listeners[ event ] = this.listeners[ event ] || [];
 		this.listeners[ event ].push(callback);
 	}
@@ -24,7 +24,7 @@ export default class EventBus {
 	publish (event, data) {      // публикуем (диспатчим, эмитим) событие
 		this.listeners[ event ].forEach(listener => {
 			listener(data);
-        });
+		});
 	}
 
 }
