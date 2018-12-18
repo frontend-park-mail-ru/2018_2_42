@@ -4,7 +4,7 @@ const { assets } = global.serviceWorkerOption;
 
 const CACHE_NAME = new Date().toISOString();
 
-let assetsToCache = [...assets, './'];
+let assetsToCache = [...assets, './', 'build.js'];
 
 assetsToCache = assetsToCache.map(path => {
 	return new URL(path, global.location).toString();

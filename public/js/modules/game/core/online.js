@@ -1,4 +1,5 @@
 'use strict';
+
 import GameCore from './gamecore.js';
 import WEAPONS from '../conf/weapons.js';
 import LINKS from '../conf/links.js';
@@ -47,7 +48,7 @@ export default class OnlineGame extends GameCore {
 				window.bus.publish('finish-game', message.parameter);
 			}
 		};
-        
+		
 		this.socket.onerror = (error)=> {
 			alert('Ошибка ' + error.message);
 		};
@@ -77,7 +78,7 @@ export default class OnlineGame extends GameCore {
 
 		window.bus.publish('change-weapon',
 			{positionId: unitPos ,weaponName: newWeapon});
-         
+		
 		console.log('Отправка выбранного оружия на сервер.');
 		console.log(newWeapon);
 		const msg = {
