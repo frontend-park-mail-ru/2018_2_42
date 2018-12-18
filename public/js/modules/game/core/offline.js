@@ -77,7 +77,7 @@ export default class OfflineGame extends GameCore {
         
         if (toCell === null ) {
             if (!this.moveUnit(movement.from, movement.to)){
-                throw "to cell not null";
+                throw "invalid movement";
             }
             window.bus.publish("move-unit", movement);
         } else {
@@ -147,15 +147,14 @@ export default class OfflineGame extends GameCore {
             this.tie.clientUnitPos = from;
             this.tie.botUnitPos = to;
         }
-
-
+        
         window.bus.publish("tie", this.tie.clientUnitPos);
         this.bot.stop();
     }
 
     onGameRechoseWeapon(newWeapon){
         window.bus.publish("change-weapon",
-         {positionId: this.tie.clientUnitPos ,weaponName: newWeapon})
+         {positionId: this.tie.clientUnitPos ,weaponName: newWeapon});
         this.state.field[this.tie.clientUnitPos].weapon = newWeapon;
         this.handleFight(this.tie.from, this.tie.to);
     }

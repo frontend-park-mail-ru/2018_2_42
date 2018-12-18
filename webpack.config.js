@@ -4,7 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-// const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 const path = require('path');
 const zopfli = require('@gfx/zopfli');
@@ -63,10 +63,11 @@ module.exports = {
     },
 
     plugins: [
-      // new UglifyJsPlugin({
-      //   cache: true,
-      //   parallel: true,
-      // }),
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true,
+      }),
       new OptimizeCSSAssetsPlugin({}),
       new CompressionPlugin({
         compressionOptions: {

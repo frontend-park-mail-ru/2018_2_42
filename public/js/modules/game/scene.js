@@ -114,9 +114,6 @@ export default class GameScene {
         let cellTo = null;
         if (this.validatePositionId(to)) {
             cellTo = document.getElementById(to);
-            // if (cellTo.innerHTML !== "") {
-            //     throw "not emty to-cell";
-            // }
         }
 
         let moveAnimationClass = "animate-" + this.validateAvailableCells(from, to);
@@ -127,7 +124,6 @@ export default class GameScene {
         if (weapon) weapon.classList.add("animate-jump");
 
         function afterMove(){
-            document.getElementById(to).appendChild(unitFrom);
             unitFrom.classList.remove(moveAnimationClass);
             if (weapon) weapon.classList.remove("animate-jump");
             unitFrom.removeEventListener("webkitAnimationEnd", afterMove);
@@ -137,6 +133,7 @@ export default class GameScene {
         
         window.bus.publish("animation-started");
         unitFrom.classList.add(moveAnimationClass);
+        document.getElementById(to).appendChild(unitFrom);
         unitFrom.addEventListener("webkitAnimationEnd", afterMove, false);
     }
     
@@ -199,6 +196,7 @@ export default class GameScene {
     doFight(fightCell, attackerCell, winnerUnit, winner, moveAnimationClass, fightAnimationClass){
         let fightDiv = document.createElement("div");
         let eventDiv = document.getElementById("game-event");
+        let attacker = attackerCell.firstChild;
         let weapon = attackerCell.firstChild.firstChild;
 
         var afterAttackMove = ()=>{
@@ -206,12 +204,12 @@ export default class GameScene {
             eventDiv.append(fightDiv);
             fightDiv.classList.add('animate-fight-' + fightAnimationClass);
             fightDiv.addEventListener("webkitAnimationEnd", afterAttackEvent, false);
-            attackerCell.firstChild.removeEventListener("webkitAnimationEnd", afterAttackMove);
+            attacker.removeEventListener("webkitAnimationEnd", afterAttackMove);
         }
 
         var afterAttackEvent = () => {
             if (weapon) weapon.classList.remove("animate-jump");
-            attackerCell.firstChild.classList.remove(moveAnimationClass);		
+            attacker.classList.remove(moveAnimationClass);		
             eventDiv.innerHTML = "";
             attackerCell.innerHTML = "";
             fightCell.innerHTML = "";
@@ -222,9 +220,10 @@ export default class GameScene {
         }
         
         window.bus.publish("animation-started");
-        attackerCell.firstChild.classList.add(moveAnimationClass);
+        attacker.classList.add(moveAnimationClass);
+        fightCell.appendChild(attacker);
         if (weapon) weapon.classList.add("animate-jump");
-        attackerCell.firstChild.addEventListener("webkitAnimationEnd", afterAttackMove, false);
+        attacker.addEventListener("webkitAnimationEnd", afterAttackMove, false);
     }
 
     showTie(cell){
@@ -237,6 +236,8 @@ export default class GameScene {
         }
 
         let weapon = unit.firstChild.className;
+        if (weapon.indexOf(" ") != -1) weapon = weapon.substring(0, weapon.indexOf(" "));
+        console.log(weapon);
         this.validateWeapon(weapon);
 
         let animationClass;
@@ -365,7 +366,7 @@ export default class GameScene {
         if (weaponName == WEAPONS.ROCK || weaponName == WEAPONS.PAPER || weaponName == WEAPONS.SCISSORS){
             return true;
         } else {
-            throw "incorrect weapon";	
+            throw "incorrect weapon";
             return false;
         }
     }

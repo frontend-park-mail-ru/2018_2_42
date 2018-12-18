@@ -72,6 +72,8 @@ export default class Game {
         }
 
         this.currentTurn = turn ? this.clientColor : this.enemyColor;
+        
+        this.gameScene.changeTurn(this.currentTurn);
 
         if (!this.animating) this.setTurn();
     }
@@ -80,7 +82,6 @@ export default class Game {
 
     setTurn(){ 
         this.animating = false;
-        this.gameScene.changeTurn(this.currentTurn);
         (this.gameScene.me === this.currentTurn) ? this.gameController.start() : this.gameController.stop();
     }
 };
