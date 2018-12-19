@@ -2,25 +2,25 @@
 
 @import "./sprites";
 
-@import "./animation";
-
-@import "../js/components/Navbar/Navbar";
-
-@import "../js/components/Logo/Logo";
-
-@import "../js/components/Menu/Menu";
+@import "../js/components/About/About";
 
 @import "../js/components/Button/Button";
 
 @import "../js/components/Form/Form";
 
-@import "../js/components/Profile/Profile";
+@import "../js/components/GameField/GameField";
 
 @import "../js/components/LeaderBoard/LeaderBoard";
 
-@import "../js/components/About/About";
+@import "../js/components/Logo/Logo";
+
+@import "../js/components/Menu/Menu";
+
+@import "../js/components/Navbar/Navbar";
 
 @import "../js/components/NetworkError/NetworkError";
+
+@import "../js/components/Profile/Profile";
 
 @import "../js/components/TeamChooser/TeamChooser";
 
@@ -46,7 +46,6 @@ html, body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: row;
   align-items: center;
 }
 
