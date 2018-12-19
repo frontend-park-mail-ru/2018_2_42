@@ -180,42 +180,42 @@
 
 @keyframes up {
   from {
-    bottom: 0;
+    bottom: -200%;
   }
 
   to {
-    bottom: 200%;
+    bottom: 0%;
   }
 }
 
 
 @keyframes down {
   from {
-    top: 0;
+    top: -200%;
   }
 
   to {
-    top: 200%;
+    top: 0%;
   }
 }
 
 @keyframes left {
   from {
-    left: 0;
+    right: -200%;
   }
 
   to {
-    left: -200%;
+    right: 0%;
   }
 }
 
 @keyframes right {
   from {
-    right: 0;
+    left: -200%;
   }
 
   to {
-    right: -200%;
+    left: 0%;
   }
 }
 
