@@ -2,11 +2,7 @@
 
 const CACHE_NAME = new Date().toISOString();
 
-const assets = [...global.serviceWorkerOption.assets, './', 'build.js', 'images/icon.png'];
-
-// assets = assets.map(path => {
-// 	return new URL(path, global.location).toString();
-// });
+const assets = [...global.serviceWorkerOption.assets, './', 'build.js', 'images/favicon.ico'];
 
 self.addEventListener('install', (event) => {
 	event.waitUntil(

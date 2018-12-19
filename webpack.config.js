@@ -44,13 +44,17 @@ module.exports = {
 				loader: 'url-loader?limit=4096',
 			},
 			{
-				test: /\.(png|jpg|gif|svg)$/,
+				test: /\.(png|jpg|gif|svg|ico)$/,
 				loader: 'url-loader',
 				options: {
 					name: 'images/[name].[ext]',
 					limit: 4096
 				},
-			},       
+			},
+			{
+				test: /\.ico$/,
+				loader: 'file-loader?name=images/favicon.ico',
+			},
 			{
 				test: /\.css$/,
 				use:['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
