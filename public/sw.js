@@ -23,6 +23,9 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+	if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') {
+		return;
+	}
 
 	/** online first */
 	if (navigator.onLine) {
