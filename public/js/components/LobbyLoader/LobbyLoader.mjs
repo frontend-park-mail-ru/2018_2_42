@@ -1,8 +1,8 @@
 'use strict';
 
-import tmpl from  './TeamChooser.tmpl.xml';
+import tmpl from './LobbyLoader.tmpl.xml';
 
-export default class TeamChooserComponent {
+export default class LobbyLoaderComponent {
 	constructor({ el = document.body } = {}) {
 		this._el = el;
 	}

@@ -68,3 +68,6 @@ typings/
 .vscode
 
 .editorconfig
+
+#builded files
+dist/
