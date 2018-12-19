@@ -1,20 +1,18 @@
 'use strict';
 
-const { assets } = global.serviceWorkerOption;
-
 const CACHE_NAME = new Date().toISOString();
 
-let assetsToCache = [...assets, './', 'build.js'];
+const assets = [...global.serviceWorkerOption.assets, './', 'build.js', 'images/icon.png'];
 
-assetsToCache = assetsToCache.map(path => {
-	return new URL(path, global.location).toString();
-});
+// assets = assets.map(path => {
+// 	return new URL(path, global.location).toString();
+// });
 
 self.addEventListener('install', (event) => {
 	event.waitUntil(
 		caches.open(CACHE_NAME)
 			.then((cache) => {
-				return cache.addAll(assetsToCache);
+				return cache.addAll(assets);
 			})
 			.catch((err) => {
 				console.error('smth went wrong with caches.open: ', err);
