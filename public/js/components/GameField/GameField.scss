@@ -149,6 +149,7 @@
   height: 47px;
   width: 69px;
   z-index: 3;
+  zoom: 3;
 }
 
 .blue-turn {
@@ -165,6 +166,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  zoom: 2;
 }
 
 @keyframes jump {
@@ -336,6 +338,7 @@
   height: 100%;
   background-size: auto 100%;
   width: 66%;
+  transform: scale(1.3);
 }
 
 .scissors {
