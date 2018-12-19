@@ -231,27 +231,27 @@
 
 .blue-back {
   background-image: var(--blue-back);
-  background-position-x: 0%;
+  background-position-x: 0;
 }
 
 .blue-front {
   background-image: var(--blue-front);
-  background-position-x: 0%;
+  background-position-x: 0;
 }
 
 .red-back {
   background-image: var(--red-back);
-  background-position-x: 0%;
+  background-position-x: 0;
 }
 
 .red-front {
   background-image: var(--red-front);
-  background-position-x: 0%;
+  background-position-x: 0;
 }
 
 .blue-flag {
   background-image: var(--flag-units);
-  background-position-x: 0%;
+  background-position-x: 0;
 }
 
 .red-flag {
@@ -263,8 +263,8 @@
   background-image: var(--winners);
   height: 90px;
   width: 70px;
-  background-position-y: 0%;
-  background-position-x: 0%;
+  background-position-y: 0;
+  background-position-x: 0;
   animation: celebration 1s steps(5) infinite;
 }
 
