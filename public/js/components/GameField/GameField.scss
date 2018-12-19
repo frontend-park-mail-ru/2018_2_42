@@ -45,11 +45,11 @@
 }
 
 .selected-cell {
-  background-color: rgb(3, 247, 3);
+  box-shadow: inset 0 0 30px 20px #d0ff33;
 }
 
 .near-cell {
-  background-color: blue;
+  box-shadow: inset 0 0 30px 20px rgba(255,255,255,0.6);
 }
 
 .tableBody {
