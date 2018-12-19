@@ -6,6 +6,7 @@ node_js:
 sudo: required
 
 script:
+- npm i
 - npm run-script build-static
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 - docker build -t koretskyhub/front:nginx .

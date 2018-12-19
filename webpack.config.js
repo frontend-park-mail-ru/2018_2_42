@@ -12,7 +12,7 @@ const zopfli = require('@gfx/zopfli');
 module.exports = {
 	mode: 'development',
 	entry: './public/js/main.js',
-	// devtool: 'source-map',
+	devtool: 'source-map',
     
 	output: {
 		path: path.resolve(__dirname, 'dist'),
@@ -66,7 +66,7 @@ module.exports = {
 		new UglifyJsPlugin({
 			cache: true,
 			parallel: true,
-			// sourceMap: true,
+			sourceMap: true,
 		}),
 		new OptimizeCSSAssetsPlugin({}),
 		new CompressionPlugin({
@@ -79,7 +79,7 @@ module.exports = {
 		}),
 		new CleanWebpackPlugin('dist', {} ),
 		new ServiceWorkerWebpackPlugin({
-			entry: path.join(__dirname, 'public/sw.js'),
+			entry: path.join(__dirname, 'public/sw.js'),	
 		}),
 		new MiniCssExtractPlugin({
 			filename: 'style.css',
