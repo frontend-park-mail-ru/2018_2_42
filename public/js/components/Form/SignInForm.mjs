@@ -1,6 +1,6 @@
 'use strict';
 
-import tmpl from './Form.tmpl.xml'
+import tmpl from './Form.tmpl.xml';
 
 import { Errors, ValidatorModule } from '../../modules/validation.js';
 
