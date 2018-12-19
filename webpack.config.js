@@ -63,6 +63,9 @@ module.exports = {
 	},
 
 	plugins: [
+		new ServiceWorkerWebpackPlugin({
+			entry: path.join(__dirname, 'public/sw.js'),	
+		}),
 		new UglifyJsPlugin({
 			cache: true,
 			parallel: true,
@@ -78,9 +81,6 @@ module.exports = {
 			}
 		}),
 		new CleanWebpackPlugin('dist', {} ),
-		new ServiceWorkerWebpackPlugin({
-			entry: path.join(__dirname, 'public/sw.js'),	
-		}),
 		new MiniCssExtractPlugin({
 			filename: 'style.css',
 		}),
