@@ -71,11 +71,16 @@ export default class OfflineGame extends GameCore {
 
 	onGameUnitMoved(movement) {
 		// validate move, later
-		console.log(this.state.field);
-		console.log(movement);
+		// console.log(this.state.field);
+		// console.log(movement);
 		const toCell = this.state.field[movement.to];
 		const fromCell = this.state.field[movement.from];
-        
+
+        var audio = new Audio(); // Создаём новый элемент Audio
+		audio.src = './../../../../audio/move.mp3'; // Указываем путь к звуку "клика"
+		audio.autoplay = true; // Автоматически запускаем
+		console.log(audio.src)
+
 		if (toCell === null ) {
 			if (!this.moveUnit(movement.from, movement.to)){
 				throw 'invalid movement';
