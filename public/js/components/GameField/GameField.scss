@@ -19,6 +19,11 @@
   align-items: center;
 }
 
+.pixel-images { // растягивает картинки попиксельно https://css-tricks.com/almanac/properties/i/image-rendering/
+  image-rendering: optimizespeed; // firefox
+  image-rendering: pixelated; // chrome
+}
+
 .table {
   display: table;
   margin: auto;
@@ -213,7 +218,7 @@
   }
 
   to {
-    right: 0%;
+    right: 0;
   }
 }
 
@@ -223,7 +228,7 @@
   }
 
   to {
-    left: 0%;
+    left: 0;
   }
 }
 

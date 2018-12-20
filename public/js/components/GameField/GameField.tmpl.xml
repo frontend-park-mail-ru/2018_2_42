@@ -1,5 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
-    <div class="game">
+    <div class="game pixel-images">
         <div id="indicator" class="indicator blue-turn"></div>
         <div class="table">
             <div class="tableBody">
