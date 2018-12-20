@@ -1,6 +1,6 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <div class="menu">
-        <fest:include context="'RPS ARENA'" src="../Logo/Logo.tmpl.xml"/>
+        <fest:include context="data.logo" src="../Logo/Logo.tmpl.xml"/>
         <fest:each iterate="data.menuTitles" index="i">
             <fest:include context="data.menuTitles[i]" src="../Button/Button.tmpl.xml"/>
         </fest:each>

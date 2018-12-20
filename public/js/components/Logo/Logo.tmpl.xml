@@ -1,5 +1,10 @@
-<fest:template xmlns:fest="http://fest.mail.ru" context_name="logoName">
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="logo">
         <div class="logo">
-            <fest:value>logoName</fest:value>   
+            <div>
+                <img src="{logo.pic}"></img>
+            </div>
+            <div>
+                <fest:value>logo.txt</fest:value>
+            </div>   
         </div>
 </fest:template>

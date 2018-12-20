@@ -1,6 +1,7 @@
 'use strict';
 
 import tmpl from './Menu.tmpl.xml';
+import pic from '../Logo/logo.png';
 
 export default class MenuComponent {
 	constructor({ el = document.body } = {}) {
@@ -14,7 +15,11 @@ export default class MenuComponent {
 				{ caption: 'Multiplayer', url: 'multiplayer', className: 'menu__button', id: 'multiplayer_btn' },
 				{ caption: 'Leaderboard', url: 'users', className: 'menu__button', id: 'leaderboard_btn' },
 				{ caption: 'About', url: 'about', className: 'menu__button', id: 'about_btn' },
-			]
+			],
+			logo: {
+				pic: pic,
+				txt: 'RPS ARENA',
+			}
 		};
 		const template = tmpl(data);
 		let div = document.createElement('div');
