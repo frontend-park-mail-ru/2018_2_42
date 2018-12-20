@@ -19,7 +19,7 @@ export default class Router {
 			el: document.getElementById('root'),
 			callback: callback,
 		};
-        
+		
 		return this;
 	}
 
@@ -37,7 +37,7 @@ export default class Router {
 			return;
 		}
 
-		if (route.View == null) {
+		if (route.View === null) {
 			this.open({ path: '/', params: {} });
 			return;
 		}
@@ -51,7 +51,7 @@ export default class Router {
 		}
 
 		let { View, view, el } = route;
-        
+		
 		if (!view) {
 			view = new View({el: el});
 			if (view.render() === 'redirect') {

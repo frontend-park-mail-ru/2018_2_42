@@ -182,5 +182,11 @@ export default class OfflineGame extends GameCore {
 
 	destroy(){
 		super.destroy();
+		if (this.bot !== null){
+			this.bot.stop();
+			this.bot = null;
+		} 
+		this.tie = null;
+		this.state = null;
 	}
 }

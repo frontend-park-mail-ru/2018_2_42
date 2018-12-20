@@ -3,6 +3,11 @@
   font-weight: bold;
   z-index: 3;
   font-size: 1.5rem;
+  :hover {cursor: pointer}
+}
+
+section + section > .game {
+  margin-top: -10%;
 }
 
 .game {

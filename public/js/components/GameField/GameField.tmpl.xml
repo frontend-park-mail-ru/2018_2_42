@@ -61,7 +61,7 @@
             </div>
         </div>
         <div class="gamefield__back" style="text-align: center; margin-top: 3rem;">
-            <a id="gamefield_back_btn" href="/menu" data-href="menu" class="back_btn">Quit game</a>
+            <a id="gamefield_back_btn" data-href="menu" class="back_btn">Quit game</a>
         </div>
     </div>
 </fest:template>

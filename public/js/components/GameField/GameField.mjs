@@ -16,7 +16,8 @@ export default class GameFieldComponent {
 
 		document.getElementById('gamefield_back_btn').addEventListener('click', (event) => {
 			event.preventDefault();
-			window.bus.publish('destroy-game');
+			window.history.back();
+			// window.bus.publish('destroy-game');
 		});
 	}
 
