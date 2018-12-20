@@ -76,11 +76,6 @@ export default class OfflineGame extends GameCore {
 		const toCell = this.state.field[movement.to];
 		const fromCell = this.state.field[movement.from];
 
-        var audio = new Audio(); // Создаём новый элемент Audio
-		audio.src = './../../../../audio/move.mp3'; // Указываем путь к звуку "клика"
-		audio.autoplay = true; // Автоматически запускаем
-		console.log(audio.src)
-
 		if (toCell === null ) {
 			if (!this.moveUnit(movement.from, movement.to)){
 				throw 'invalid movement';
