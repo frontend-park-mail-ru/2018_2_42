@@ -28,8 +28,10 @@ export default class GameScene {
 		window.bus.subscribe('finish-game', this.showGetFlag);
 		window.bus.subscribe('change-weapon', this.replaceWeapon);
 	}
-    
+
 	destroy() {
+		this.me = null;
+		this.enemy = null;
 		window.bus.unsubscribe('move-unit', this.moveUnit);
 		window.bus.unsubscribe('fight', this.fight);
 		window.bus.unsubscribe('tie', this.showTie);
@@ -89,7 +91,7 @@ export default class GameScene {
 			weapon.classList.add(WEAPONS.RandomWeapon());
 			let targetUnit = document.getElementById(FIELD.SIZE - i).firstChild;
 			if (!targetUnit) throw 'units not in start position';
-			targetUnit.classList.remove(this.me + '-flag');
+			targetUnit.className = 'unit ' + this.me + '-back';
 			targetUnit.innerHTML = '';
 			targetUnit.appendChild(weapon);
 		}

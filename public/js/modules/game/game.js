@@ -48,9 +48,13 @@ export default class Game {
 	}
     
 	destroy() {
-		this.gameController.stop();
-		this.gameScene.destroy();
-		this.gameCore.destroy();
+		if (this.gameController !== null) this.gameController.stop();
+		if (this.gameScene !== null)this.gameScene.destroy();
+		if (this.gameCore !== null)this.gameCore.destroy();
+
+		this.gameScene = null;
+		this.gameController = null;
+		this.gameCore = null;
 
 		window.bus.unsubscribe('team-picked', this.setTeams);
 		window.bus.unsubscribe('change-turn', this.changeTurn);
