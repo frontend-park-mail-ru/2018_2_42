@@ -21,8 +21,8 @@ export default class GameCore {
 	}
     
 	destroy() {
-		this.mode = null;
-		
+		// this.mode = null;
+
 		window.bus.unsubscribe('start-game', this.onGameStarted);
 		window.bus.unsubscribe('finish-game', this.onGameFinished);
 		window.bus.unsubscribe('game-unit-moved', this.onGameUnitMoved);

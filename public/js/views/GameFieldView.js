@@ -36,7 +36,7 @@ export default class GameFieldView extends BaseView {
 		}
 
 		this._section.setAttribute('style', 'display:initial;');
-		this._el.innerHTML = this._section;
+		this._el.appendChild(this._section);
 		const gameField = new GameFieldComponent({ el: this._section });
 		gameField.render();
 
@@ -108,7 +108,8 @@ export default class GameFieldView extends BaseView {
 		window.bus.unsubscribe('destroy-game', () => { this.destroy(); });
 		window.bus.unsubscribe('rechoose-weapon', () => { this._weaponsChooser.render(); });
 		window.bus.unsubscribe('show-winner', (data) => { this._winnerShower.render(data); });
-		if ((typeof this.game !== 'undefined') || (this.game !== null)) this.game.destroy();
+		// if ((typeof this.game !== 'undefined') || (this.game !== null)) 
+		this.game.destroy();
 		this._mode = null;
 		super.destroy();
 		// window.bus.publish('draw-menu');
