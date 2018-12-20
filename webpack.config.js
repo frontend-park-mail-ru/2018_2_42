@@ -31,7 +31,7 @@ module.exports = {
 			},
 			{
 				test: /\.m?js$/,
-				exclude: /(node_modules|bower_components)/,
+				exclude: /(node_modules)/,
 				use: [
 					{
 						loader: 'babel-loader',
@@ -54,6 +54,10 @@ module.exports = {
 			{
 				test: /\.ico$/,
 				loader: 'file-loader?name=images/favicon.ico',
+			},
+			{
+				test: /\.mp3$/,
+				loader: 'file-loader?name=audio/[name].[ext]',
 			},
 			{
 				test: /\.css$/,

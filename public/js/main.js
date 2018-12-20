@@ -2,6 +2,7 @@
 
 import '../scss/main.scss';
 import '../images/favicon.ico';
+import '../audio/move.mp3';
 
 import UserService from './services/UserService.js';
 import EventBus from './modules/eventBus.js';
