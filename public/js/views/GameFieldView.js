@@ -108,7 +108,7 @@ export default class GameFieldView extends BaseView {
 		window.bus.unsubscribe('destroy-game', () => { this.destroy(); });
 		window.bus.unsubscribe('rechoose-weapon', () => { this._weaponsChooser.render(); });
 		window.bus.unsubscribe('show-winner', (data) => { this._winnerShower.render(data); });
-		if (typeof this.game !== 'undefined') this.game.destroy();
+		if ((typeof this.game !== 'undefined') || (this.game !== null)) this.game.destroy();
 		this._mode = null;
 		super.destroy();
 		// window.bus.publish('draw-menu');
