@@ -19,7 +19,7 @@ export default class GameAudio {
 		window.bus.subscribe('move-unit', this.playSoundMoveUnit);
 		window.bus.subscribe('hit', this.playSoundFight);
 		window.bus.subscribe('tie', this.playSoungTie);
-		// window.bus.subscribe('change-turn', this.playSoungChangeTurn);
+		window.bus.subscribe('change-turn-sound', this.playSoungChangeTurn);
 		window.bus.subscribe('finish-game', this.playSoundshowGetFlag);
 	}
 
@@ -30,7 +30,7 @@ export default class GameAudio {
 		window.bus.unsubscribe('move-unit', this.playSoundMoveUnit);
 		window.bus.unsubscribe('hit', this.playSoundFight);
         window.bus.unsubscribe('tie', this.playSoungTie);
-        window.bus.unsubscribe('change-turn', this.playSoungChangeTurn);
+        window.bus.unsubscribe('change-turn-sound', this.playSoungChangeTurn);
 		window.bus.unsubscribe('finish-game', this.playSoundshowGetFlag);
     }
 
