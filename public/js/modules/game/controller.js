@@ -46,7 +46,7 @@ export default class GameController {
 		if (this.reachableCells.includes(clicked)) {
 			let from = +this.selectedCell.getAttribute('id');
 			let to = +clicked.getAttribute('id');
-			window.bus.publish('game-unit-moved', {from ,to} );
+			window.bus.publish('game-unit-moved', {from ,to});
 			this.stop();
 		}
 
@@ -58,6 +58,7 @@ export default class GameController {
 			parentCell.classList.add('selected-cell');
 			this.selectedCell = parentCell;
 			this.markAvailableCells(clicked, this.me);
+			window.bus.publish('pick-unit');
 		}
 	}
 

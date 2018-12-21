@@ -3,10 +3,11 @@
 export default class GameAudio {
 	constructor() {
         this.playSoundStartGame = this.playSoundStartGame.bind(this);
+        this.playSoundPickUnit = this.playSoundPickUnit.bind(this);
         this.playSoundShuffleWeapon = this.playSoundShuffleWeapon.bind(this);
 		this.playSoundMoveUnit = this.playSoundMoveUnit.bind(this);
 		this.playSoundFight = this.playSoundFight.bind(this);
-		// this.showTie = this.showTie.bind(this);
+		this.playSoungTie = this.playSoungTie.bind(this);
 		// this.changeTurn = this.changeTurn.bind(this);
 		// this.replaceWeapon = this.replaceWeapon.bind(this);
 		// this.showGetFlag = this.showGetFlag.bind(this);
@@ -14,19 +15,21 @@ export default class GameAudio {
 
     start() {
 		window.bus.subscribe('start-game', this.playSoundStartGame);
+		window.bus.subscribe('pick-unit', this.playSoundPickUnit);
 		window.bus.subscribe('shuffle-weapons', this.playSoundShuffleWeapon);
 		window.bus.subscribe('move-unit', this.playSoundMoveUnit);
 		window.bus.subscribe('hit', this.playSoundFight);
-		// window.bus.subscribe('tie', this.showTie);
+		window.bus.subscribe('tie', this.playSoungTie);
 		// window.bus.subscribe('finish-game', this.showGetFlag);
 	}
 
 	destroy() {
         window.bus.unsubscribe('start-game', this.playSoundStartGame);
+        window.bus.unsubscribe('pick-unit', this.playSoundPickUnit);
         window.bus.unsubscribe('shuffle-weapons', this.playSoundShuffleWeapon);
 		window.bus.unsubscribe('move-unit', this.playSoundMoveUnit);
 		window.bus.unsubscribe('hit', this.playSoundFight);
-		// window.bus.unsubscribe('tie', this.showTie);
+		window.bus.unsubscribe('tie', this.playSoungTie);
 		// window.bus.unsubscribe('finish-game', this.showGetFlag);
     }
 
@@ -34,6 +37,12 @@ export default class GameAudio {
     playSoundStartGame() {
         let move = new Audio();
         move.src = './../../../audio/gong.mp3';
+        move.autoplay = true; 
+    }
+
+    playSoundPickUnit() {
+        let move = new Audio();
+        move.src = './../../../audio/pick.mp3';
         move.autoplay = true; 
     }
 
@@ -60,6 +69,12 @@ export default class GameAudio {
     playSoundShuffleWeapon() {
         let move = new Audio();
         move.src = './../../../audio/shuffle.mp3';
+        move.autoplay = true; 
+    }
+
+    playSoungTie() {
+        let move = new Audio();
+        move.src = './../../../audio/tie.mp3';
         move.autoplay = true; 
     }
     
