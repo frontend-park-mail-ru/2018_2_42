@@ -51,10 +51,10 @@ export default class GameScene {
 		indicatorClasses.remove('red-turn', 'blue-turn');
 		switch (clr){
 		case TEAMS.BLUE: indicatorClasses.add('blue-turn');
-			// window.bus.publish('change-turn', 'blue')
+			window.bus.publish('change-turn-sound', 'blue')
 			break;
 		case TEAMS.RED: indicatorClasses.add('red-turn');
-			// window.bus.publish('change-turn', 'red')
+			window.bus.publish('change-turn-sound', 'red')
 			break;
 		default: throw 'incorrect color';
 		}
