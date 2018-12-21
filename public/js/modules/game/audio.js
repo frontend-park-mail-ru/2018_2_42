@@ -2,7 +2,8 @@
 
 export default class GameAudio {
 	constructor() {
-        // this.shuffleWeapon = this.shuffleWeapon.bind(this);
+        this.playSoundStartGame = this.playSoundStartGame.bind(this);
+        this.playSoundShuffleWeapon = this.playSoundShuffleWeapon.bind(this);
 		this.playSoundMoveUnit = this.playSoundMoveUnit.bind(this);
 		this.playSoundFight = this.playSoundFight.bind(this);
 		// this.showTie = this.showTie.bind(this);
@@ -12,7 +13,8 @@ export default class GameAudio {
     }
 
     start() {
-		// window.bus.subscribe('shuffle-weapons', this.bindedShuffleWeapon);
+		window.bus.subscribe('start-game', this.playSoundStartGame);
+		window.bus.subscribe('shuffle-weapons', this.playSoundShuffleWeapon);
 		window.bus.subscribe('move-unit', this.playSoundMoveUnit);
 		window.bus.subscribe('hit', this.playSoundFight);
 		// window.bus.subscribe('tie', this.showTie);
@@ -20,11 +22,19 @@ export default class GameAudio {
 	}
 
 	destroy() {
-        // window.bus.unsubscribe('shuffle-weapons', this.bindedShuffleWeapon);
+        window.bus.unsubscribe('start-game', this.playSoundStartGame);
+        window.bus.unsubscribe('shuffle-weapons', this.playSoundShuffleWeapon);
 		window.bus.unsubscribe('move-unit', this.playSoundMoveUnit);
 		window.bus.unsubscribe('hit', this.playSoundFight);
 		// window.bus.unsubscribe('tie', this.showTie);
 		// window.bus.unsubscribe('finish-game', this.showGetFlag);
+    }
+
+
+    playSoundStartGame() {
+        let move = new Audio();
+        move.src = './../../../audio/gong.mp3';
+        move.autoplay = true; 
     }
 
     playSoundMoveUnit() {
@@ -44,6 +54,12 @@ export default class GameAudio {
         else if (obj.substr(obj.length - 2) == 'rs') {
             move.src = './../../../audio/winR.mp3';
         }
+        move.autoplay = true; 
+    }
+
+    playSoundShuffleWeapon() {
+        let move = new Audio();
+        move.src = './../../../audio/shuffle.mp3';
         move.autoplay = true; 
     }
     

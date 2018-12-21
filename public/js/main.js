@@ -15,6 +15,7 @@ import '../audio/win.mp3';
 import '../audio/winP.mp3';
 import '../audio/winR.mp3';
 import '../audio/winS.mp3';
+import '../audio/shuffle.mp3';
 import UserService from './services/UserService.js';
 import EventBus from './modules/eventBus.js';
 import Router from './modules/router.js';
