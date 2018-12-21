@@ -1,21 +1,8 @@
 'use strict';
 
-import './../../../audio/move.mp3';
-import './../../../audio/gong.mp3';
-import './../../../audio/lost.mp3';
-import './../../../audio/pum.mp3';
-import './../../../audio/sound.mp3';
-import './../../../audio/tick.mp3';
-import './../../../audio/tieP.mp3';
-import './../../../audio/tieR.mp3';
-import './../../../audio/tieS.mp3';
-import './../../../audio/win.mp3';
-import './../../../audio/winP.mp3';
-import './../../../audio/winR.mp3';
-import './../../../audio/winS.mp3';
-
-export default class Audio {
+export default class GameAudio {
 	constructor() {
+
         // this.shuffleWeapon = this.shuffleWeapon.bind(this);
 		this.playSoundMoveUnit = this.playSoundMoveUnit.bind(this);
 		// this.fight = this.fight.bind(this);
@@ -41,11 +28,10 @@ export default class Audio {
 		// window.bus.unsubscribe('finish-game', this.showGetFlag);
     }
 
-    playSoundMoveUnit({from, to, callback}) {
-        var audio = new Audio(); // Создаём новый элемент Audio
-        audio.src = './../../../audio/move.mp3'; // Указываем путь к звуку "клика"
-        audio.autoplay = true; // Автоматически запускаем
-        console.log(from, to, callback)
+    playSoundMoveUnit() {
+		let move = new Audio();
+        move.src = './../../../audio/move.mp3';
+        move.autoplay = true; // Автоматически запускаем
     }
     
 }

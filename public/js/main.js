@@ -2,7 +2,19 @@
 
 import '../scss/main.scss';
 import '../images/favicon.ico';
-
+import '../audio/move.mp3';
+import '../audio/gong.mp3';
+import '../audio/lost.mp3';
+import '../audio/pum.mp3';
+import '../audio/sound.mp3';
+import '../audio/tick.mp3';
+import '../audio/tieP.mp3';
+import '../audio/tieR.mp3';
+import '../audio/tieS.mp3';
+import '../audio/win.mp3';
+import '../audio/winP.mp3';
+import '../audio/winR.mp3';
+import '../audio/winS.mp3';
 import UserService from './services/UserService.js';
 import EventBus from './modules/eventBus.js';
 import Router from './modules/router.js';

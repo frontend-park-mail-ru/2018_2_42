@@ -4,7 +4,7 @@ import OfflineGame from './core/offline.js';
 import GameScene from './scene.js';
 import GameController from './controller.js';
 import TEAMS from './conf/teams.js';
-import Audio from './audio.js';
+import GameAudio from './audio.js';
 
 export default class Game {
 	constructor({ mode = 'offline', gameField = document.getElementsByClassName('game')[0] }) {
@@ -24,7 +24,7 @@ export default class Game {
 		}
 
 		this.gameScene = new GameScene();
-		this.audio = new Audio();
+		this.audio = new GameAudio();
 		this.gameController = new GameController(this.gameField);
 		this.gameCore = new GameConstructor({ scene: this.gameScene });
 
