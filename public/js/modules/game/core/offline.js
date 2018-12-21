@@ -108,7 +108,7 @@ export default class OfflineGame extends GameCore {
 			this.state.field[from] = null;
 			this.state.field[to] = winner;
 
-			window.bus.publish('fight', {   winner: {position: winnerIdx, weapon: winnerWeapon},
+			window.bus.publish('fight', {winner: {position: winnerIdx, weapon: winnerWeapon},
 				loser:  {position: loserIdx, weapon: loserWeapon}});
 
 			if (this.tie) {

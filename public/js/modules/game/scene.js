@@ -201,6 +201,7 @@ export default class GameScene {
 		let weapon = attackerCell.firstChild.firstChild;
 
 		var afterAttackMove = ()=>{
+			window.bus.publish('hit', fightAnimationClass);
 			eventDiv.innerHTML = '';
 			eventDiv.append(fightDiv);
 			fightDiv.classList.add('animate-fight-' + fightAnimationClass);
