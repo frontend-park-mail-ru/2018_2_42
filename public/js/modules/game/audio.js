@@ -8,9 +8,8 @@ export default class GameAudio {
 		this.playSoundMoveUnit = this.playSoundMoveUnit.bind(this);
 		this.playSoundFight = this.playSoundFight.bind(this);
 		this.playSoungTie = this.playSoungTie.bind(this);
-		// this.changeTurn = this.changeTurn.bind(this);
-		// this.replaceWeapon = this.replaceWeapon.bind(this);
-		// this.showGetFlag = this.showGetFlag.bind(this);
+		this.playSoungChangeTurn = this.playSoungChangeTurn.bind(this);
+		this.playSoundshowGetFlag = this.playSoundshowGetFlag.bind(this);
     }
 
     start() {
@@ -20,7 +19,8 @@ export default class GameAudio {
 		window.bus.subscribe('move-unit', this.playSoundMoveUnit);
 		window.bus.subscribe('hit', this.playSoundFight);
 		window.bus.subscribe('tie', this.playSoungTie);
-		// window.bus.subscribe('finish-game', this.showGetFlag);
+		window.bus.subscribe('change-turn', this.playSoungChangeTurn);
+		window.bus.subscribe('finish-game', this.playSoundshowGetFlag);
 	}
 
 	destroy() {
@@ -29,8 +29,9 @@ export default class GameAudio {
         window.bus.unsubscribe('shuffle-weapons', this.playSoundShuffleWeapon);
 		window.bus.unsubscribe('move-unit', this.playSoundMoveUnit);
 		window.bus.unsubscribe('hit', this.playSoundFight);
-		window.bus.unsubscribe('tie', this.playSoungTie);
-		// window.bus.unsubscribe('finish-game', this.showGetFlag);
+        window.bus.unsubscribe('tie', this.playSoungTie);
+        window.bus.unsubscribe('change-turn', this.playSoungChangeTurn);
+		window.bus.unsubscribe('finish-game', this.playSoundshowGetFlag);
     }
 
 
@@ -77,5 +78,20 @@ export default class GameAudio {
         move.src = './../../../audio/tie.mp3';
         move.autoplay = true; 
     }
+
+    playSoungChangeTurn(turn) {
+        let move = new Audio();
+        if (turn == 'red') {
+            move.src = './../../../audio/red-turn.mp3';
+        } else if (turn == 'blue') {
+            move.src = './../../../audio/blue-turn.mp3';
+        }
+        move.autoplay = true; 
+    }
     
+    playSoundshowGetFlag() {
+        let move = new Audio();
+        move.src = './../../../audio/win.mp3';
+        move.autoplay = true; 
+    }
 }

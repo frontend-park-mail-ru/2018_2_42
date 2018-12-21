@@ -26,7 +26,6 @@ export default class Bot{
 	changeTurn(clientTurn){
 		if (!clientTurn) {
 			let rand = Math.round(Math.random() * (this.DELAY - this.DELAY/2)) + this.DELAY/2;
-			console.log(rand);
 			setTimeout(this.makeMove, rand);
 		}
 	}

@@ -15,15 +15,13 @@ export default class OnlineGame extends GameCore {
 		super.start();
 		this.socket = new WebSocket(LINKS.WS);
 		this.socket.onopen = ()=> {
-			console.log('Соединение установлено.');
+			// console.log('Соединение установлено.');
 		};
 
 		this.socket.onmessage = (event)=> {
-			console.log('Получено сообщение от сервера.');
-			console.log(event);
-			console.log(event.data);
+			// console.log('Получено сообщение от сервера.');
 			const message = JSON.parse(event.data);
-			console.log(message);
+			// console.log(message);
 			switch (message.method){
 			case 'your_turn': 
 				window.bus.publish('change-turn', message.parameter);
@@ -60,15 +58,15 @@ export default class OnlineGame extends GameCore {
 	}
 
 	onGameStarted(){
-		console.log('Отправка команды на сервер.');
+		// console.log('Отправка команды на сервер.');
 		const uploadMap = super.parseClientTeam();
 		this.socket.send(JSON.stringify(uploadMap));
 		window.bus.publish('show-loader');
 	}
     
 	onGameUnitMoved(movement){
-		console.log('Отправка шага на сервер.');
-		console.log(movement);
+		// console.log('Отправка шага на сервер.');
+		// console.log(movement);
 		const msg = {
 			'method': 'attempt_go_to_cell',
 			'parameter': {
@@ -85,8 +83,8 @@ export default class OnlineGame extends GameCore {
 		window.bus.publish('change-weapon',
 			{positionId: unitPos ,weaponName: newWeapon});
 		
-		console.log('Отправка выбранного оружия на сервер.');
-		console.log(newWeapon);
+		// console.log('Отправка выбранного оружия на сервер.');
+		// console.log(newWeapon);
 		const msg = {
 			'method': 'reassign_weapons',
 			'parameter': {
@@ -94,7 +92,7 @@ export default class OnlineGame extends GameCore {
 				'new_weapon': newWeapon,
 			}
 		};
-		console.log(JSON.stringify(msg));
+		// console.log(JSON.stringify(msg));
 		this.socket.send(JSON.stringify(msg));
 		this.tiePos = null;
 	}

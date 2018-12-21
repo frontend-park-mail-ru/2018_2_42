@@ -51,10 +51,6 @@ export default class Game {
 	}
     
 	destroy() {
-		// if (this.gameController !== null) this.gameController.stop();
-		// if (this.gameScene !== null)this.gameScene.destroy();
-		// if (this.gameCore !== null)this.gameCore.destroy();
-
 		this.audio.destroy();
 		this.gameController.stop();
 		this.gameScene.destroy();

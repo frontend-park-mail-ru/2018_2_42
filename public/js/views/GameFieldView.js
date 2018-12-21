@@ -20,7 +20,6 @@ export default class GameFieldView extends BaseView {
 	}
     
 	render() {
-		console.log('render');
 		this._active = true;
 		window.bus.subscribe('destroy-game', () => { this.destroy(); });
 		this._mode = null;
@@ -103,7 +102,6 @@ export default class GameFieldView extends BaseView {
 	}
 
 	destroy() {
-		console.log('destroy');
 		this._active = false;
 		window.bus.unsubscribe('destroy-game', () => { this.destroy(); });
 		window.bus.unsubscribe('rechoose-weapon', () => { this._weaponsChooser.render(); });

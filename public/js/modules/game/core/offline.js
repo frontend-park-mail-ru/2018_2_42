@@ -25,7 +25,6 @@ export default class OfflineGame extends GameCore {
 	onGameStarted() {
 		//парсим команду клиента
 		const uploadMap = super.parseClientTeam();
-		console.log(uploadMap);
 
 		//определяем цвет команды клиента и бота
 		let enemyColor = null;
@@ -70,9 +69,6 @@ export default class OfflineGame extends GameCore {
 	}
 
 	onGameUnitMoved(movement) {
-		// validate move, later
-		// console.log(this.state.field);
-		// console.log(movement);
 		const toCell = this.state.field[movement.to];
 		const fromCell = this.state.field[movement.from];
 

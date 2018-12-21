@@ -76,7 +76,6 @@ export default class APIModule {
      */
 	Avatar(file) {
 		const url = '/api/v1/avatar';
-		console.log(file);
 		let formData = new FormData();
 		formData.append('avatar', file);
 
