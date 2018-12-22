@@ -102,7 +102,7 @@ export default class UserService {
 				return response.json();
 			})
 			.then((data) => {
-				window.bus.publish('draw-profile', this.login);
+				window.bus.publish('successful_avatar_update', this.login);
 			})
 			.catch((error) => {
 				window.bus.publish('draw-networkError');

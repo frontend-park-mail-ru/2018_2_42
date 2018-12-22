@@ -50,6 +50,7 @@ window.bus.subscribe('router-go-back', () => { router.goBack(); });
 window.bus.subscribe('successful_sign_in', () => { router.rerenderViews(['/profile']); router.open({ path: '/profile' }); });
 window.bus.subscribe('successful_sign_up', () => { router.rerenderViews(['/profile']); router.open({ path: '/profile' }); });
 window.bus.subscribe('successful_sign_out', () => { router.rerenderViews([]); router.open({ path: '/' }); });
+window.bus.subscribe('successful_avatar_update', () => { router.rerenderViews(['/profile']); router.open({ path: '/profile' }); });
 
 window.bus.subscribe('sign-out', userService.SignOut);
 window.bus.subscribe('sign-in', userService.SignIn);
