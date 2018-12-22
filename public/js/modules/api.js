@@ -83,4 +83,13 @@ export default class APIModule {
 			body: formData
 		});
 	}
+
+	/**
+     * Checks if cookie exists
+     * @returns {promise}
+     */
+	CheckCookie() {
+		const url = '/api/v1/session';
+		return network.promiseGet(url, { credentials: 'include' });
+	}
 }

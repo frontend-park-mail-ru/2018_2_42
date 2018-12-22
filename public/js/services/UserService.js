@@ -13,6 +13,24 @@ export default class UserService {
 	}
 
 	get login() {
+		api.CheckCookie()
+			.then((response) => {
+				if (response.status === 400 || response.status === 404 || response.status === 200) {
+					return response.json();
+				} else {
+					throw new Error('Server response was not ok.');
+				}
+			})
+			.then((data) => {
+				if (data.status != 'OK') {
+					localStorage.removeItem('login');
+				} else {
+					localStorage.setItem('login', data.message);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 		return localStorage.getItem('login');
 	}
 
