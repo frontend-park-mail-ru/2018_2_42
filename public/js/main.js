@@ -54,7 +54,7 @@ window.bus.subscribe('successful_sign_out', () => { router.rerenderViews([]); ro
 window.bus.subscribe('sign-out', userService.SignOut);
 window.bus.subscribe('sign-in', userService.SignIn);
 window.bus.subscribe('sign-up', userService.SignUp);
-window.bus.subscribe('update-avatar', userService.UpdateAvatar);
+window.bus.subscribe('update-avatar', userService.UpdateAvatar.bind(userService));
 
 router
 	.register('/', MenuView)
