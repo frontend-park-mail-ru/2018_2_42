@@ -6,5 +6,6 @@ sudo docker run \
     --publish 443:443 \
     --network 'rpsarena-net' \
     --volume '/etc/letsencrypt':'/etc/letsencrypt' \
+    --volume '/home/ubuntu/presentation':'/var/www/presentation' \
     --detach \
     --rm koretskyhub/front:nginx

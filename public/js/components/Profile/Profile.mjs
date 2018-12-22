@@ -24,7 +24,7 @@ export default class ProfileComponent {
 			})
 			.then((receivedData) => {
 				this._profileData = receivedData;
-				this._profileData.profile.avatarAddress += `?a=${Date.now()}`;
+				this._profileData.profile.avatarAddress;
 				const isSignedInUsersProfile = (userService.login === this._profileData.login);
 				const data = {
 					profile: this._profileData,
