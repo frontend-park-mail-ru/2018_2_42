@@ -24,6 +24,7 @@ export default class ProfileComponent {
 			})
 			.then((receivedData) => {
 				this._profileData = receivedData;
+				this._profileData.profile.avatarAddress += `?a=${Date.now()}`;
 				const isSignedInUsersProfile = (userService.login === this._profileData.login);
 				const data = {
 					profile: this._profileData,
@@ -42,7 +43,7 @@ export default class ProfileComponent {
 						window.bus.publish('update-avatar', fileInput.files[0]);
 					}, false);
 				}
-
+				
 				document.getElementById('profile_back_btn').addEventListener('click', (event) => {
 					event.preventDefault();
 					window.bus.publish('draw-menu');
