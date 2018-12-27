@@ -4,8 +4,12 @@
             <div class="shuffler-modal-header">SHUFFLE WEAPONS</div>
 
             <div class="shuffler-container">
-                <a class="shuffle" id="shuffleButton" href="">Shuffle</a>
-                <a class="start" id="startButton" href="">Start game</a>
+                <a class="start" id="startButton" href="">
+                    <div class="shuffler__button">Play</div>
+                </a>
+                <a class="shuffle" id="shuffleButton" href="">
+                    <div class="shuffler__button">Shuffle</div>
+                </a>
             </div>
         </div>
     </div>

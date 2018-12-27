@@ -15,7 +15,6 @@
                 </div>
             </fest:if>
         </div>
-
         <div class="profile__login">
             <fest:value>data.profile.login</fest:value>
         </div>

@@ -11,6 +11,7 @@ COPY './dist'  '/var/www/html/'
 # RUN cd '/tmp/project' && \
 #     mkdir --parent '/var/www/html/' && \
 #     mv -v '/tmp/project/dist'/* '/var/www/html/' && \
+#     mv -v '/tmp/project/images/' '/var/www/html/' && \
 #     rm -rf '/tmp/project';
 
 # Стартуем с коммандой nginx -с '/etc/nginx/nginx.conf'
