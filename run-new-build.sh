@@ -7,5 +7,6 @@ sudo docker run \
     --network 'rpsarena-net' \
     --volume '/etc/letsencrypt':'/etc/letsencrypt' \
     --volume '/home/ubuntu/presentation':'/var/www/presentation' \
+    --volume '/home/ubuntu/nginx':'/etc/nginx-custom' \
     --detach \
     --rm koretskyhub/front:nginx
