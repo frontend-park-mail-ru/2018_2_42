@@ -1,7 +1,6 @@
-'use strict';
-import WEAPONS from '../conf/weapons.js';
+const WEAPONS = require('../conf/weapons.js');
 
-export default class Unit {
+class Unit {
 	constructor(team = null, weapon = null) {
 		this.team = team;
 		this.weapon = weapon || WEAPONS.RandomWeapon();
@@ -38,3 +37,5 @@ export default class Unit {
 		}
 	}
 }
+
+module.exports = Unit;
