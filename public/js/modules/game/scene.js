@@ -1,10 +1,8 @@
-'use strict';
+const TEAMS = require('./conf/teams.js');
+const FIELD = require('./conf/field.js');
+const WEAPONS = require('./conf/weapons.js');
 
-import TEAMS    from './conf/teams.js';
-import FIELD    from './conf/field.js';
-import WEAPONS  from './conf/weapons.js';
-
-export default class GameScene {
+class GameScene {
 	constructor() {
 		this.me = null;
 		this.enemy = null;
@@ -396,3 +394,5 @@ export default class GameScene {
 		return fightAnimationClass;
 	}
 }
+
+module.exports = GameScene;
