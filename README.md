@@ -3,7 +3,7 @@
 Репозиторий бекенда: https://github.com/go-park-mail-ru/2018_2_42
 
 ## Команда
-1️⃣ [Дикарев Андрей](https://github.com/DikarevAndrey)
+1️⃣ [Дикарев Андрей](https://github.com/gretzkiy)
 <br>
 2️⃣ [Корецкий Михаил](https://github.com/koretskyhub)
 <br>
